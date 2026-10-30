@@ -78,9 +78,11 @@ def sitemap():
 def llms_index():
     return f'''# NoMark
 
-> Public, account-free browser tool for cleaning supported hidden Unicode characters and document metadata. No AI model or API key is required.
+> Public, account-free browser tool for cleaning supported hidden Unicode characters and document metadata. Cleaning needs no AI model or API key. Optional server paraphrasing uses locally operated translation models with separate consent.
 
 Text and non-PDF documents are processed locally in a browser Web Worker. PDFs require explicit upload permission and a server slot. Findings do not establish AI authorship, and statistical AI watermark removal is not guaranteed. Public site context: Jakarta, Indonesia. Available worldwide in Indonesian and English.
+
+Optional paraphrasing supports Indonesian and English, at most 5,000 characters, one active job and two waiting tickets. It can change meaning and does not detect or guarantee removal of SynthID. It is unavailable when its separate model service is not configured.
 
 ## Pages
 - [English tool]({SITE}/en): Workspace, supported formats, processing locations, attribution, and frequently asked questions.

@@ -68,7 +68,12 @@ document.addEventListener('alpine:init', () => {
     get textTabClass() { return this.isTextTab ? 'selected' : ''; }, get fileTabClass() { return this.isFileTab ? 'selected' : ''; },
     get textTabIndex() { return this.isTextTab ? 0 : -1; }, get fileTabIndex() { return this.isFileTab ? 0 : -1; },
     setTextTab() { if (!this.busy) { this.tab = 'text'; this.error = ''; } }, setFileTab() { if (!this.busy) { this.tab = 'file'; this.error = ''; } },
-    tabKey(event) { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); if (this.busy) return; this.tab = event.key === 'Home' ? 'text' : event.key === 'End' ? 'file' : this.isTextTab ? 'file' : 'text'; document.getElementById(`${this.tab}-tab`).focus(); } },
+    get isParaphraseTab() { return this.tab === 'paraphrase'; },
+    get paraphraseTabClass() { return this.isParaphraseTab ? 'selected' : ''; },
+    get paraphraseTabIndex() { return this.isParaphraseTab ? 0 : -1; },
+    get modeNote() { return this.t(this.isParaphraseTab ? 'paraphraseServer' : 'noRewrite'); },
+    setParaphraseTab() { if (!this.busy) { this.tab = 'paraphrase'; this.error = ''; } },
+    tabKey(event) { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); if (this.busy) return; const tabs = ['text', 'file', 'paraphrase']; this.tab = event.key === 'Home' ? 'text' : event.key === 'End' ? 'paraphrase' : tabs[(tabs.indexOf(this.tab) + (event.key === 'ArrowLeft' ? 2 : 1)) % 3]; document.getElementById(`${this.tab}-tab`).focus(); } },
     get notBusy() { return !this.busy; }, get characterCount() { return Array.from(this.input).length.toLocaleString(this.locale); },
     get characterLimit() { return (200000).toLocaleString(this.locale); },
     get cannotCleanText() { return this.busy || !this.input.trim(); }, get cannotClear() { return this.busy || !this.input; },
@@ -89,7 +94,7 @@ document.addEventListener('alpine:init', () => {
     get fileMethod() { return this.t(`${this.formatCategory}Method`); },
     categoryFor(name) { const suffix = name.split('.').pop().toLowerCase(); return Object.keys(this.fileFormats).find(category => this.fileFormats[category].split(',').includes(suffix)) || 'documents'; },
     get dropClass() { return this.dragging ? 'dragging' : ''; },
-    get activeResult() { return this.isTextTab ? this.textResult : this.selectedFileResult; },
+    get activeResult() { return this.isParaphraseTab ? null : this.isTextTab ? this.textResult : this.selectedFileResult; },
     get reportTiming() { return this.activeResult ? `${(this.activeResult.elapsed_ms / 1000).toLocaleString(this.locale, { maximumFractionDigits: 2 })} s` : ''; },
     get reportSummary() {
       if (!this.activeResult) return '';
@@ -180,12 +185,12 @@ document.addEventListener('alpine:init', () => {
       }
       this.busy = false; this.stage = '';
     },
-    cancelProcessing() { this.cancelled = true; NoMarkProcessor.cancel(); },
+    cancelProcessing() { this.cancelled = true; if (this.isParaphraseTab) window.dispatchEvent(new Event('nomark-cancel-paraphrase')); else NoMarkProcessor.cancel(); },
     downloadFile(id) { const result = this.files.find(entry => entry.id === id)?.result; if (result) download(result.outputBlob, result.cleaned_name); },
     formatBytes(value) { return value >= 1024 * 1024 ? `${(value / (1024 * 1024)).toLocaleString(this.locale, { maximumFractionDigits: 1 })} MiB` : value >= 1024 ? `${(value / 1024).toLocaleString(this.locale, { maximumFractionDigits: 1 })} KiB` : `${value} B`; },
     async refreshHistory() { try { this.history = await NoMarkHistory.list(); } catch { this.notice = this.t('storageFailed'); } },
     async saveHistory(record) { try { const evicted = await NoMarkHistory.save(record); await this.refreshHistory(); if (evicted) this.notice = this.t('storageEvicted'); } catch { this.notice = this.t('storageFailed'); } },
-    itemType(item) { return this.t(item.mode === 'text' ? 'textTab' : 'fileTab'); },
+    itemType(item) { return this.t(item.mode === 'paraphrase' ? 'paraphraseTab' : item.mode === 'text' ? 'textTab' : 'fileTab'); },
     itemTitle(item) { return item.title; },
     itemDate(item) { return new Intl.DateTimeFormat(this.locale, { dateStyle: 'medium', timeStyle: 'short' }).format(item.created); },
     deleteLabel(item) { return `${this.t('delete')}: ${item.title}`; },
@@ -195,12 +200,13 @@ document.addEventListener('alpine:init', () => {
         const record = await NoMarkHistory.get(id);
         if (!record) { this.notice = this.t('historyMissing'); await this.refreshHistory(); return; }
         this.tab = record.mode;
-        if (record.mode === 'text') { this.input = record.inputText; this.textResult = record.result; }
+        if (record.mode === 'paraphrase') { window.dispatchEvent(new CustomEvent('nomark-restore-paraphrase', { detail: record })); }
+        else if (record.mode === 'text') { this.input = record.inputText; this.textResult = record.result; }
         else { this.formatCategory = this.categoryFor(record.sourceName); const result = { ...record.result, outputBlob: record.outputBlob }; this.files = [{ id: record.id, name: record.sourceName, size: record.sourceBlob.size, file: new File([record.sourceBlob], record.sourceName), status: result.status, result, error: '' }]; this.selectedFileResult = result; }
         this.error = ''; this.notice = this.t('pendingResult');
       } catch { this.notice = this.t('storageFailed'); }
     },
-    async downloadHistory(id) { try { const record = await NoMarkHistory.get(id); if (!record) { this.notice = this.t('historyMissing'); return; } if (record.mode === 'text') download(new Blob([record.result.cleaned_text], { type: 'text/plain;charset=utf-8' }), 'text.cleaned.txt'); else download(record.outputBlob, record.result.cleaned_name); } catch { this.notice = this.t('storageFailed'); } },
+    async downloadHistory(id) { try { const record = await NoMarkHistory.get(id); if (!record) { this.notice = this.t('historyMissing'); return; } if (record.mode === 'paraphrase') download(new Blob([record.result.paraphrased_text], { type: 'text/plain;charset=utf-8' }), 'text.paraphrased.txt'); else if (record.mode === 'text') download(new Blob([record.result.cleaned_text], { type: 'text/plain;charset=utf-8' }), 'text.cleaned.txt'); else download(record.outputBlob, record.result.cleaned_name); } catch { this.notice = this.t('storageFailed'); } },
     async deleteHistory(id) { try { await NoMarkHistory.remove(id); await this.refreshHistory(); } catch { this.notice = this.t('storageFailed'); } },
     requestClearHistory() { this.$refs.confirmDialog.showModal(); }, cancelClearHistory() { this.$refs.confirmDialog.close(); },
     async clearHistory() { try { await NoMarkHistory.clear(); await this.refreshHistory(); this.notice = this.t('historyCleared'); } catch { this.notice = this.t('storageFailed'); } this.$refs.confirmDialog.close(); },

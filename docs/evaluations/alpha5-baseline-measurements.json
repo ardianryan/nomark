@@ -1,0 +1,1 @@
+{"disconnect_stopped_existing_worker": true, "maximum_input": [{"language": "en", "characters": 5000, "elapsed_ms": 12057, "status": "unchanged"}, {"language": "id", "characters": 5000, "elapsed_ms": 12691, "status": "paraphrased"}], "real_timeout": {"cold_ms": 1395, "shortened_timeout_stopped_worker": true}, "container_memory_peak_bytes": 684761088}

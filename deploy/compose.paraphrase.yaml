@@ -1,0 +1,28 @@
+# Combine with compose.yaml (build) or compose.release.yaml (published images).
+services:
+  nomark:
+    environment:
+      NOMARK_NMT_URL: http://nomark-nmt:8001
+    networks:
+      - default
+      - nmt-internal
+  nomark-nmt:
+    platform: linux/amd64
+    build:
+      context: ./nmt-service
+    image: registry.gitlab.com/ardianryan/nomark/nmt:0.1.0-alpha.5
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777,noexec,nosuid,nodev
+    mem_limit: 2g
+    memswap_limit: 2g
+    cpus: 2
+    pids_limit: 64
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 10s
+    networks: [nmt-internal]
+networks:
+  nmt-internal:
+    internal: true

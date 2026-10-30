@@ -6,6 +6,20 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.5] - 2026-10-30
+
+### Added
+
+- Optional isolated CPU NMT service for Indonesian/English back-translation, a dedicated paraphrase workspace, explicit server consent, and browser-local history.
+- Independent bounded admission, per-client ticket ownership, hard inference cancellation with idle confirmation, offline pinned models and checksums, and two-image GitLab verification.
+- Add a dedicated capability rate bucket, bilingual consent/privacy/terms/discovery updates, measured real-model probes, and a source-bound forty-sample quality gate before tagged image publication.
+- Add abbreviation-aware segmentation, bounded alternative decoding and an ordered-token edit filter. Reject changes outside a narrow reviewed equivalence vocabulary, preserve original segments and avoid counting whitespace changes as paraphrases.
+- Verify 168 Python and 22 browser tests in isolated staging. Review the original 40 samples plus 40 additional synthetic holdout samples: zero observed critical changes and 80/80 language-acceptable results, including 68 retained inputs and 12 actual limited rewrites. Keep the failed eleven-error baseline for comparison; unchanged inputs are not reported as successful rewrites.
+- Require both evaluation reports and actual rewrites in both languages before the quality gate passes. Real 5,000-character repeated-sentence jobs complete in approximately 30–36 seconds on two CPUs; timeout and disconnect still terminate inference.
+- Remove completed alpha.4/alpha.5 staging containers, images and build intermediates, socket volumes, the isolated network, expiry timers and temporary directories. Verify production NoMark keeps its original container/image, start time and zero restarts; no global Docker prune is used.
+- Correct incomplete cleanup: identify three randomly named exited containers from failed dependency builds, remove eight additional unused NoMark image roots and their remaining untagged ancestors, and verify no exited containers or NoMark dangling images remain. Preserve unrelated application images, including a dangling image used by a running production container.
+- Paraphrasing remains limited and requires review. It does not detect or guarantee removal of SynthID or other statistical watermarks. Passing the quality gate does not publish alpha.5, promote latest or change production. Existing security limitations remain open.
+
 ## [0.1.0-alpha.4] - 2026-10-30
 
 ### Security hardening

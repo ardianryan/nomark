@@ -81,19 +81,35 @@ class Guard:
             except ValueError:
                 pass
             address = hmac.new(self.salt, address.encode(), hashlib.sha256).hexdigest()
+            scope['nomark.client'] = address
             now = time.monotonic()
             if now - self.last_sweep > 60 or len(self.requests) > 10_000:
                 self.requests = defaultdict(deque, {key: values for key, values in self.requests.items() if values and values[-1] > now - 60})
                 self.last_sweep = now
                 if len(self.requests) > 10_000:
                     return await reject("server_busy", 503)
-            if not (path == "/api/queue" and scope["method"] in {"GET", "DELETE"}):
+            capability = path == '/api/paraphrase/capabilities' and scope['method'] == 'GET'
+            if capability:
+                recent = self.requests[(address, 'capabilities')]
+                while recent and recent[0] <= now - 60:
+                    recent.popleft()
+                if len(recent) >= 60:
+                    return await reject('rate_limited', 429)
+                recent.append(now)
+            if not capability and not (path in {"/api/queue", "/api/paraphrase/queue"} and scope["method"] in {"GET", "DELETE"}):
                 recent = self.requests[address]
                 while recent and recent[0] <= now - 60:
                     recent.popleft()
                 if len(recent) >= 20:
                     return await reject("rate_limited", 429)
                 recent.append(now)
+                if scope['method'] == 'POST' and path in {'/api/paraphrase/queue', '/api/text/paraphrase'}:
+                    nmt_recent = self.requests[(address, 'paraphrase')]
+                    while nmt_recent and nmt_recent[0] <= now - 60:
+                        nmt_recent.popleft()
+                    if len(nmt_recent) >= 5:
+                        return await reject('rate_limited', 429)
+                    nmt_recent.append(now)
             try:
                 if int(headers.get("content-length", "0")) > BODY_LIMIT:
                     return await reject("file_too_large", 413)
@@ -154,6 +170,8 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
     app.state.admission = Admission(capacity=app.state.jobs.concurrency)
     app.state.tools = {"exiftool": False, "qpdf": False, "gs": False}
     app.add_middleware(Guard)
+    from nomark.paraphrase_routes import install
+    install(app)
 
     def queue_token(request):
         value = request.headers.get("authorization", "")

@@ -1,6 +1,6 @@
 services:
   nomark:
-    image: registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.4
+    image: registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.5
     platform: linux/amd64
     restart: unless-stopped
     ports:

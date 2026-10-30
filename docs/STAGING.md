@@ -52,3 +52,11 @@ ssh -N -o ExitOnForwardFailure=yes \
 ```
 
 Use only the `nomark-staging-*` resources when stopping or removing this environment. Do not run host-wide Docker cleanup commands. Starting or promoting production remains a separate operation requiring the owner's approval.
+
+## Alpha.5 staging
+
+The later optional NMT environment used a separate alpha.5 application/model pair on an internal-only network, with a distinct socket volume and six-hour expiry timer. The temporary local tunnel used `http://127.0.0.1:8122`; it is not a permanent deployment. At the owner's request, test containers, images, socket volumes, the staging network and temporary source/build directories are removed after verification. Production resources are excluded. Alpha.5 results and quality limitations are in [Verification](VERIFICATION.md) and [Paraphrasing](PARAPHRASE.md).
+
+The [cleanup record](evaluations/alpha5-staging-cleanup.json) confirms removal of all three alpha.4/alpha.5 staging containers, no remaining staging image tags/volumes/networks, stopped expiry timers and removal of both temporary directories. Local SSH forwards on ports 8121 and 8122 were closed. Host free space increased by approximately 4.8 GiB during cleanup; this is an observed filesystem difference, not an exact accounting of Docker layer sizes. Production NoMark remained healthy with the same container/image, start time and zero restarts.
+
+That first check missed randomly named containers left by failed legacy Docker builds and untagged test images. The [follow-up record](evaluations/alpha5-staging-cleanup-followup.json) documents removal of three failed-build containers, eight additional test image roots and sixteen remaining parent image records. Final inspection found zero exited containers and zero NoMark dangling images. Two unrelated application images remain untagged; one is used by a running production container. Running container IDs, images, start times and restart counts were unchanged during the final cleanup. No global prune or force removal was used.

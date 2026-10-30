@@ -10,12 +10,12 @@ from urllib.request import Request, urlopen
 from release import check
 
 
-def promote():
+def promote(suffix="", metadata_path="artifacts/image-metadata.json"):
     version = check()
     if os.environ.get('CI_COMMIT_TAG') != f'v{version}':
         raise RuntimeError('Image promotion requires a matching release tag')
     registry = os.environ['CI_REGISTRY']
-    image = os.environ['CI_REGISTRY_IMAGE']
+    image = os.environ['CI_REGISTRY_IMAGE'] + suffix
     if not image.startswith(registry + '/'):
         raise RuntimeError('Image is outside the configured registry')
     repository = image[len(registry) + 1:]
@@ -43,7 +43,7 @@ def promote():
         manifest = response.read()
         media_type = response.headers['Content-Type']
     digest = 'sha256:' + hashlib.sha256(manifest).hexdigest()
-    metadata = json.loads(Path('artifacts/image-metadata.json').read_text())
+    metadata = json.loads(Path(metadata_path).read_text())
     if digest != metadata['containerimage.digest']:
         raise RuntimeError('Release manifest does not match the tested build')
     put_headers = {**headers, 'Content-Type': media_type}
@@ -57,4 +57,7 @@ def promote():
 
 
 if __name__ == '__main__':
+    from nmt_quality_gate import check_quality
+    check_quality()
     promote()
+    promote('/nmt', 'artifacts/nmt-image-metadata.json')

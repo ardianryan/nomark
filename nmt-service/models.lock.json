@@ -1,0 +1,32 @@
+{
+  "en-id": {
+    "repository": "Helsinki-NLP/opus-mt-en-id",
+    "revision": "6e4c52d61a6b16fe3509b0267cbfec65011b860b",
+    "license": "Apache-2.0",
+    "files": {
+      "pytorch_model.bin": "55cf1d883321cfd3bcfc43ce37fa842fc01690c7cb05afaff0fc9ca2df15f859",
+      "source.spm": "e88300911c2c573ec5526777a1e84bae698d20925b82dcef9c7248bb0e537ed0",
+      "target.spm": "2a8fefe71c7f26cb0c6aa1b9f0cc0f8d18006b20fe41c547af7f25b9c8333465",
+      "tokenizer_config.json": "1e1ea5d4fd5b329d2f4c9bec15f6c1e34cfbe7383b10f88fdff1db3508bd1e1f",
+      "vocab.json": "efb902a7e49901c3dcdd4b2e079419a0b6ccead3fa2cabfc90820ce1ba66e157",
+      "config.json": "4d7c70eec8e533308818fdbe89db9c56a3163261aa0c07ccc8d1dca4c1e5bd9d",
+      "generation_config.json": "d8826c233032ab2e70d024a30ba4de3af907f72d67ba79204f953b7f2e74ada5",
+      "README.md": "b22576651af4091e2b7460f1a0a59b96ce24e2bbfeb4886941e7805d51db4a15"
+    }
+  },
+  "id-en": {
+    "repository": "Helsinki-NLP/opus-mt-id-en",
+    "revision": "9a7f1b0d0dfe0a92ba691030b01d6f23f966e7ec",
+    "license": "Apache-2.0",
+    "files": {
+      "pytorch_model.bin": "798ff872a045346ff907fc9938ecd8d8dc9b346358cc514b35e08387776bee24",
+      "source.spm": "2a8fefe71c7f26cb0c6aa1b9f0cc0f8d18006b20fe41c547af7f25b9c8333465",
+      "target.spm": "e88300911c2c573ec5526777a1e84bae698d20925b82dcef9c7248bb0e537ed0",
+      "tokenizer_config.json": "77c1fac0929a2918f6d4652358a22e45a44dfc54a19f5bef78fb9072b3b87808",
+      "vocab.json": "efb902a7e49901c3dcdd4b2e079419a0b6ccead3fa2cabfc90820ce1ba66e157",
+      "config.json": "67f3a2b3217f56c5efe717b2374a5599761de7a3103d8b9411a0521971056446",
+      "generation_config.json": "ddb872d4287d4a45f64e7a5f363d23a6d85e0890a75cb99d2e478f538a985e84",
+      "README.md": "02362f9831450d02ed0a94c995a7168da502664ee30cc9e16fee04e9dc9bde0f"
+    }
+  }
+}

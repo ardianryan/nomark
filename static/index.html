@@ -11,6 +11,7 @@
   <script defer src="/static/history.js"></script>
   <script defer src="/static/copy.js"></script>
   <script defer src="/static/app.js"></script>
+  <script defer src="/static/paraphrase.js"></script>
   <script defer src="/static/vendor/alpine-csp.min.js"></script>
 </head>
 <body x-data="workspace">
@@ -51,8 +52,9 @@
             <div class="tabs" role="tablist" :aria-label="t('inputType')">
               <button type="button" id="text-tab" role="tab" aria-controls="text-panel" :aria-selected="isTextTab" :tabindex="textTabIndex" :disabled="busy" @click="setTextTab" @keydown="tabKey" :class="textTabClass"><span aria-hidden="true" class="text-symbol">Aa</span><span x-text="t('textTab')">Teks</span></button>
               <button type="button" id="file-tab" role="tab" aria-controls="file-panel" :aria-selected="isFileTab" :tabindex="fileTabIndex" :disabled="busy" @click="setFileTab" @keydown="tabKey" :class="fileTabClass"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M11 2H5a1 1 0 0 0-1 1v14h12V7zm0 0v5h5M7 11h6m-6 3h5"/></svg><span x-text="t('fileTab')">Dokumen</span></button>
+              <button type="button" id="paraphrase-tab" role="tab" aria-controls="paraphrase-panel" :aria-selected="isParaphraseTab" :tabindex="paraphraseTabIndex" :disabled="busy" @click="setParaphraseTab" @keydown="tabKey" :class="paraphraseTabClass"><span x-text="t('paraphraseTab')">Parafrasa</span></button>
             </div>
-            <span class="mode-note" id="mode-label" x-text="t('noRewrite')">Pembersihan tanpa AI</span>
+            <span class="mode-note" id="mode-label" x-text="modeNote">Pembersihan tanpa AI</span>
           </div>
 
           <section id="text-panel" role="tabpanel" aria-labelledby="text-tab" x-show="isTextTab">
@@ -100,6 +102,33 @@
             <div class="run-bar"><p x-text="t('documentMethod')">Membersihkan metadata dan karakter internal sesuai format. PDF tidak mendapatkan OCR atau penulisan ulang isi.</p><button type="button" class="primary-button" @click="cleanFiles" :disabled="cannotCleanFiles"><span x-text="fileButtonLabel">Bersihkan dokumen</span></button></div>
           </section>
 
+          <section id="paraphrase-panel" role="tabpanel" aria-labelledby="paraphrase-tab" x-show="isParaphraseTab" x-data="paraphraseEditor" x-cloak>
+            <div class="paraphrase-options">
+              <label><span x-text="t('paraphraseLanguage')">Bahasa teks</span><select x-model="language" :disabled="busy" @change="invalidate"><option value="id">Bahasa Indonesia</option><option value="en">English</option></select></label>
+              <p x-text="t('paraphraseExplanation')"></p>
+              <p role="status" x-show="unavailable" x-text="t('paraphrase_unavailable')"></p>
+              <button type="button" class="text-button" x-show="unavailable" @click="refreshAvailability" :disabled="busy" x-text="t('paraphraseRetry')">Periksa ketersediaan</button>
+            </div>
+            <div class="editor-grid">
+              <div class="editor input-editor">
+                <div class="panel-heading"><label for="paraphrase-source" x-text="t('paraphraseOriginal')">Teks untuk diparafrasakan</label></div>
+                <textarea id="paraphrase-source" x-model="source" @input="invalidate" :disabled="busy" aria-describedby="paraphrase-limit" spellcheck="false"></textarea>
+                <div class="editor-footer"><span id="paraphrase-limit"><span x-text="count">0</span> / <span x-text="limitLabel">5.000</span> <span x-text="t('characters')">karakter</span></span></div>
+              </div>
+              <div class="editor output-editor">
+                <div class="panel-heading"><label for="paraphrase-output" x-text="t('paraphraseOutput')">Hasil parafrasa</label></div>
+                <div class="output-empty" x-show="noResult"><p x-text="t('paraphraseEmpty')"></p></div>
+                <textarea id="paraphrase-output" x-ref="output" x-show="result" :value="output" readonly spellcheck="false" x-cloak></textarea>
+                <div class="editor-footer result-actions"><span x-show="result" x-text="t('serverLocation')"></span><span x-show="noResult" x-text="t('paraphraseRouteHint')"></span><div><button type="button" class="text-button" @click="download" :disabled="noResult" x-text="t('downloadTxt')">Unduh .txt</button><button type="button" class="copy-button" @click="copy" :disabled="noResult" x-text="t('copy')">Salin</button></div></div>
+              </div>
+            </div>
+            <div class="paraphrase-options">
+              <label class="pdf-consent"><input type="checkbox" x-model="consent" :disabled="busy"><span x-text="t('paraphraseConsent')"></span></label>
+              <p x-text="t('review_required')"></p>
+              <p class="paraphrase-summary" x-show="result" x-text="resultSummary"></p>
+            </div>
+            <div class="run-bar"><p x-text="t('paraphrasePrivacy')"></p><button type="button" class="primary-button" @click="paraphrase" :disabled="cannotParaphrase" x-text="t('paraphraseAction')">Parafrasakan teks</button></div>
+          </section>
           <div class="process-status" role="status" aria-live="polite" x-show="busy" x-cloak><span class="process-dot" aria-hidden="true"></span><span x-text="stage"></span><button class="text-button" type="button" @click="cancelProcessing" x-text="t('cancel')">Batal</button></div>
           <section class="report-panel" x-show="activeResult" x-cloak aria-labelledby="report-title">
             <div class="panel-heading"><h2 id="report-title" x-text="t('changeReport')">Yang berubah</h2><span x-text="reportTiming"></span></div>

@@ -1,0 +1,27 @@
+{
+  "version": "0.1.0-alpha.5",
+  "time_utc": "2026-10-30T15:44:22.107440+00:00",
+  "removed_failed_build_containers": [
+    "0855ead8243a",
+    "c9e506f5d404",
+    "27badae76334"
+  ],
+  "removed_unused_test_image_roots": [
+    "bb214289b6bd",
+    "e1b499fdd2ba",
+    "ac113e6bbd8d",
+    "0268b48a9e8d",
+    "41a0f62b2726",
+    "1e7ee3ed9ef9",
+    "1072ddf63f21",
+    "58526e9101ad"
+  ],
+  "additional_parent_records_removed": 16,
+  "remaining_parent_records_referenced_by_other_images": [],
+  "exited_containers_remaining": 0,
+  "nomark_dangling_images_remaining": 0,
+  "other_application_dangling_images_retained": 2,
+  "running_containers_unchanged_during_final_cleanup": true,
+  "production_nomark_healthy_and_unchanged": true,
+  "scope": "Explicit failed NoMark build containers and unused NoMark test image IDs plus their untagged ancestors, stopping at tagged, container-referenced or foreign-labelled images. No global prune or force flag."
+}

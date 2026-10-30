@@ -75,3 +75,12 @@ def test_branch_pipeline_cannot_promote(promotion, monkeypatch):
     monkeypatch.setattr(promotion, 'urlopen', lambda *a, **kw: pytest.fail('Registry was contacted'))
     with pytest.raises(RuntimeError, match='matching release tag'):
         promotion.promote()
+
+
+def test_nmt_promotes_its_own_tested_manifest(promotion, monkeypatch):
+    calls = mock_registry(monkeypatch, promotion)
+    Path('artifacts/nmt-image-metadata.json').write_bytes(Path('artifacts/image-metadata.json').read_bytes())
+    promotion.promote('/nmt', 'artifacts/nmt-image-metadata.json')
+    writes = [req for req in calls if req.get_method() == 'PUT']
+    assert len(writes) == 1
+    assert '/project/nomark/nmt/manifests/latest' in writes[0].full_url

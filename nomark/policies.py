@@ -23,7 +23,7 @@ POLICIES = {
             "title": "Ketentuan layanan",
             "lead": "NoMark menyediakan alat pembersih karakter tersembunyi dan metadata berkas untuk penggunaan publik tanpa akun. Dengan menggunakan layanan, Anda menyetujui ketentuan berikut.",
             "sections": [
-                ("Cakupan layanan", ["Layanan memeriksa dan membersihkan karakter Unicode serta metadata yang didukung. Pemrosesan lokal dan server ditandai pada antarmuka. Teks tidak ditulis ulang dengan model AI; watermark statistik dan watermark yang tertanam pada piksel tidak dijamin terhapus. Temuan maupun ketiadaan temuan bukan bukti tentang siapa yang membuat konten."]),
+                ("Cakupan layanan", ["Layanan memeriksa dan membersihkan karakter Unicode serta metadata yang didukung. Pemrosesan lokal dan server ditandai pada antarmuka. Alat pembersihan tidak menulis ulang teks; tab Parafrasa yang terpisah memakai model terjemahan lokal; watermark statistik dan watermark yang tertanam pada piksel tidak dijamin terhapus. Temuan maupun ketiadaan temuan bukan bukti tentang siapa yang membuat konten."]),
                 ("Hak atas konten dan penggunaan yang diizinkan", ["Anda tetap memiliki hak atas konten yang Anda masukkan. Pastikan Anda memiliki hak atau izin untuk memprosesnya. Jangan memakai layanan untuk penipuan, penyamaran identitas, pelanggaran hak pihak lain, atau menghindari kewajiban pengungkapan yang berlaku. Jangan mengunggah konten ilegal atau mencoba mengganggu, membanjiri, maupun mengakses sistem di luar fungsi layanan.", "Izin untuk membersihkan metadata tidak mengubah lisensi konten atau membebaskan Anda dari kewajiban atribusi dan pengungkapan. Penghapusan metadata dapat menghilangkan informasi pencipta, lisensi, atau asal-usul yang Anda perlukan."]),
                 ("Tinjau dan simpan hasil", ["Simpan berkas asli dan periksa hasil sebelum digunakan. Pembersihan dapat mengubah metadata, format internal, atau karakter yang memengaruhi tampilan. Tanda tangan digital dokumen dapat menjadi tidak valid setelah perubahan. NoMark tidak menjanjikan hasil yang identik pada semua dokumen atau penerimaan hasil oleh pendeteksi tertentu."]),
                 ("Persetujuan unggahan dan batas layanan", ["Format selain PDF diproses di browser pada alur website. PDF memerlukan persetujuan pengiriman ke server. Batas saat ini ditampilkan pada antarmuka: 200.000 karakter untuk teks yang ditempel, 20 MiB per berkas, dan lima berkas per antrean browser. Batas waktu dan kapasitas server dapat menyebabkan permintaan menunggu, ditolak, atau dihentikan.", "Ketersediaan layanan, batas, dan format yang didukung dapat berubah. Layanan tidak menjamin ketersediaan tanpa gangguan. Jangan melakukan unggahan ulang otomatis tanpa batas atau mencoba melewati pembatasan kapasitas."]),
@@ -52,7 +52,7 @@ POLICIES = {
             "title": "Terms of service",
             "lead": "NoMark provides public, account-free tools for cleaning hidden characters and document metadata. By using the service, you agree to the following terms.",
             "sections": [
-                ("Service scope", ["The service inspects and cleans supported Unicode characters and metadata. The interface identifies local and server processing. It does not rewrite text with an AI model; removal of statistical or pixel-embedded watermarks is not guaranteed. Findings, or the absence of findings, do not establish who created content."]),
+                ("Service scope", ["The service inspects and cleans supported Unicode characters and metadata. The interface identifies local and server processing. The cleaning tools do not rewrite text; the separate optional Paraphrase tab uses local translation models; removal of statistical or pixel-embedded watermarks is not guaranteed. Findings, or the absence of findings, do not establish who created content."]),
                 ("Content rights and permitted use", ["You retain your rights to the content you submit. You must have the rights or permission needed to process it. Do not use the service for fraud, impersonation, infringement of others' rights, or evasion of applicable disclosure obligations. Do not submit illegal content or disrupt, overwhelm, or access systems beyond the service's intended functions.", "Permission to clean metadata does not change the content's license or remove attribution and disclosure obligations. Removing metadata may remove creator, license, or provenance information that you need to keep."]),
                 ("Review and retain your results", ["Keep your original files and review results before use. Cleaning may change metadata, internal formatting, or characters affecting display. Changes may invalidate a document's digital signatures. NoMark does not promise identical results for every document or acceptance by a particular detector."]),
                 ("Upload permission and service limits", ["The website processes non-PDF formats in your browser. PDFs require permission to send them to the server. Current interface limits are 200,000 characters for pasted text, 20 MiB per file, and five files per browser queue. Time and server-capacity limits may cause requests to wait, be refused, or be stopped.", "Availability, limits, and supported formats may change. Uninterrupted availability is not guaranteed. Do not retry uploads indefinitely or attempt to bypass capacity restrictions."]),
@@ -63,6 +63,22 @@ POLICIES = {
         },
     },
 }
+
+
+POLICIES['id']['privacy']['sections'].insert(2, ('Parafrasa di server', [
+    'Tab Parafrasa mengirim teks hanya setelah Anda menyetujui pengiriman dan menekan Parafrasakan teks. Teks tetap di perangkat saat menunggu tiket. Server NoMark meneruskan teks ke layanan model lokal yang dioperasikan bersama aplikasi, bukan ke API penyedia AI eksternal. Batasnya 5.000 karakter, satu pekerjaan aktif, dua tiket menunggu, dan 75 detik pemrosesan.',
+    'Masukan dan hasil diproses sementara di memori, tanpa riwayat atau berkas hasil di server. Proses model dapat tetap dimuat selama lima menit saat menganggur; ini bukan jaminan penghapusan forensik byte memori. Pembatalan atau timeout menghentikan proses inferensi aktif. Riwayat parafrasa hanya disimpan di IndexedDB browser Anda. Model diunduh pada tahap build tanpa menyertakan teks pengguna.'
+]))
+POLICIES['en']['privacy']['sections'].insert(2, ('Server paraphrasing', [
+    'The Paraphrase tab sends text only after you allow server processing and press Paraphrase text. Text stays on your device while waiting for a ticket. NoMark forwards it to its locally operated model service, not an external AI provider API. Limits are 5,000 characters, one active job, two waiting tickets and 75 seconds of processing.',
+    'Input and output are processed temporarily in memory, without server history or result files. The model process can stay loaded for five idle minutes; this is not a promise of forensic memory erasure. Cancellation or timeout terminates active inference. Paraphrase history is stored only in browser IndexedDB. Models are downloaded at build time without user text.'
+]))
+POLICIES['id']['terms']['sections'].insert(1, ('Batas parafrasa', [
+    'Parafrasa melalui penerjemahan bolak-balik dapat mengubah makna, fakta, nama, atau gaya. Tinjau hasil sebelum digunakan. Keluaran tidak dijamin memenuhi seluruh kaidah EYD V. Fitur ini tidak mendeteksi SynthID, tidak mendekripsi teks, dan tidak menjamin penghapusan watermark statistik atau penerimaan oleh pendeteksi AI.'
+]))
+POLICIES['en']['terms']['sections'].insert(1, ('Paraphrase limitations', [
+    'Back-translation can change meaning, facts, names or style. Review output before use. Language-rule compliance is not guaranteed. This feature does not detect SynthID, decrypt text, or guarantee statistical watermark removal or acceptance by AI detectors.'
+]))
 
 
 def render_policy(lang: str, kind: str) -> str:

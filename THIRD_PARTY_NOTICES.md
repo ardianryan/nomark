@@ -15,3 +15,7 @@ The complete browser notices are served at `/static/notices.txt` and regenerated
 The Docker image installs FastAPI/Python dependencies and Debian packages including ExifTool, qpdf, and Ghostscript. These have their own licenses, shipped notices, and source-availability terms. The browser notice file is not an inventory of every package in the container. Review the exact built image and its `/usr/share/doc/` package notices before redistributing it.
 
 Brand assets outline the wordmark selected for NoMark; no font binary is bundled with the logo. Runtime body text uses fonts available on the user's system.
+
+## Optional NMT service (0.1.0-alpha.5)
+
+Helsinki-NLP OPUS-MT en-id and id-en model cards declare Apache-2.0. Immutable source revisions and file SHA-256 values are in `nmt-service/models.lock.json`; license terms are in `nmt-service/LICENSE.models`. Converted model/tokenizer checksums are generated inside the NMT image. CTranslate2 and Transformers dependencies retain their own distribution licenses. NMT dependencies and models are not bundled into the browser engine or the main application image.

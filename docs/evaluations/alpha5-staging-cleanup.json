@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0-alpha.5",
+  "time_utc": "2026-10-30T15:36:47.049673+00:00",
+  "removed_containers": [
+    "nomark-staging-nmt-alpha5",
+    "nomark-staging-app-alpha5",
+    "nomark-staging-alpha4-LqbEQP"
+  ],
+  "staging_image_tags_remaining": [],
+  "staging_volumes_remaining": [],
+  "staging_networks_remaining": [],
+  "temporary_directories_removed": [
+    "/opt/nomark-staging-alpha5",
+    "/opt/nomark-staging-alpha4.LqbEQP"
+  ],
+  "expiry_timers_stopped": true,
+  "available_disk_bytes_before_cleanup_inventory": 10395578368,
+  "available_disk_bytes_after": 15551447040,
+  "observed_free_space_increase_bytes": 5155868672,
+  "production_nomark_unchanged_and_healthy": true,
+  "scope": "Explicit staging names and labels, plus intermediate image IDs from their own build logs. No force removal, global prune, or production container mutation. Free space is a host observation and not an exact attribution of deleted layer sizes."
+}

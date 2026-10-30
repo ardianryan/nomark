@@ -60,3 +60,7 @@ No external CDN or bucket has been provisioned. To scale beyond one process/VPS,
 | `WATERMARKS_MAX_INPUT_BYTES` | Upstream input limit; Docker sets 20 MiB |
 
 Browser interface limits are intentionally fixed alongside server validation. Keep policy descriptions and tests synchronized if changing them.
+
+## Optional NMT service (alpha.5)
+
+The default deployment remains one container. The optional [paraphrase override](../deploy/compose.paraphrase.yaml) adds a private second container without making main readiness depend on it. Use `--project-directory .` from the repository root so build paths resolve correctly. Current model quality fails the release gate; keep it in isolated staging. See [Paraphrasing](PARAPHRASE.md).

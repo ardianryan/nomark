@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import shutil
+import time
 
 import pytest
 
@@ -23,6 +24,13 @@ def is_running(pid):
             return False
     result = subprocess.run(["ps", "-p", str(pid), "-o", "stat="], capture_output=True, text=True)
     return result.returncode == 0 and "Z" not in result.stdout
+
+
+def assert_stopped(pid):
+    deadline = time.monotonic() + 2
+    while is_running(pid) and time.monotonic() < deadline:
+        time.sleep(.01)
+    assert not is_running(pid)
 
 
 def test_success_and_failure_remove_temporary_files(tmp_path):
@@ -46,7 +54,7 @@ def test_timeout_kills_descendants_and_removes_temp_files(tmp_path, monkeypatch)
         asyncio.run(jobs.run("text", b"hello", str(child_pid)))
     assert exc.value.code == "processing_timeout"
     assert child_pid.exists()
-    assert not is_running(int(child_pid.read_text()))
+    assert_stopped(int(child_pid.read_text()))
     assert list(job_root.iterdir()) == []
     assert jobs.active == 0
 
@@ -70,7 +78,7 @@ def test_busy_and_cancellation_release_capacity(tmp_path, monkeypatch):
         with pytest.raises(asyncio.CancelledError):
             await task
     asyncio.run(scenario())
-    assert not is_running(int(pid_file.read_text()))
+    assert_stopped(int(pid_file.read_text()))
     assert jobs.active == 0
     assert list(job_root.iterdir()) == []
 

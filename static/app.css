@@ -84,3 +84,11 @@ html[data-theme=dark] .skip-link{background:var(--accent);color:var(--on-accent)
 .format-explanation span{font-size:12px}
 .supported-formats{overflow-wrap:anywhere}
 @media(max-width:600px){.format-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.format-options label{padding:8px 12px}.format-explanation{font-size:12px}}
+
+/* Paraphrase shares the editor surfaces; consent precedes server submission. */
+.paraphrase-options { padding: 1.25rem; display: grid; gap: .75rem; }
+.paraphrase-options p { margin: 0; line-height: 1.6; }
+.paraphrase-options > label:first-child { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.paraphrase-options select { padding: .65rem; border: 1px solid currentColor; border-radius: .6rem; background: transparent; color: inherit; font: inherit; }
+.tabs { flex-wrap: wrap; }
+@media (max-width: 600px) { .workspace-toolbar { flex-wrap: wrap; gap: .6rem; } .tabs { width: 100%; } .tabs button { flex: 1; } }

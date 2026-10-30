@@ -23,7 +23,7 @@ The website address is the production target. Deployment and DNS setup are separ
 - Switch between Indonesian and English, and system, light, or dark themes.
 - Use keyboard-accessible controls, responsive layouts, and screen-reader status announcements.
 
-No AI model, API key, MCP service, account, or server database is required. NoMark does not rewrite text, perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Image and audio/video cleaning removes supported metadata only: it does not alter pixel or waveform watermarks. Removing metadata may affect image orientation or color interpretation; review results. Findings do not establish who authored content.
+No AI model, API key, MCP service, account, or server database is required. The cleaning tools do not rewrite text or perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Image and audio/video cleaning removes supported metadata only: it does not alter pixel or waveform watermarks. Removing metadata may affect image orientation or color interpretation; review results. Findings do not establish who authored content.
 
 ## Where processing happens
 
@@ -71,7 +71,7 @@ docker compose up --build -d
 curl http://127.0.0.1:8000/health
 ```
 
-**One application image and one container** include FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database, Redis, or AI service. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
+**The default one-image, one-container deployment** includes FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database or Redis. Optional paraphrasing adds a separate local NMT container. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
 
 ## Limits
 
@@ -128,3 +128,7 @@ Read [Contributing](CONTRIBUTING.md), [Security](SECURITY.md), [Code of conduct]
 The upstream cleaner is MIT-licensed. Alpine.js, Vue, Pyodide, and CPython retain their own licenses; see [Third-party notices](THIRD_PARTY_NOTICES.md) and [browser notices](static/notices.txt).
 
 NoMark's original application code is licensed under the [MIT License](LICENSE). Third-party components retain their own licenses and required notices.
+
+## Optional paraphrasing (alpha.5 candidate)
+
+A separate, staging-first NMT service supports limited Indonesian and English back-translation with explicit server consent. Its conservative edit filter retains original segments when a candidate cannot be accepted; many texts remain unchanged. It is not a SynthID detector or a guaranteed watermark remover. The default single-container cleaner works without it. See [Paraphrasing](docs/PARAPHRASE.md) for data flow, two-container setup, limits and the model-quality release gate.

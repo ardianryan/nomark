@@ -36,3 +36,7 @@ The [security verification record](docs/SECURITY-VERIFICATION.md) identifies the
 - [ ] Resolve dependency advisory follow-up, scan the exact release image, and validate production TLS/proxy/Cloudflare controls.
 
 **No OWASP ASVS level, Cloudflare certification, absence of CVEs, or complete production penetration test is claimed.** The original source review had no confirmed exploit and four hypotheses requiring validation. Follow-up checks and their disposition are recorded separately so that passing regression tests cannot silently close an untested hypothesis. Deployed Cloudflare account settings, public TLS, origin restrictions, and production image vulnerability status remain unverified.
+
+## Optional NMT boundary — 0.1.0-alpha.5
+
+Paraphrasing introduces an internal HTTP/model-parser boundary and requires a new quality/runtime review. It is disabled when `NOMARK_NMT_URL` is unset. Never expose its unauthenticated internal port publicly. Use the isolated network, single-replica admission and resource bounds described in [Paraphrasing](docs/PARAPHRASE.md). It does not inherit an ASVS compliance claim from earlier cleaner tests. Model source revisions/checksums and converted artefact checksums are recorded separately from application dependencies; actual language quality and dependency/image review remain distinct gates.
