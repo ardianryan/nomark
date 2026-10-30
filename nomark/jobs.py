@@ -13,6 +13,10 @@ import time
 
 def worker(directory: str, mode: str, name: str) -> None:
     os.setsid()
+    root = Path(directory)
+    # Parent cleanup also owns upstream/native staging after a forced kill.
+    os.environ['TMPDIR'] = str(root)
+    tempfile.tempdir = str(root)
     if sys.platform == "linux":
         import resource
         resource.setrlimit(resource.RLIMIT_AS, (768 * 1024 * 1024, 768 * 1024 * 1024))
@@ -23,7 +27,6 @@ def worker(directory: str, mode: str, name: str) -> None:
         os.dup2(sink.fileno(), 2)
     from nomark.engine import ProcessingError, process_file, process_text
 
-    root = Path(directory)
     try:
         if mode == "text":
             result = process_text((root / "input").read_text(encoding="utf-8"))

@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 const AxeBuilder = require('@axe-core/playwright').default;
 const { execFileSync } = require('node:child_process');
+const python = process.env.NOMARK_TEST_PYTHON || '.venv/bin/python';
 
 test.beforeEach(async ({ page }) => {
   page.errors = [];
@@ -200,7 +201,7 @@ test('system theme follows the OS and manual preferences persist in both themes'
 });
 
 test('all non-PDF formats run locally without processing API requests', async ({ page }) => {
-  const fixtures = JSON.parse(execFileSync('.venv/bin/python', ['-c', `
+  const fixtures = JSON.parse(execFileSync(python, ['-c', `
 import base64, json
 from pathlib import Path
 from tests.test_api import docx, odt, epub
@@ -230,7 +231,7 @@ print(json.dumps([{'name':name,'content':base64.b64encode(data).decode()} for na
 });
 
 test('PDF waits before upload and requires explicit server permission', async ({ page, request }) => {
-  const source = execFileSync('.venv/bin/python', ['-c', 'from tests.test_api import pdf; import sys; sys.stdout.buffer.write(pdf())']);
+  const source = execFileSync(python, ['-c', 'from tests.test_api import pdf; import sys; sys.stdout.buffer.write(pdf())']);
   const tickets = [];
   let uploads = 0;
   page.on('request', request => { if (request.url().endsWith('/api/file/process')) uploads++; });
@@ -290,7 +291,7 @@ test('local processing can be cancelled and retried without uploading content', 
 
 test('cancelling a waiting PDF releases its ticket without uploading the file', async ({ page, request }) => {
   const held = [];
-  const content = execFileSync('.venv/bin/python', ['-c', 'from tests.test_api import pdf; import sys; sys.stdout.buffer.write(pdf())']);
+  const content = execFileSync(python, ['-c', 'from tests.test_api import pdf; import sys; sys.stdout.buffer.write(pdf())']);
   let uploads = 0;
   page.on('request', request => { if (request.url().endsWith('/api/file/process')) uploads++; });
   try {

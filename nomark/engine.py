@@ -5,17 +5,18 @@ import io
 import mimetypes
 import os
 from pathlib import Path
-import sys
 import zipfile
 from xml.etree import ElementTree
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "watermarks-remover" / "service" / "scripts"))
-
-from common import looks_binary
-from container_meta import clean_container, detect_container_format, inspect_container
-from text_unicode import clean_text, inspect_text
+from nomark.upstream import common, container_meta, text_unicode
 from nomark.media import IMAGE_EXTENSIONS, AV_EXTENSIONS, clean_media, validate_media
+
+looks_binary = common.looks_binary
+clean_container = container_meta.clean_container
+detect_container_format = container_meta.detect_container_format
+inspect_container = container_meta.inspect_container
+clean_text = text_unicode.clean_text
+inspect_text = text_unicode.inspect_text
 
 TEXT_LIMIT = 200_000
 FILE_LIMIT = 20 * 1024 * 1024

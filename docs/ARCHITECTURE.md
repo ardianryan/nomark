@@ -35,7 +35,7 @@ The request limiter counts ticket creation and processing calls: 20 per IP per m
 | `DELETE /api/queue` | Same authorization header | Cancellation |
 | `POST /api/file/process` | Multipart `file`; optional `X-NoMark-Reservation` | Base64 file and report |
 | `POST /api/text/process` | JSON `{"text":"..."}` | Server text result and report |
-| `GET /health` | None | Engine, PDF tool readiness, limits |
+| `GET /health` | None | Minimal application/engine/PDF readiness and version |
 
 Processing responses use `Cache-Control: no-store`. Results identify `processed_by: browser` or `server` and status `unchanged`, `cleaned`, or `partial`. Errors use `{"ok":false,"error":"code"}`. Server routes also validate format, size, encryption, unsafe names, and malformed input. Uploaded HTML is never rendered as active page content.
 
@@ -54,3 +54,13 @@ The Files workspace adds image, audio, and video format selectors. All supported
 Validation checks filename/signature agreement, top-level boundaries, required media sections, and PNG checksums before cleaning. These are metadata/container checks, not full codec decoding or antivirus scanning. Original compressed image/audio/video payloads are retained; removing orientation or color metadata can still change image appearance. The UI explains these limits and the shared 20 MiB limit.
 
 FLAC support follows upstream: leading ID3v2 tags only. Native FLAC application/comment/picture blocks and MP3 ID3v1 tags can remain; NoMark reports partial completion when these are present.
+
+## Import and housekeeping boundaries (0.1.0-alpha.4)
+
+`nomark.upstream` loads the five pinned upstream modules from explicit file paths under a private namespace. Its module-local import resolver binds upstream sibling imports to the same namespace; application-wide `sys.path` and unrelated modules named `common` or `image_meta` are left unchanged. Upstream source files and cleaning algorithms remain unchanged.
+
+Expired-job housekeeping opens the work root with `O_NOFOLLOW` and uses descriptor-relative stat and symlink-resistant `shutil.rmtree`. It skips cleanup on platforms without that implementation. A path-resolution containment check alone would leave a check/use race. The old rmtree implementation already included symlink protections; these changes strengthen anchoring rather than establishing a previously demonstrated escape.
+
+The public `/health` payload retains `ok`, `version`, `engine_available`, and `pdf_ready` so the browser and container health checks remain functional. Tool inventory and configured capacities are omitted. Socket-loopback checks are not an access-control mechanism behind a reverse proxy; external requests may arrive over the same loopback connection.
+
+Each server worker sets Python's temporary-directory root and native tools' `TMPDIR` to its parent-owned job directory. Upstream attachment/Ghostscript staging therefore shares the job's lifetime: parent cleanup removes it after success, failure, timeout or cancellation. Real qpdf extraction regression tests cover timeout and cancellation at an instrumented extraction checkpoint. Files written by a native tool outside its configured temporary root and host crashes require separate assessment.

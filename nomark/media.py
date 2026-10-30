@@ -2,8 +2,11 @@
 import zlib
 from pathlib import Path
 
-import image_meta
-from av_meta import clean_av, detect_av_format, inspect_av
+from nomark.upstream import av_meta, common, image_meta
+
+clean_av = av_meta.clean_av
+detect_av_format = av_meta.detect_av_format
+inspect_av = av_meta.inspect_av
 
 IMAGE_EXTENSIONS = {'.png': 'png', '.jpg': 'jpeg', '.jpeg': 'jpeg', '.webp': 'webp', '.gif': 'gif', '.bmp': 'bmp', '.tif': 'tiff', '.tiff': 'tiff', '.avif': 'avif', '.heic': 'heic', '.heif': 'heic'}
 AV_EXTENSIONS = {'.mp4': 'mp4', '.mov': 'mp4', '.m4v': 'mp4', '.m4a': 'mp4', '.wav': 'wav', '.mp3': 'mp3', '.flac': 'flac'}
@@ -137,7 +140,7 @@ def clean_media(source: Path, destination: Path, data: bytes, suffix: str):
         cleaned, actions = image_meta.strip_isobmff(data, fmt, strip_all_metadata=True)
     else:
         cleaned, actions = getattr(image_meta, f'strip_{fmt}')(data, strip_all_metadata=True)
-    destination.write_bytes(cleaned)
+    common.safe_write_bytes(destination, cleaned)
     def inspect(raw):
         c2pa, ai, findings = inspector(raw)
         return {'format': fmt, 'has_c2pa': c2pa, 'has_ai_metadata': ai, 'findings': findings, 'notes': []}

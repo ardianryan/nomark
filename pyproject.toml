@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nomark"
-version = "0.1.0a3"
+version = "0.1.0a4"
 description = "A browser-managed workspace for cleaning hidden Unicode and document metadata."
 license = {file = "LICENSE"}
 requires-python = ">=3.11"

@@ -21,6 +21,7 @@ from nomark import __version__
 from nomark.jobs import JobError, Jobs
 from nomark.admission import Admission
 from nomark.assets import Assets
+from nomark.cleanup import cleanup_stale_jobs
 from nomark.policies import render_policy
 from nomark.seo import SITE, render_index, sitemap, llms_index, llms_full
 
@@ -74,7 +75,9 @@ class Guard:
             address = (scope.get("client") or ("unknown", 0))[0]
             try:
                 if any(ipaddress.ip_address(address) in network for network in self.trusted):
-                    address = headers.get("x-forwarded-for", address).split(",")[-1].strip()
+                    forwarded = headers.get("x-forwarded-for", "").split(",")[-1].strip()
+                    if forwarded:
+                        address = str(ipaddress.ip_address(forwarded))
             except ValueError:
                 pass
             address = hmac.new(self.salt, address.encode(), hashlib.sha256).hexdigest()
@@ -145,12 +148,7 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
     def cleanup_workdir():
         if jobs is not None:
             return
-        for directory in workdir.glob("nomark-*"):
-            try:
-                if directory.is_dir() and not directory.is_symlink() and time.time() - directory.stat().st_mtime > 300:
-                    shutil.rmtree(directory)
-            except OSError:
-                pass
+        cleanup_stale_jobs(workdir)
     cleanup_workdir()
     app.state.jobs = jobs or Jobs(timeout=float(os.environ.get("NOMARK_TIMEOUT", "60")), temp_root=str(workdir))
     app.state.admission = Admission(capacity=app.state.jobs.concurrency)
@@ -204,7 +202,7 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
     @app.get("/health")
     async def health():
         available = (ROOT / "watermarks-remover/service/scripts/text_unicode.py").is_file()
-        return JSONResponse({"ok": available, "version": __version__, "engine_available": available, "pdf_ready": all(app.state.tools.values()), "tools": app.state.tools, "limits": {"text_chars": TEXT_LIMIT, "file_bytes": FILE_LIMIT, "batch_files": 5, "server_concurrency": 2, "queue_waiting": 8}}, status_code=200 if available else 503)
+        return JSONResponse({"ok": available, "version": __version__, "engine_available": available, "pdf_ready": all(app.state.tools.values())}, status_code=200 if available else 503)
 
     @app.post("/api/text/process")
     async def text_process(request: Request, _slot=Depends(admitted)):
@@ -217,7 +215,7 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
                 raise JobError("text_too_large", 413)
             import json
             body = json.loads(raw)
-        except (ValueError, UnicodeError):
+        except (ValueError, UnicodeError, RecursionError):
             raise JobError("invalid_request", 400) from None
         except TimeoutError:
             raise JobError("upload_timeout", 408) from None

@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-files = [ROOT / "nomark/__init__.py", ROOT / "nomark/engine.py", ROOT / "nomark/media.py"]
+files = [ROOT / "nomark/__init__.py", ROOT / "nomark/engine.py", ROOT / "nomark/media.py", ROOT / "nomark/upstream.py"]
 files += [ROOT / "watermarks-remover/service/scripts" / name for name in (
     "common.py", "text_unicode.py", "container_meta.py", "image_meta.py", "av_meta.py",
 )]

@@ -6,6 +6,25 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.4] - 2026-10-30
+
+### Security hardening
+
+- Reject JSON nesting that exceeds the parser recursion limit with a controlled 400 response.
+- Retain the socket address when a trusted proxy supplies an empty or invalid final X-Forwarded-For value.
+- Anchor expired-job removal to a no-follow directory descriptor and Python's symlink-resistant rmtree implementation.
+- Load the pinned upstream modules in a private namespace with scoped sibling imports instead of modifying global sys.path.
+- Limit public health output to readiness and application version; remove tool inventory and capacity configuration.
+- Use the upstream atomic, symlink-safe writer for cleaned image output.
+- Verify Linux worker termination through procfs so regression tests also run in the minimal production runtime without installing procps.
+- Add offline Pyodide smoke checks and document the dedicated, resource-limited staging environment; no production promotion is included.
+- Place upstream and native PDF temporary storage inside the parent-owned job directory so forced termination also removes extracted attachments. Add real qpdf timeout/cancellation regressions and kernel memory/file-limit checks; the Linux Python suite now passes 110 tests.
+- Make browser test Python/Chromium paths configurable for offline Linux staging, and document audit evidence, selected OWASP control mapping, Cloudflare deployment checks and unresolved work in SECURITY.md and the security verification record.
+- Verify all 19 browser tests and run bounded observations for reservation fairness, attachment storage and HTML scanning; retain their unresolved security conclusions explicitly.
+
+These changes harden the reviewed paths; they do not establish that every earlier audit hypothesis was exploitable or resolved. Existing alpha limitations remain applicable.
+
+
 ## [0.1.0-alpha.3] - 2026-10-30
 
 ### Added

@@ -35,7 +35,7 @@ Production canonical URLs are defined by `SITE` in `nomark/seo.py`. If the publi
 
 Check native PDF processing with a synthetic fixture, downloaded output readability, timeout/cancellation, queue admission, temporary cleanup, mobile UI, and policy links. Check `/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/llms-full.txt`, `/favicon.ico`, and social image URLs over the public HTTPS origin after deployment.
 
-A Docker build has not been executed on the original macOS development host because Docker was unavailable there. Linux resource limits must be verified on the target runtime; see [Verification](VERIFICATION.md). Repository configuration alone does not publish the site or change DNS.
+The alpha.4 source overlay was built and tested in isolated Linux staging. Worker memory/file limits, termination and cleanup were exercised there; see [Verification](VERIFICATION.md). A fresh release Dockerfile/dependency build, the exact published image scan, and effective production ingress settings still require verification. Repository configuration alone does not publish the site or change DNS.
 
 ## Storage, CDN, and scaling
 
