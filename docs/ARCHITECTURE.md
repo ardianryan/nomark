@@ -46,3 +46,11 @@ Processing responses use `Cache-Control: no-store`. Results identify `processed_
 `nomark/seo.py` supplies canonical/hreflang metadata, structured data, the sitemap, and public LLM context. `nomark/policies.py` supplies both policy translations. No user content is inserted into these discovery documents.
 
 `static/brand/` contains committed SVG masters and generated raster exports. Versioned Pyodide and fingerprinted engine assets support immutable caching and precompressed gzip delivery. Main assets revalidate. See [SEO](SEO.md) and [Deployment](DEPLOYMENT.md).
+
+## Media metadata (0.1.0-alpha.3)
+
+The Files workspace adds image, audio, and video format selectors. All supported media run in the browser worker through deterministic `image_meta` strip functions and `av_meta.clean_av`. No optional scorer, model hook, external command, pixel processing, waveform transformation, or transcoding is called. Native-server compatibility endpoints retain their previous document allowlist; media are browser-only in the website and are not added to that API.
+
+Validation checks filename/signature agreement, top-level boundaries, required media sections, and PNG checksums before cleaning. These are metadata/container checks, not full codec decoding or antivirus scanning. Original compressed image/audio/video payloads are retained; removing orientation or color metadata can still change image appearance. The UI explains these limits and the shared 20 MiB limit.
+
+FLAC support follows upstream: leading ID3v2 tags only. Native FLAC application/comment/picture blocks and MP3 ID3v1 tags can remain; NoMark reports partial completion when these are present.

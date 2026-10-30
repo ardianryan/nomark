@@ -8,7 +8,7 @@
 
 [![Pipeline](https://gitlab.com/ardianryan/nomark/badges/main/pipeline.svg)](https://gitlab.com/ardianryan/nomark/-/pipelines) [![License: MIT](https://img.shields.io/badge/license-MIT-416e58)](LICENSE)
 
-A public, account-free web tool for cleaning hidden Unicode characters and document metadata. NoMark makes [watermarks-remover](https://github.com/guillaumemeyer/watermarks-remover) available through a browser without a complicated installation.
+A public, account-free web tool for cleaning hidden Unicode characters and file metadata. NoMark makes [watermarks-remover](https://github.com/guillaumemeyer/watermarks-remover) available through a browser without a complicated installation.
 
 **Website:** https://nomark.ardianryan.com · **Contact:** me@ardianryan.com
 
@@ -23,7 +23,7 @@ The website address is the production target. Deployment and DNS setup are separ
 - Switch between Indonesian and English, and system, light, or dark themes.
 - Use keyboard-accessible controls, responsive layouts, and screen-reader status announcements.
 
-No AI model, API key, MCP service, account, or server database is required. NoMark does not rewrite text, perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Findings do not establish who authored content.
+No AI model, API key, MCP service, account, or server database is required. NoMark does not rewrite text, perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Image and audio/video cleaning removes supported metadata only: it does not alter pixel or waveform watermarks. Removing metadata may affect image orientation or color interpretation; review results. Findings do not establish who authored content.
 
 ## Where processing happens
 
@@ -31,7 +31,9 @@ No AI model, API key, MCP service, account, or server database is required. NoMa
 | --- | --- | --- |
 | Pasted text | Browser worker | No |
 | TXT, Markdown, HTML | Browser worker | No |
-| DOCX, XLSX, PPTX, ODT, EPUB | Browser worker | No |
+| DOCX, XLSX, PPTX, ODT, EPUB, TEX/LaTeX | Browser worker | No |
+| PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, HEIC/HEIF, SVG metadata | Browser worker | No |
+| WAV, MP3, FLAC, M4A, MP4, MOV, M4V metadata | Browser worker | No |
 | PDF metadata | Server, after permission and admission | PDF and filename |
 | History, preferences, downloads | Browser | No synchronization |
 

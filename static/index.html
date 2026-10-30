@@ -74,17 +74,27 @@
 
           <section id="file-panel" role="tabpanel" aria-labelledby="file-tab" x-show="isFileTab" x-cloak>
             <div class="document-workspace">
+              <fieldset class="format-picker" :disabled="busy">
+                <legend x-text="t('formatCategory')">Jenis berkas</legend>
+                <div class="format-options">
+                  <label><input type="radio" name="format-category" value="documents" x-model="formatCategory"><span x-text="t('documentsCategory')">Dokumen</span></label>
+                  <label><input type="radio" name="format-category" value="images" x-model="formatCategory"><span x-text="t('imagesCategory')">Gambar</span></label>
+                  <label><input type="radio" name="format-category" value="audio" x-model="formatCategory"><span x-text="t('audioCategory')">Audio</span></label>
+                  <label><input type="radio" name="format-category" value="video" x-model="formatCategory"><span x-text="t('videoCategory')">Video</span></label>
+                </div>
+              </fieldset>
+              <div class="format-explanation"><p x-text="fileMethod"></p><span x-text="t('mixedQueue')"></span></div>
               <div class="dropzone" :class="dropClass" @dragover.prevent="dragEnter" @dragleave.prevent="dragLeave" @drop.prevent="dropFiles">
                 <svg class="upload-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M28 6H13a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V16L28 6Zm0 0v10h10M24 34V22m-5 5 5-5 5 5"/></svg>
                 <h2 x-text="t('dropTitle')">Dokumen masuk, jejak dirapikan.</h2>
                 <p x-text="t('dropHint')">Tarik berkas ke sini atau pilih dari perangkat Anda.</p>
-                <label class="file-picker"><span x-text="t('chooseFiles')">Pilih dokumen</span><input type="file" multiple accept=".txt,.md,.markdown,.html,.htm,.pdf,.docx,.xlsx,.pptx,.odt,.epub" @change="pickFiles" :disabled="busy" aria-describedby="file-limit"></label>
+                <label class="file-picker"><span x-text="t('chooseFiles')">Pilih dokumen</span><input type="file" multiple :accept="acceptedFormats" @change="pickFiles" :disabled="busy" aria-describedby="file-limit"></label>
                 <p class="file-limit" id="file-limit" x-text="t('fileLimit')">Maksimal 5 berkas, masing-masing 20 MiB.</p>
               </div>
               <div class="file-list" x-show="hasFiles">
                 <template x-for="entry in files" :key="entry.id"><article class="file-row"><div class="file-info"><strong x-text="entry.name"></strong><span x-text="fileMeta(entry)"></span><span class="processing-route" x-text="processingRoute(entry)"></span><span class="file-error" x-show="entry.error" x-text="entry.error"></span></div><div class="file-actions"><button class="text-button" type="button" x-show="entry.result" @click="viewFile(entry.id)" x-text="t('report')">Laporan</button><button class="copy-button" type="button" x-show="entry.result" @click="downloadFile(entry.id)" x-text="t('download')">Unduh</button><button class="remove-button" type="button" @click="removeFile(entry.id)" :disabled="busy" :aria-label="removeLabel(entry)">×</button></div></article></template>
               </div>
-              <p class="supported-formats">TXT · Markdown · HTML · PDF · DOCX · XLSX · PPTX · ODT · EPUB</p>
+              <p class="supported-formats" x-text="supportedFormats">TXT · MD · HTML · PDF · DOCX · XLSX · PPTX · ODT · EPUB</p>
               <label class="pdf-consent" x-show="hasPdfFiles" x-cloak><input type="checkbox" x-model="allowServer" :disabled="busy"><span x-text="t('pdfConsent')">Saya mengizinkan PDF dikirim ke server untuk diproses. Berkas lain tetap diproses di browser.</span></label>
             </div>
             <div class="run-bar"><p x-text="t('documentMethod')">Membersihkan metadata dan karakter internal sesuai format. PDF tidak mendapatkan OCR atau penulisan ulang isi.</p><button type="button" class="primary-button" @click="cleanFiles" :disabled="cannotCleanFiles"><span x-text="fileButtonLabel">Bersihkan dokumen</span></button></div>

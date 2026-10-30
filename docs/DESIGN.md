@@ -24,3 +24,5 @@ rounded panels, and a task-first composition. ENERGY 2 / RHYTHM 2 / MOTION 1.
 - Processing-location labels describe a real privacy decision: local for text
   and non-PDF documents; an explicit permission control for server PDF uploads.
 - Privacy and terms have English and Indonesian HTML pages and an actual contact.
+
+- The Files workspace places four native radio choices (Documents, Images, Audio, Video) above the picker. The choices wrap to two columns on phones; each explains its scope before a file is selected. Mixed queues, processing routes, reports, and history retain the shared workflow.

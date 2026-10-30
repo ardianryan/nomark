@@ -42,12 +42,12 @@ test('cleans text, copies, downloads, restores local history, and deletes it', a
 });
 
 test('uploads a sequential document queue, downloads, and restores files', async ({ page }) => {
-  await page.getByRole('tab', { name: 'Documents' }).click();
+  await page.getByRole('tab', { name: 'Files' }).click();
   await page.locator('input[type=file]').setInputFiles([
     { name: 'first.txt', mimeType: 'text/plain', buffer: Buffer.from('Hello\u200bworld') },
     { name: 'second.md', mimeType: 'text/markdown', buffer: Buffer.from('# Halo\u200bdunia') },
   ]);
-  await page.getByRole('button', { name: 'Clean documents', exact: true }).click();
+  await page.getByRole('button', { name: 'Clean files', exact: true }).click();
   await expect(page.locator('.file-row .copy-button').first()).toBeVisible();
   await expect(page.locator('.history-list li')).toHaveCount(2);
   const event = page.waitForEvent('download');
@@ -58,14 +58,14 @@ test('uploads a sequential document queue, downloads, and restores files', async
   await page.reload();
   await page.locator('.history-item').filter({ hasText: 'first.txt' }).click();
   await expect(page.locator('.file-row')).toContainText('first.txt');
-  await expect(page.getByRole('tab', { name: 'Documents' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Files' })).toHaveAttribute('aria-selected', 'true');
   await page.locator('.history-item-actions').last().getByRole('button', { name: 'Delete' }).click();
   await expect(page.locator('.history-list li')).toHaveCount(1);
 });
 
 test('validates uploads, retains input on network errors, and survives storage failure', async ({ page }) => {
-  await page.getByRole('tab', { name: 'Documents' }).click();
-  await page.locator('input[type=file]').setInputFiles({ name: 'image.png', mimeType: 'image/png', buffer: Buffer.from('png') });
+  await page.getByRole('tab', { name: 'Files' }).click();
+  await page.locator('input[type=file]').setInputFiles({ name: 'archive.7z', mimeType: 'application/x-7z-compressed', buffer: Buffer.from('unsupported') });
   await expect(page.getByRole('alert')).toContainText('not supported');
   await page.getByRole('tab', { name: 'Text', exact: true }).click();
   await page.getByRole('button', { name: 'Try a sample' }).click();
@@ -89,7 +89,7 @@ test('language choice persists, keyboard tabs work, and responsive layouts do no
   await expect(page.getByRole('heading', { name: 'Bereskan jejak tersembunyi.' })).toBeVisible();
   await page.getByRole('tab', { name: 'Teks' }).focus();
   await page.keyboard.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: 'Dokumen' })).toBeFocused();
+  await expect(page.getByRole('tab', { name: 'Berkas' })).toBeFocused();
   await page.keyboard.press('ArrowLeft');
   await expect(page.getByRole('tab', { name: 'Teks' })).toBeFocused();
   for (const width of [1440, 768, 390, 320]) {
@@ -125,7 +125,7 @@ test('uses Indonesian browser language automatically without geolocation request
 });
 
 test('supports dropping files and enforces the five-file queue limit', async ({ page }) => {
-  await page.getByRole('tab', { name: 'Documents' }).click();
+  await page.getByRole('tab', { name: 'Files' }).click();
   const transfer = await page.evaluateHandle(() => {
     const data = new DataTransfer();
     for (let i = 0; i < 6; i++) data.items.add(new File(['Hello'], `document-${i}.txt`, { type: 'text/plain' }));
@@ -150,7 +150,7 @@ test('supports the UUID and clipboard fallbacks needed for HTTP LAN access', asy
   await expect(page.locator('.history-list li')).toHaveCount(1);
   await page.getByRole('button', { name: 'Copy', exact: true }).click();
   await expect(page.locator('.notice')).toContainText('Cleaned text copied');
-  await page.getByRole('tab', { name: 'Documents' }).click();
+  await page.getByRole('tab', { name: 'Files' }).click();
   await page.locator('input[type=file]').setInputFiles({ name: 'lan.txt', mimeType: 'text/plain', buffer: Buffer.from('Hello\u200bLAN') });
   await expect(page.locator('.file-row')).toHaveCount(1);
 });
@@ -170,7 +170,7 @@ test('text, documents, and dialog satisfy automated WCAG checks', async ({ page 
   await scan();
   await page.keyboard.press('Escape');
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('tab', { name: 'Documents' }).click();
+  await page.getByRole('tab', { name: 'Files' }).click();
   await scan();
 });
 
@@ -236,13 +236,13 @@ test('PDF waits before upload and requires explicit server permission', async ({
   page.on('request', request => { if (request.url().endsWith('/api/file/process')) uploads++; });
   try {
     for (let index = 0; index < 2; index++) tickets.push(await (await request.post('/api/queue')).json());
-    await page.getByRole('tab', { name: 'Documents' }).click();
+    await page.getByRole('tab', { name: 'Files' }).click();
     await page.locator('input[type=file]').setInputFiles({ name: 'sample.pdf', mimeType: 'application/pdf', buffer: source });
-    await page.getByRole('button', { name: 'Clean documents', exact: true }).click();
+    await page.getByRole('button', { name: 'Clean files', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Allow PDF uploads');
     expect(uploads).toBe(0);
     await page.getByRole('checkbox', { name: /I allow queued PDFs/ }).check();
-    await page.getByRole('button', { name: 'Clean documents', exact: true }).click();
+    await page.getByRole('button', { name: 'Clean files', exact: true }).click();
     await expect(page.locator('.process-status')).toContainText('Your file stays on your device');
     expect(uploads).toBe(0);
     await request.delete('/api/queue', { headers: { Authorization: `Bearer ${tickets[0].token}` } });
@@ -295,11 +295,11 @@ test('cancelling a waiting PDF releases its ticket without uploading the file', 
   page.on('request', request => { if (request.url().endsWith('/api/file/process')) uploads++; });
   try {
     for (let i = 0; i < 2; i++) held.push(await (await request.post('/api/queue')).json());
-    await page.getByRole('tab', { name: 'Documents' }).click();
+    await page.getByRole('tab', { name: 'Files' }).click();
     await page.locator('input[type=file]').setInputFiles({ name: 'cancel.pdf', mimeType: 'application/pdf', buffer: content });
     await page.getByRole('checkbox', { name: /I allow queued PDFs/ }).check();
     const ticketResponse = page.waitForResponse(response => response.url().endsWith('/api/queue') && response.request().method() === 'POST');
-    await page.getByRole('button', { name: 'Clean documents', exact: true }).click();
+    await page.getByRole('button', { name: 'Clean files', exact: true }).click();
     const ticket = await (await ticketResponse).json();
     await expect(page.locator('.process-status')).toContainText('Your file stays on your device');
     await page.getByRole('button', { name: 'Cancel', exact: true }).click();

@@ -6,6 +6,22 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.3] - 2026-10-30
+
+### Added
+
+- SVG metadata cleaning and LaTeX source cleaning in the browser, without rendering SVG or compiling LaTeX. HTML and SVG cleaning is not script sanitization.
+- Browser-local metadata cleaning for PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, HEIC/HEIF, WAV, MP3, FLAC, M4A, MP4, MOV, and M4V using deterministic upstream functions.
+- Document, image, audio, and video selectors above the upload area, with format-specific scope and processing-location guidance in Indonesian and English.
+- Media signature and container-boundary validation; before/after reports, downloads, and history use the existing workflow.
+
+### Changed
+
+- Rename the Documents workspace to Files and update privacy, discovery documents, and format documentation.
+- Report partial completion when native FLAC metadata or legacy MP3 ID3v1 tags remain outside upstream coverage.
+- No model hooks, external scoring tools, re-encoding, destructive audio transformations, or pixel watermark removal are enabled. Alpha security limitations remain unchanged.
+
+
 ## [0.1.0-alpha.2] - 2026-10-30
 
 ### Changed

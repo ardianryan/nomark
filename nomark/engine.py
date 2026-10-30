@@ -15,10 +15,11 @@ sys.path.insert(0, str(ROOT / "watermarks-remover" / "service" / "scripts"))
 from common import looks_binary
 from container_meta import clean_container, detect_container_format, inspect_container
 from text_unicode import clean_text, inspect_text
+from nomark.media import IMAGE_EXTENSIONS, AV_EXTENSIONS, clean_media, validate_media
 
 TEXT_LIMIT = 200_000
 FILE_LIMIT = 20 * 1024 * 1024
-EXTENSIONS = {".txt", ".md", ".markdown", ".html", ".htm", ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".epub"}
+EXTENSIONS = set(IMAGE_EXTENSIONS) | set(AV_EXTENSIONS) | {".txt", ".md", ".markdown", ".html", ".htm", ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".epub", ".svg", ".tex", ".latex"}
 PACKAGES = {".docx": "word/document.xml", ".xlsx": "xl/workbook.xml", ".pptx": "ppt/presentation.xml", ".odt": "content.xml", ".epub": "META-INF/container.xml"}
 
 
@@ -40,6 +41,12 @@ def validate_name(name: str) -> str:
 
 
 def _validate_document(data: bytes, suffix: str) -> None:
+    if suffix in IMAGE_EXTENSIONS or suffix in AV_EXTENSIONS:
+        try:
+            validate_media(data, suffix)
+        except Exception:
+            raise ProcessingError("invalid_document") from None
+        return
     # Encrypted OOXML is an OLE container, not a ZIP package.
     if data.startswith(bytes.fromhex("d0cf11e0a1b11ae1")):
         raise ProcessingError("encrypted_document")
@@ -57,6 +64,17 @@ def _validate_document(data: bytes, suffix: str) -> None:
             raise
         except Exception:
             raise ProcessingError("invalid_document") from None
+    elif suffix == '.svg':
+        try:
+            if b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
+                raise ProcessingError('invalid_document')
+            element = ElementTree.fromstring(data)
+            if element.tag.rsplit('}', 1)[-1] != 'svg':
+                raise ProcessingError('invalid_document')
+        except ProcessingError:
+            raise
+        except Exception:
+            raise ProcessingError('invalid_document') from None
     elif suffix in PACKAGES:
         try:
             with zipfile.ZipFile(io.BytesIO(data)) as archive:
@@ -127,8 +145,22 @@ def process_file(source: Path, name: str, directory: Path) -> dict:
         output = (b"\xef\xbb\xbf" if data.startswith(b"\xef\xbb\xbf") else b"") + result.pop("cleaned_text").encode("utf-8")
         result["kind"] = "file"
         result["format"] = "txt"
+    elif suffix in IMAGE_EXTENSIONS or suffix in AV_EXTENSIONS:
+        destination = directory / f"cleaned{suffix}"
+        before, after, actions, partial = clean_media(source, destination, data, suffix)
+        output = destination.read_bytes()
+        try:
+            validate_media(output, suffix)
+        except Exception:
+            raise ProcessingError('processing_failed') from None
+        result = {
+            "kind": "file", "format": after['format'],
+            "status": "partial" if partial else "cleaned" if output != data else "unchanged",
+            "report": {"before": _plain_report(before), "after": _plain_report(after), "actions": actions,
+                       "warnings": (["residual_metadata"] if partial else []) + (["image_metadata_notice"] if suffix in IMAGE_EXTENSIONS else [])},
+        }
     else:
-        if suffix in {".md", ".markdown", ".html", ".htm"}:
+        if suffix in {".md", ".markdown", ".html", ".htm", ".tex", ".latex"}:
             if looks_binary(data):
                 raise ProcessingError("invalid_document")
             try:

@@ -27,7 +27,7 @@ function download(blob, name) {
 
 document.addEventListener('alpine:init', () => {
   Alpine.data('workspace', () => ({
-    locale: 'id', tab: 'text', input: '', textResult: null, selectedFileResult: null,
+    locale: 'id', tab: 'text', formatCategory: 'documents', input: '', textResult: null, selectedFileResult: null,
     files: [], history: [], busy: false, dragging: false, stage: '', error: '', notice: '', pdfReady: false, theme: 'system', allowServer: false, cancelled: false,
     async init() {
       let saved;
@@ -79,6 +79,15 @@ document.addEventListener('alpine:init', () => {
     get hasPdfFiles() { return this.files.some(entry => /\.pdf$/i.test(entry.name) && !entry.result); },
     processingRoute(entry) { return this.t(/\.pdf$/i.test(entry.name) ? 'serverRoute' : 'localRoute'); },
     get resultLocation() { return this.activeResult ? this.t(this.activeResult.processed_by === 'browser' ? 'localRoute' : 'serverLocation') : ''; },
+    get fileFormats() { return {
+      documents: 'txt,md,markdown,html,htm,pdf,docx,xlsx,pptx,odt,epub,tex,latex',
+      images: 'png,jpg,jpeg,webp,gif,bmp,tif,tiff,avif,heic,heif,svg',
+      audio: 'wav,mp3,flac,m4a', video: 'mp4,mov,m4v',
+    }; },
+    get acceptedFormats() { return this.fileFormats[this.formatCategory].split(',').map(extension => `.${extension}`).join(','); },
+    get supportedFormats() { return this.fileFormats[this.formatCategory].split(',').join(' · ').toUpperCase(); },
+    get fileMethod() { return this.t(`${this.formatCategory}Method`); },
+    categoryFor(name) { const suffix = name.split('.').pop().toLowerCase(); return Object.keys(this.fileFormats).find(category => this.fileFormats[category].split(',').includes(suffix)) || 'documents'; },
     get dropClass() { return this.dragging ? 'dragging' : ''; },
     get activeResult() { return this.isTextTab ? this.textResult : this.selectedFileResult; },
     get reportTiming() { return this.activeResult ? `${(this.activeResult.elapsed_ms / 1000).toLocaleString(this.locale, { maximumFractionDigits: 2 })} s` : ''; },
@@ -140,7 +149,7 @@ document.addEventListener('alpine:init', () => {
       for (const file of list) {
         if (this.files.length >= 5) { this.error = this.t('tooManyFiles'); break; }
         const suffix = file.name.split('.').pop().toLowerCase();
-        if (!['txt', 'md', 'markdown', 'html', 'htm', 'pdf', 'docx', 'xlsx', 'pptx', 'odt', 'epub'].includes(suffix)) { this.error = this.t('unsupported_format'); continue; }
+        if (!Object.values(this.fileFormats).some(formats => formats.split(',').includes(suffix))) { this.error = this.t('unsupported_format'); continue; }
         if (file.size > 20 * 1024 * 1024) { this.error = this.t('file_too_large'); continue; }
         if (!file.size) { this.error = this.t('empty_file'); continue; }
         this.files.push({ id: newId(), file, name: file.name, size: file.size, result: null, status: 'ready', error: '' });
@@ -187,7 +196,7 @@ document.addEventListener('alpine:init', () => {
         if (!record) { this.notice = this.t('historyMissing'); await this.refreshHistory(); return; }
         this.tab = record.mode;
         if (record.mode === 'text') { this.input = record.inputText; this.textResult = record.result; }
-        else { const result = { ...record.result, outputBlob: record.outputBlob }; this.files = [{ id: record.id, name: record.sourceName, size: record.sourceBlob.size, file: new File([record.sourceBlob], record.sourceName), status: result.status, result, error: '' }]; this.selectedFileResult = result; }
+        else { this.formatCategory = this.categoryFor(record.sourceName); const result = { ...record.result, outputBlob: record.outputBlob }; this.files = [{ id: record.id, name: record.sourceName, size: record.sourceBlob.size, file: new File([record.sourceBlob], record.sourceName), status: result.status, result, error: '' }]; this.selectedFileResult = result; }
         this.error = ''; this.notice = this.t('pendingResult');
       } catch { this.notice = this.t('storageFailed'); }
     },
