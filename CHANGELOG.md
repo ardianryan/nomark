@@ -32,6 +32,7 @@ No changes yet.
 
 - Theme-aware README banners using the original outlined logo and Avenir Next lettering.
 - Version consistency checks, GitLab CI tests, container image publishing, and tagged releases.
+- CI uses Node.js 22 and Python 3.11 to match the locked browser tooling requirements.
 - Single-container deployment manifest and OCI image version/revision labels.
 
 ### Known alpha limitations
