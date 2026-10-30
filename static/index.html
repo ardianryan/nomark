@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <!-- NOMARK_HEAD -->
+  <script src="/static/theme.js"></script>
+  <link rel="stylesheet" href="/static/app.css">
+  <script defer src="/static/processor.js"></script>
+  <script defer src="/static/history.js"></script>
+  <script defer src="/static/copy.js"></script>
+  <script defer src="/static/app.js"></script>
+  <script defer src="/static/vendor/alpine-csp.min.js"></script>
+</head>
+<body x-data="workspace">
+  <a class="skip-link" href="#workspace" x-text="t('skip')">Lewati ke area kerja</a>
+  <div class="page">
+    <header class="site-header">
+      <a href="/" class="wordmark" aria-label="NoMark"><img class="brand-logo" src="/static/brand/logo.svg" alt="NoMark" width="124" height="34"><img class="brand-logo-dark" src="/static/brand/logo-dark.svg" alt="" width="124" height="34" aria-hidden="true"></a>
+      <div class="header-actions">
+        <a href="#about" class="quiet-link" x-text="t('aboutLink')">Tentang alat ini</a>
+        <label class="theme-switch"><span class="sr-only" x-text="t('theme')">Tema</span><select :aria-label="t('theme')" x-model="theme" @change="changeTheme"><option value="system" x-text="t('systemTheme')">Sistem</option><option value="light" x-text="t('lightTheme')">Terang</option><option value="dark" x-text="t('darkTheme')">Gelap</option></select></label>
+        <div class="language-switch" role="group" aria-label="Bahasa / Language">
+          <button type="button" @click="useIndonesian" :aria-pressed="isIndonesian">ID</button>
+          <span aria-hidden="true">/</span>
+          <button type="button" @click="useEnglish" :aria-pressed="isEnglish">EN</button>
+        </div>
+      </div>
+    </header>
+    <noscript><p class="noscript">Aktifkan JavaScript untuk membersihkan konten. JavaScript is required for cleaning. Informasi dan FAQ tetap dapat dibaca di bawah. Public information and FAQs remain available below.</p></noscript>
+
+    <main id="workspace" tabindex="-1">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow" x-text="t('eyebrow')">Ruang kecil untuk teks yang lebih bersih</p>
+          <h1 id="page-title" x-text="t('title')">Bereskan jejak tersembunyi.</h1>
+          <p class="intro-copy" x-text="t('intro')">Bersihkan karakter tak terlihat dan metadata dokumen. Tanpa akun, tanpa menulis ulang isinya.</p>
+        </div>
+        <div class="local-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4m-4-11 3 3 5-5"/></svg>
+          <span x-text="t('localNote')">Riwayat tinggal di browser Anda.</span>
+        </div>
+      </section>
+
+      <div class="notice" role="status" aria-live="polite" x-show="notice" x-cloak><p x-text="notice"></p><button type="button" @click="dismissNotice" :aria-label="t('dismiss')">×</button></div>
+      <div class="error-notice" role="alert" x-show="error" x-cloak><p x-text="error"></p><button type="button" @click="dismissError" :aria-label="t('dismiss')">×</button></div>
+      <div class="app-grid">
+        <section class="workspace-card" :aria-busy="busy" aria-labelledby="mode-label">
+          <div class="workspace-toolbar">
+            <div class="tabs" role="tablist" :aria-label="t('inputType')">
+              <button type="button" id="text-tab" role="tab" aria-controls="text-panel" :aria-selected="isTextTab" :tabindex="textTabIndex" :disabled="busy" @click="setTextTab" @keydown="tabKey" :class="textTabClass"><span aria-hidden="true" class="text-symbol">Aa</span><span x-text="t('textTab')">Teks</span></button>
+              <button type="button" id="file-tab" role="tab" aria-controls="file-panel" :aria-selected="isFileTab" :tabindex="fileTabIndex" :disabled="busy" @click="setFileTab" @keydown="tabKey" :class="fileTabClass"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M11 2H5a1 1 0 0 0-1 1v14h12V7zm0 0v5h5M7 11h6m-6 3h5"/></svg><span x-text="t('fileTab')">Dokumen</span></button>
+            </div>
+            <span class="mode-note" id="mode-label" x-text="t('noRewrite')">Pembersihan tanpa AI</span>
+          </div>
+
+          <section id="text-panel" role="tabpanel" aria-labelledby="text-tab" x-show="isTextTab">
+            <div class="editor-grid">
+              <div class="editor input-editor">
+                <div class="panel-heading"><label for="source-text" x-text="t('original')">Teks asli</label><button class="text-button" type="button" @click="loadSample" :disabled="busy" x-text="t('sample')">Coba contoh</button></div>
+                <textarea id="source-text" x-model="input" @input="invalidateResult" :disabled="busy" :placeholder="t('placeholder')" aria-describedby="text-limit" spellcheck="false"></textarea>
+                <div class="editor-footer"><span id="text-limit"><span x-text="characterCount">0</span> / <span x-text="characterLimit">200.000</span> <span x-text="t('characters')">karakter</span></span><button class="text-button" type="button" @click="clearText" :disabled="cannotClear" x-text="t('clear')">Kosongkan</button></div>
+              </div>
+              <div class="editor output-editor">
+                <div class="panel-heading"><label for="cleaned-text" x-text="t('cleaned')">Hasil bersih</label><span class="result-status" x-show="textResult" x-text="textStatus"></span></div>
+                <div class="output-empty" x-show="hasNoTextResult"><span class="empty-glyph" aria-hidden="true">Aa</span><p x-text="t('outputEmpty')">Hasil akan muncul di sini.<br></p><span x-text="t('outputEmptyHint')">Teks Anda tetap menjadi teks Anda.</span></div>
+                <textarea id="cleaned-text" x-show="textResult" :value="cleanedText" readonly :aria-label="t('cleaned')" spellcheck="false" x-cloak></textarea>
+                <div class="editor-footer result-actions"><span x-show="textResult"><span x-text="cleanedCount"></span> <span x-text="t('characters')"></span></span><span x-show="hasNoTextResult" x-text="t('waiting')">Menunggu teks Anda</span><div><button type="button" class="text-button" @click="downloadText" :disabled="hasNoTextResult" x-text="t('downloadTxt')">Unduh .txt</button><button type="button" class="copy-button" @click="copyText" :disabled="hasNoTextResult"><span x-text="t('copy')">Salin</span></button></div></div>
+              </div>
+            </div>
+            <div class="run-bar"><p x-text="t('textMethod')">Menghapus karakter tersembunyi dan merapikan spasi khusus. Emoji dan aksara yang sah dipertahankan.</p><button type="button" class="primary-button" @click="cleanText" :disabled="cannotCleanText"><span x-text="cleanButtonLabel">Bersihkan teks</span><svg x-show="notBusy" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 5 5 5-5 5M3 10h10"/></svg></button></div>
+          </section>
+
+          <section id="file-panel" role="tabpanel" aria-labelledby="file-tab" x-show="isFileTab" x-cloak>
+            <div class="document-workspace">
+              <div class="dropzone" :class="dropClass" @dragover.prevent="dragEnter" @dragleave.prevent="dragLeave" @drop.prevent="dropFiles">
+                <svg class="upload-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M28 6H13a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V16L28 6Zm0 0v10h10M24 34V22m-5 5 5-5 5 5"/></svg>
+                <h2 x-text="t('dropTitle')">Dokumen masuk, jejak dirapikan.</h2>
+                <p x-text="t('dropHint')">Tarik berkas ke sini atau pilih dari perangkat Anda.</p>
+                <label class="file-picker"><span x-text="t('chooseFiles')">Pilih dokumen</span><input type="file" multiple accept=".txt,.md,.markdown,.html,.htm,.pdf,.docx,.xlsx,.pptx,.odt,.epub" @change="pickFiles" :disabled="busy" aria-describedby="file-limit"></label>
+                <p class="file-limit" id="file-limit" x-text="t('fileLimit')">Maksimal 5 berkas, masing-masing 20 MiB.</p>
+              </div>
+              <div class="file-list" x-show="hasFiles">
+                <template x-for="entry in files" :key="entry.id"><article class="file-row"><div class="file-info"><strong x-text="entry.name"></strong><span x-text="fileMeta(entry)"></span><span class="processing-route" x-text="processingRoute(entry)"></span><span class="file-error" x-show="entry.error" x-text="entry.error"></span></div><div class="file-actions"><button class="text-button" type="button" x-show="entry.result" @click="viewFile(entry.id)" x-text="t('report')">Laporan</button><button class="copy-button" type="button" x-show="entry.result" @click="downloadFile(entry.id)" x-text="t('download')">Unduh</button><button class="remove-button" type="button" @click="removeFile(entry.id)" :disabled="busy" :aria-label="removeLabel(entry)">×</button></div></article></template>
+              </div>
+              <p class="supported-formats">TXT · Markdown · HTML · PDF · DOCX · XLSX · PPTX · ODT · EPUB</p>
+              <label class="pdf-consent" x-show="hasPdfFiles" x-cloak><input type="checkbox" x-model="allowServer" :disabled="busy"><span x-text="t('pdfConsent')">Saya mengizinkan PDF dikirim ke server untuk diproses. Berkas lain tetap diproses di browser.</span></label>
+            </div>
+            <div class="run-bar"><p x-text="t('documentMethod')">Membersihkan metadata dan karakter internal sesuai format. PDF tidak mendapatkan OCR atau penulisan ulang isi.</p><button type="button" class="primary-button" @click="cleanFiles" :disabled="cannotCleanFiles"><span x-text="fileButtonLabel">Bersihkan dokumen</span></button></div>
+          </section>
+
+          <div class="process-status" role="status" aria-live="polite" x-show="busy" x-cloak><span class="process-dot" aria-hidden="true"></span><span x-text="stage"></span><button class="text-button" type="button" @click="cancelProcessing" x-text="t('cancel')">Batal</button></div>
+          <section class="report-panel" x-show="activeResult" x-cloak aria-labelledby="report-title">
+            <div class="panel-heading"><h2 id="report-title" x-text="t('changeReport')">Yang berubah</h2><span x-text="reportTiming"></span></div>
+            <p class="report-summary" x-text="reportSummary"></p>
+            <p class="result-location" x-text="resultLocation"></p>
+            <template x-for="warning in reportWarnings" :key="warning"><p class="warning" x-text="warning"></p></template>
+            <div class="character-changes" x-show="hasCharacterChanges"><template x-for="change in characterChanges" :key="change.label"><div class="change-row"><code x-text="change.label"></code><span x-text="change.action"></span><strong x-text="change.count"></strong></div></template></div>
+            <details x-show="hasReportDetails"><summary x-text="t('details')">Rincian pemeriksaan</summary><p class="detail-note" x-text="t('technicalNotes')">Catatan teknis dari mesin pembersih ditampilkan dalam bahasa sumber.</p><ul><template x-for="line in reportDetails" :key="line"><li x-text="line"></li></template></ul></details>
+          </section>
+        </section>
+
+        <aside class="history-card" aria-labelledby="history-title">
+          <div class="history-heading"><span class="history-symbol" aria-hidden="true">↺</span><span class="history-count" x-text="historyCountLabel">0 / 20</span></div>
+          <h2 id="history-title" x-text="t('history')">Pernah dibersihkan</h2>
+          <p class="history-description" x-text="t('historyHint')">Tersimpan otomatis di browser ini. Buka lagi kapan saja.</p>
+          <div class="history-empty" x-show="historyIsEmpty"><span aria-hidden="true" class="empty-lines"><i></i><i></i><i></i></span><p x-text="t('historyEmpty')">Belum ada riwayat.</p><span x-text="t('historyEmptyHint')">Hasil pertama Anda akan tersimpan di sini.</span></div>
+          <ol class="history-list"><template x-for="item in history" :key="item.id"><li><button type="button" class="history-item" @click="restore(item.id)" :disabled="busy"><span class="history-item-type" x-text="itemType(item)"></span><strong x-text="itemTitle(item)"></strong><span class="history-item-date" x-text="itemDate(item)"></span></button><div class="history-item-actions"><button type="button" class="text-button" @click="downloadHistory(item.id)" x-text="t('download')">Unduh</button><button type="button" class="text-button" @click="deleteHistory(item.id)" :disabled="busy" :aria-label="deleteLabel(item)" x-text="t('delete')">Hapus</button></div></li></template></ol>
+          <div class="history-bottom"><p x-text="historyStorageLabel">Maksimal 20 hasil atau 100 MiB.</p><button type="button" class="text-button" @click="requestClearHistory" :disabled="cannotClearHistory" x-text="t('clearHistory')">Hapus seluruh riwayat</button></div>
+        </aside>
+      </div>
+
+      <section id="about" class="about-strip" aria-labelledby="about-title">
+        <div><h2 id="about-title" x-text="t('aboutTitle')">Tahu apa yang dibersihkan.</h2><p x-text="t('aboutCopy')">NoMark membersihkan karakter Unicode tersembunyi dan metadata. Temuan tersebut bukan bukti bahwa konten dibuat oleh AI, dan hasilnya bukan jaminan seluruh watermark telah hilang.</p></div>
+        <div class="privacy-copy"><strong x-text="t('privacyTitle')">Lokal dahulu. Jelas saat perlu server.</strong><p x-text="t('privacyCopy')">Teks dan dokumen selain PDF diproses di browser. PDF dikirim ke server setelah persetujuan. Riwayat tetap di perangkat Anda.</p></div>
+      </section>
+      <section class="processing-map"><h2 x-text="t('processingMapTitle')">Konten diproses di mana?</h2><p x-text="t('processingMapCopy')">Teks dan dokumen selain PDF: browser. PDF: server setelah persetujuan. Riwayat dan unduhan: perangkat Anda.</p></section>
+      <section class="processing-map" aria-labelledby="source-title">
+        <h2 id="source-title" x-text="t('sourceTitle')">Berbasis watermarks-remover</h2>
+        <p><span x-text="t('sourceIntro')">NoMark menggunakan repositori sumber terbuka</span> <a href="https://github.com/guillaumemeyer/watermarks-remover">watermarks-remover</a>.</p>
+        <p x-text="t('sourcePurpose')">Website ini dibuat untuk memudahkan siapa saja menggunakan watermarks-remover untuk membersihkan teks melalui browser, tanpa instalasi yang rumit.</p>
+      </section>
+      <section id="faq" class="faq-section" aria-labelledby="faq-title">
+        <h2 id="faq-title" x-text="t('faqTitle')">Pertanyaan umum</h2>
+        <details><summary x-text="t('faq1Q')">Apa yang dibersihkan NoMark?</summary><p x-text="t('faq1A')"></p></details>
+        <details><summary x-text="t('faq2Q')">Apakah perlu menginstal aplikasi atau menggunakan API AI?</summary><p x-text="t('faq2A')"></p></details>
+        <details><summary x-text="t('faq3Q')">Apakah dokumen saya diunggah?</summary><p x-text="t('faq3A')"></p></details>
+        <details><summary x-text="t('faq4Q')">Mengapa NoMark dibuat?</summary><p x-text="t('faq4A')"></p></details>
+      </section>
+    </main>
+    <footer><p>© 2026 NoMark <span aria-hidden="true">·</span> <span x-text="t('publicTool')">Terbuka untuk siapa saja</span></p><nav class="footer-links" aria-label="Legal"><a :href="termsHref" href="/id/terms" x-text="t('terms')">Ketentuan layanan</a><a :href="privacyHref" href="/id/privacy" x-text="t('privacy')">Kebijakan privasi</a><a href="/static/notices.txt" x-text="t('licenses')">Lisensi sumber terbuka</a></nav></footer>
+  </div>
+  <dialog x-ref="confirmDialog" aria-labelledby="confirm-title"><h2 id="confirm-title" x-text="t('confirmTitle')">Hapus seluruh riwayat?</h2><p x-text="t('confirmCopy')">Teks dan berkas yang tersimpan di browser ini akan dihapus. Tindakan ini tidak dapat dibatalkan.</p><div class="dialog-actions"><button type="button" @click="cancelClearHistory" x-text="t('cancel')">Batal</button><button type="button" class="primary-button" @click="clearHistory" x-text="t('deleteAll')">Hapus semuanya</button></div></dialog>
+</body>
+</html>

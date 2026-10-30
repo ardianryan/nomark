@@ -1,0 +1,16 @@
+.git
+.venv
+node_modules
+tests
+test-results
+playwright-report
+artifacts
+.taste-skill
+__pycache__
+watermarks-remover/.git
+watermarks-remover/tests
+.env
+*.egg-info
+
+.env.*
+.docker-ci/

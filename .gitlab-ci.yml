@@ -1,0 +1,73 @@
+stages: [test, build, smoke, release]
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH
+
+verify:
+  stage: test
+  image: python:3.11-bookworm
+  script:
+    - apt-get update && apt-get install -y --no-install-recommends libimage-exiftool-perl qpdf ghostscript nodejs npm
+    - python -m venv .venv
+    - .venv/bin/pip install -r requirements.lock
+    - .venv/bin/python scripts/release.py check
+    - .venv/bin/python -m pytest
+    - npm ci --no-audit --no-fund
+    - npx playwright install --with-deps chromium
+    - npm test
+  artifacts:
+    when: on_failure
+    expire_in: 7 days
+    paths: [test-results/, playwright-report/]
+
+build_image:
+  stage: build
+  image:
+    name: moby/buildkit:v0.34.1-rootless
+    entrypoint: [""]
+  variables:
+    BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+  script:
+    - mkdir -p "$HOME/.docker"
+    - AUTH=$(printf '%s:%s' "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')
+    - printf '{"auths":{"%s":{"auth":"%s"}}}' "$CI_REGISTRY" "$AUTH" > "$HOME/.docker/config.json"
+    - IMAGE_NAMES="$CI_REGISTRY_IMAGE:sha-$CI_COMMIT_SHA"
+    - if [ -n "$CI_COMMIT_TAG" ]; then IMAGE_NAMES="$IMAGE_NAMES,$CI_REGISTRY_IMAGE:$(cat VERSION)"; fi
+    - mkdir -p artifacts
+    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=. --local dockerfile=. --opt platform=linux/amd64 --opt build-arg:VERSION="$(cat VERSION)" --opt build-arg:REVISION="$CI_COMMIT_SHA" --output "type=image,\"name=$IMAGE_NAMES\",push=true" --metadata-file artifacts/image-metadata.json
+  artifacts:
+    paths: [artifacts/image-metadata.json]
+    expire_in: 1 year
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+smoke:
+  stage: smoke
+  image:
+    name: $CI_REGISTRY_IMAGE:sha-$CI_COMMIT_SHA
+    entrypoint: [""]
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd /app
+    - python -c "from nomark import __version__; from nomark.engine import process_text; import shutil; assert all(shutil.which(t) for t in ('exiftool', 'qpdf', 'gs')); assert process_text('hello')['cleaned_text'] == 'hello'; print(__version__)"
+    - python -m uvicorn nomark.app:app --host 127.0.0.1 --port 8000 --no-access-log --no-proxy-headers &
+    - python -c "import json,time,urllib.request; time.sleep(3); r=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health')); assert r['ok'] and r['engine_available'] and r['pdf_ready']; print(r)"
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+release:
+  stage: release
+  image: python:3.11-slim-bookworm
+  script:
+    - python scripts/release.py publish
+  rules:
+    - if: $CI_COMMIT_TAG

@@ -1,93 +1,126 @@
-# nomark
+# NoMark
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://gitlab.com/ardianryan/nomark/-/raw/main/docs/assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://gitlab.com/ardianryan/nomark/-/raw/main/docs/assets/banner-light.svg">
+  <img src="docs/assets/banner.svg" alt="NoMark — Clean text. Clear traces. A browser workspace for hidden Unicode and document metadata." width="1200">
+</picture>
 
+[![Pipeline](https://gitlab.com/ardianryan/nomark/badges/main/pipeline.svg)](https://gitlab.com/ardianryan/nomark/-/pipelines) [![License: MIT](https://img.shields.io/badge/license-MIT-416e58)](LICENSE)
 
-## Getting started
+A public, account-free web tool for cleaning hidden Unicode characters and document metadata. NoMark makes [watermarks-remover](https://github.com/guillaumemeyer/watermarks-remover) available through a browser without a complicated installation.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+**Website:** https://nomark.ardianryan.com · **Contact:** me@ardianryan.com
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The website address is the production target. Deployment and DNS setup are separate from this repository.
 
-## Add your files
+## Features
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+- Paste text or select supported documents; inspect changes, copy, and download results.
+- Process text and non-PDF documents locally using the original Python cleaners in a Pyodide Web Worker.
+- Clean PDF metadata on the server after explicit permission, with a bounded queue before upload.
+- Keep history in the browser, with individual and bulk deletion.
+- Switch between Indonesian and English, and system, light, or dark themes.
+- Use keyboard-accessible controls, responsive layouts, and screen-reader status announcements.
 
+No AI model, API key, MCP service, account, or server database is required. NoMark does not rewrite text, perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Findings do not establish who authored content.
+
+## Where processing happens
+
+| Input or feature | Location | Content uploaded? |
+| --- | --- | --- |
+| Pasted text | Browser worker | No |
+| TXT, Markdown, HTML | Browser worker | No |
+| DOCX, XLSX, PPTX, ODT, EPUB | Browser worker | No |
+| PDF metadata | Server, after permission and admission | PDF and filename |
+| History, preferences, downloads | Browser | No synchronization |
+
+Local-engine failures never silently upload content. Direct compatibility API calls are server processing, including calls containing text or non-PDF documents.
+
+## Quick start
+
+Requirements: Python 3.11 and Git. Node.js is only needed for asset maintenance and browser tests.
+
+```sh
+git submodule update --init --recursive
+python3.11 -m venv .venv
+.venv/bin/pip install -r requirements.lock
+.venv/bin/python -m nomark.dev
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/ardianryan/nomark.git
-git branch -M main
-git push -uf origin main
+
+Open http://127.0.0.1:8000. The development server binds to `0.0.0.0:8000`, allowing access at `http://<computer-ip>:8000` from the same network. Use `--host 127.0.0.1` for local-only access. Local firewalls and Wi-Fi client isolation can affect access.
+
+For native PDF processing on macOS:
+
+```sh
+brew install exiftool qpdf ghostscript
 ```
 
-## Integrate with your tools
+Restart the server and check `/health` for `pdf_ready: true`. Docker is not required to test PDFs locally.
 
-* [Set up project integrations](https://gitlab.com/ardianryan/nomark/-/settings/integrations)
+## Deployment
 
-## Collaborate with your team
+Published images and tagged releases are available from [GitLab](https://gitlab.com/ardianryan/nomark/-/releases). See [Releasing](docs/RELEASING.md) for version policy and image verification. Alpha limitations are recorded in [Changelog](CHANGELOG.md).
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```sh
+docker compose up --build -d
+curl http://127.0.0.1:8000/health
+```
 
-## Test and Deploy
+**One application image and one container** include FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database, Redis, or AI service. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
 
-Use the built-in continuous integration in GitLab.
+## Limits
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+- Text: 200,000 characters. Files: 20 MiB each; five sequential files per browser queue.
+- PDF server: two simultaneous jobs and eight waiting tickets. Files stay on the device while waiting.
+- Server upload timeout: 30 seconds. Processing timeout: 60 seconds. Browser processing timeout: 90 seconds.
+- IndexedDB history: 20 entries or 100 MiB, including originals and results. Oldest entries are evicted.
+- Working files are deleted after jobs; remnants older than five minutes are swept while running.
 
-***
+See [Architecture](docs/ARCHITECTURE.md) for admission, process isolation, rate limiting, and scaling details.
 
-# Editing this README
+## Repository structure
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```text
+nomark/                  FastAPI app, Python integration, SEO, and public policies
+static/                  Browser UI, translations, workers, and bundled runtime
+  brand/                 Outlined logos, favicons, device icons, social preview
+  vendor/                Versioned runtime assets and third-party licenses
+watermarks-remover/      Pinned upstream Git submodule
+scripts/                 Asset generation and maintenance
+tests/                   Python and browser tests
+deploy/                  Host Caddy configuration
+docs/                    Architecture, deployment, design, SEO, verification
+.github/                 Issue and pull request templates
+```
 
-## Suggestions for a good README
+`watermarks-remover` is a submodule pinned to `5c180932a00c793261177f79aee21db8929f3fe2`. Git records its URL and commit rather than importing its history. Clone this repository with `--recurse-submodules`, or initialize the submodule as shown above. The browser bundle includes the required upstream modules and their license.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## Development
 
-## Name
-Choose a self-explaining name for your project.
+```sh
+.venv/bin/pip install -e '.[test]'
+.venv/bin/python -m pytest
+npm ci
+npm test
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Browser tests use local Google Chrome or an installed Playwright Chromium. If needed, run `npx playwright install chromium`.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+After changing Python cleaning code, run `.venv/bin/python scripts/browser_bundle.py`. After changing `static/translations.json`, run `.venv/bin/python scripts/translations.py`. `npm run vendor` regenerates the local engine, runtime, browser dictionary, and notices. `npm run brand` exports PNG and ICO assets from the committed SVG masters; it requires a browser, not a font download.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Read [Contributing](CONTRIBUTING.md), [Security](SECURITY.md), [Code of conduct](CODE_OF_CONDUCT.md), and [Changelog](CHANGELOG.md).
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Public documentation
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- [Architecture and API](docs/ARCHITECTURE.md)
+- [Deployment and scaling](docs/DEPLOYMENT.md)
+- [SEO and discoverability](docs/SEO.md)
+- [Design](docs/DESIGN.md) and [verification](docs/VERIFICATION.md)
+- Privacy: `/id/privacy`, `/en/privacy`; terms: `/id/terms`, `/en/terms`
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Licensing and attribution
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+The upstream cleaner is MIT-licensed. Alpine.js, Vue, Pyodide, and CPython retain their own licenses; see [Third-party notices](THIRD_PARTY_NOTICES.md) and [browser notices](static/notices.txt).
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+NoMark's original application code is licensed under the [MIT License](LICENSE). Third-party components retain their own licenses and required notices.

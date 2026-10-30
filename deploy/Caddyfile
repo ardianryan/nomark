@@ -1,0 +1,17 @@
+nomark.ardianryan.com {
+    encode zstd gzip
+    request_body {
+        max_size 21MB
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000"
+    }
+    reverse_proxy 127.0.0.1:8000 {
+        transport http {
+            response_header_timeout 100s
+        }
+    }
+    # Only fingerprinted application assets use public caching. Never cache
+    # /api/* or user results. The app admits two jobs and eight waiting tickets;
+    # queued clients do not upload file bodies until capacity is reserved.
+}

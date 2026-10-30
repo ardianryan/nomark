@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+test-results/
+playwright-report/
+.taste-skill/
+.env
+.DS_Store
+build/
+*.egg-info/
+.coverage
+artifacts/
+
+.env.*
+.docker-ci/

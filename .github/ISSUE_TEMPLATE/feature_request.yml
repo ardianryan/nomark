@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest a change to NoMark.
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested behavior
+      description: Include alternatives and any effect on uploads, storage, or privacy.

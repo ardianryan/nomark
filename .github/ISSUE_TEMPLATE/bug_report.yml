@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible problem using synthetic input.
+body:
+  - type: markdown
+    attributes:
+      value: Do not share private documents or tokens. Report vulnerabilities privately to me@ardianryan.com.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include expected behavior and reproduction steps.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, commit, format, and local or deployed usage.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Synthetic example or screenshots
+      description: Remove personal information before attaching anything.

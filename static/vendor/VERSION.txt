@@ -1,0 +1,2 @@
+@alpinejs/csp 3.17.5
+SHA256 48c170c92032e527cbae71b8ce75cf1f96ca06fa869a6120ef0fe438d8e92c36
