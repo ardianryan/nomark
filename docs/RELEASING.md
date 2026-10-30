@@ -2,7 +2,7 @@
 
 ## Version policy
 
-`VERSION` is the public SemVer version. `nomark/__init__.py`, `package.json`, and the root entries in `package-lock.json` must match it. Python metadata uses the equivalent PEP 440 spelling: `0.1.0-alpha.1` becomes `0.1.0a1`. The application reports its version through `/health`; the public interface has no release badge.
+`VERSION` is the public SemVer version. `nomark/__init__.py`, `package.json`, and the root entries in `package-lock.json` must match it. Python metadata uses the equivalent PEP 440 spelling: `0.1.0-alpha.2` becomes `0.1.0a2`. The application reports its version through `/health`; the public interface has no release badge.
 
 Every change must be described in `CHANGELOG.md` before release. While preparing a release, changes use its version. After publishing a tag, increment the version for subsequent changes; never overwrite a release tag or versioned image. Update `deploy/compose.release.yaml` for each release. Run `python scripts/release.py check` before committing. Rebuild the browser bundle after changing the Python package version.
 
@@ -14,15 +14,15 @@ Once the default branch pipeline is green:
 
 ```sh
 python3 scripts/release.py check
-git tag -a v0.1.0-alpha.1 -m 'NoMark 0.1.0-alpha.1'
-git push origin v0.1.0-alpha.1
+git tag -a v0.1.0-alpha.2 -m 'NoMark 0.1.0-alpha.2'
+git push origin v0.1.0-alpha.2
 ```
 
-The tag pipeline checks the version again, tests, builds the versioned image, checks readiness, and publishes a GitLab release from the changelog. An alpha receives no `latest` tag. Registry publishing uses the ephemeral GitLab job credentials; no personal access token is committed. The runner must support rootless BuildKit and have registry access. Build metadata containing the image digest is retained as a pipeline artifact for one year.
+The tag pipeline checks the version again, tests, builds the versioned image, checks readiness, and publishes a GitLab release from the changelog. After the readiness check succeeds, a serialized promotion job copies the release manifest to `latest` and verifies that both digests match the build artifact. `latest` intentionally follows alpha releases until stable releases are available. It is not updated by branch builds. Publish releases in version order; rerunning an older tag pipeline can move `latest` back. Registry publishing uses the ephemeral GitLab job credentials; no personal access token is committed. The runner must support rootless BuildKit and have registry access. Build metadata containing the image digest is retained as a pipeline artifact for one year.
 
 ## Deployment
 
-The published image is `registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.1`. It includes FastAPI, local frontend assets, the pinned cleaners, ExifTool, qpdf, and Ghostscript in one container. Caddy remains on the host. No VPS deployment happens in the release pipeline.
+The published image is `registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.2`. It includes FastAPI, local frontend assets, the pinned cleaners, ExifTool, qpdf, and Ghostscript in one container. Caddy remains on the host. No VPS deployment happens in the release pipeline.
 
 ```sh
 docker compose -f deploy/compose.release.yaml pull
@@ -35,3 +35,7 @@ Review [deployment](DEPLOYMENT.md) and the changelog's alpha limitations first. 
 ## README artwork
 
 `docs/assets/banner.svg` adapts to system color preference; the light and dark variants support Markdown picture elements. Sources use absolute raw GitLab URLs because GitLab does not rewrite relative `srcset` URLs. GitHub supports the same picture markup. All lettering is outlined, with the original wordmark retained. Regenerate with `python scripts/readme_banner.py /path/to/Avenir\ Next.ttc` and development-only `fonttools`. No font binary is distributed.
+
+## Portainer rolling updates
+
+Use `image: registry.gitlab.com/ardianryan/nomark:latest` in the Portainer stack to avoid editing the version for every release. Pull and redeploy the stack after a new release; merely publishing an image does not update a running container. History and preferences remain in the browser. Allow active processing to finish before redeploying. For rollback, replace `latest` with a previous version tag and redeploy. The versioned Compose example continues to pin a release for reproducible deployments.

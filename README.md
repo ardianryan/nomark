@@ -60,6 +60,8 @@ Restart the server and check `/health` for `pdf_ready: true`. Docker is not requ
 
 ## Deployment
 
+For Portainer, use `registry.gitlab.com/ardianryan/nomark:latest` and pull/redeploy after each release. This rolling tag currently includes alpha releases; versioned tags remain available for rollback.
+
 Published images and tagged releases are available from [GitLab](https://gitlab.com/ardianryan/nomark/-/releases). See [Releasing](docs/RELEASING.md) for version policy and image verification. Alpha limitations are recorded in [Changelog](CHANGELOG.md).
 
 ```sh

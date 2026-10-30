@@ -1,4 +1,4 @@
-stages: [test, build, smoke, release]
+stages: [test, build, smoke, promote, release]
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -63,6 +63,15 @@ smoke:
   rules:
     - if: $CI_COMMIT_TAG
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+promote_latest:
+  stage: promote
+  image: python:3.11-slim-bookworm
+  resource_group: latest-image
+  script:
+    - python scripts/promote_image.py
+  rules:
+    - if: $CI_COMMIT_TAG
 
 release:
   stage: release

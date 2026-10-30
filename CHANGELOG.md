@@ -6,6 +6,20 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.2] - 2026-10-30
+
+### Changed
+
+- Publish a rolling `latest` image alias after the release image passes tests and container readiness checks, including alpha releases.
+- Promote the existing registry manifest and verify its digest against the build artifact; do not rebuild during promotion.
+- Document Portainer updates with `latest`, rollback using version tags, and the continuing alpha limitations.
+
+### Known limitations
+
+- Security and infrastructure limitations recorded for 0.1.0-alpha.1 still apply. `latest` does not imply a stable release.
+- Portainer must pull and redeploy the image to apply an update; active processing can be interrupted.
+
+
 ## [0.1.0-alpha.1] - 2026-10-30
 
 ### Added

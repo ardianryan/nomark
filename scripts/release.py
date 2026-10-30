@@ -39,7 +39,7 @@ if __name__ == '__main__':
         tag = f'v{version}'
         payload = {
             'name': f'NoMark {version}', 'tag_name': tag,
-            'description': notes(version) + f'\n## Deployment image\n\n`{os.environ["CI_REGISTRY_IMAGE"]}:{version}`\n\nPlatform: Linux amd64. The image contains the application and native PDF tools. VPS deployment is separate.\n',
+            'description': notes(version) + f'\n## Deployment image\n\n`{os.environ["CI_REGISTRY_IMAGE"]}:{version}`\n\nRolling image: `{os.environ["CI_REGISTRY_IMAGE"]}:latest` (currently follows alpha releases). It is promoted only after tests and container readiness checks succeed.\n\nPlatform: Linux amd64. The image contains the application and native PDF tools. VPS deployment is separate.\n',
             'assets': {'links': [
                 {'name': 'Container registry', 'url': f'{project}/container_registry', 'link_type': 'package'},
                 {'name': 'Deployment Compose file', 'url': f'{project}/-/raw/{tag}/deploy/compose.release.yaml', 'link_type': 'runbook'},
