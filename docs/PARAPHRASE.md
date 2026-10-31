@@ -10,7 +10,7 @@ From the repository root, build and run with:
 docker compose up -d --build
 ```
 
-The same override can accompany `deploy/compose.release.yaml` after the corresponding images have actually been published. The base single-container configuration does not enable NMT. No hard readiness dependency is added to the main application.
+For published images, combine `deploy/compose.release.yaml` with `deploy/compose.paraphrase.yaml`, or copy `deploy/compose.portainer.yaml` into Portainer. The release configuration alone does not enable NMT. No hard readiness dependency is added to the main application.
 
 The NMT service has no published port and joins only an internal network shared with the application. Runtime uses read-only model files; build-time downloads are pinned by model revision and SHA-256. The conversion build uses hash-locked CPU PyTorch and CTranslate2; runtime excludes PyTorch. Models are Apache-2.0, while original NoMark code remains MIT.
 

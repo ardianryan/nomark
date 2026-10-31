@@ -22,7 +22,7 @@ The tag pipeline checks the version again, tests, builds the versioned image, ch
 
 ## Deployment
 
-The release configuration targets `registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.6`; a candidate is not published until its tag pipeline succeeds. The image includes FastAPI, local frontend assets, the pinned cleaners, ExifTool, qpdf, and Ghostscript in one container. The optional NMT override uses `/nmt` with the same version. Caddy remains on the host. No VPS deployment happens in the release pipeline.
+The release configuration targets `registry.gitlab.com/ardianryan/nomark:0.1.0-alpha.6`; a candidate is not published until its tag pipeline succeeds. The image includes FastAPI, local frontend assets, the pinned cleaners, ExifTool, qpdf, and Ghostscript in one container. The optional NMT override uses `/nmt` with the same version. The complete `deploy/compose.portainer.yaml` stack uses both rolling `latest` images and retains the existing Portainer volume/network names. The root development Compose builds both services. Caddy remains on the host. No VPS deployment happens in the release pipeline.
 
 ```sh
 docker compose -f deploy/compose.release.yaml pull
