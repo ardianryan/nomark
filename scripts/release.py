@@ -43,6 +43,7 @@ if __name__ == '__main__':
             'assets': {'links': [
                 {'name': 'Container registry', 'url': f'{project}/container_registry', 'link_type': 'package'},
                 {'name': 'Deployment Compose file', 'url': f'{project}/-/raw/{tag}/deploy/compose.release.yaml', 'link_type': 'runbook'},
+                {'name': 'Portainer stack (both latest images)', 'url': f'{project}/-/raw/{tag}/deploy/compose.portainer.yaml', 'link_type': 'runbook'},
                 {'name': 'Optional NMT Compose override', 'url': f'{project}/-/raw/{tag}/deploy/compose.paraphrase.yaml', 'link_type': 'runbook'},
             ]},
         }

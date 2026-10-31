@@ -2,7 +2,7 @@
 
 ## Topology
 
-The supplied configuration uses **one Docker image and one application container**. It includes FastAPI/Uvicorn, static frontend assets, the Python cleaners, and the native PDF tools. Caddy runs on the VPS host and terminates HTTPS for `nomark.ardianryan.com`.
+The root development Compose file builds **two images and two containers**: the application and a private NMT service. The application image includes FastAPI/Uvicorn, static frontend assets, the Python cleaners, and the native PDF tools. Caddy runs on the VPS host and terminates HTTPS for `nomark.ardianryan.com`.
 
 No Node.js runtime, database, Redis, external AI API, S3 bucket, or CDN service is needed. Server cleaning spawns bounded child processes inside the application container; these are not separate containers.
 
@@ -17,7 +17,7 @@ docker compose up --build -d
 curl --fail http://127.0.0.1:8000/health
 ```
 
-Confirm `ok`, `engine_available`, and `pdf_ready` are true. Review container logs without enabling content or access logging. The supplied command disables Uvicorn access logs.
+Confirm `ok` is true. The public health response intentionally omits internal tool details. Review container logs without enabling content or access logging. The supplied command disables Uvicorn access logs.
 
 The service binds the host port to `127.0.0.1:8000`. It runs as UID 10001 with a read-only root filesystem, a 512 MiB temporary memory filesystem, two CPUs, a 2 GiB memory limit, and a 128-process limit. Shutdown allows 95 seconds for active work. Do not increase Uvicorn workers or add replicas without shared coordination.
 
@@ -61,6 +61,17 @@ No external CDN or bucket has been provisioned. To scale beyond one process/VPS,
 
 Browser interface limits are intentionally fixed alongside server validation. Keep policy descriptions and tests synchronized if changing them.
 
-## Optional NMT service (alpha.5)
+## Published images and Portainer (alpha.6)
 
-The default deployment remains one container. The optional [paraphrase override](../deploy/compose.paraphrase.yaml) adds a private second container without making main readiness depend on it. Use `--project-directory .` from the repository root so build paths resolve correctly. Current model quality fails the release gate; keep it in isolated staging. See [Paraphrasing](PARAPHRASE.md).
+Copy [the complete Portainer stack](../deploy/compose.portainer.yaml) into the stack editor. It uses both `latest` images, preserves the existing `nomark_temp` volume and `nomark_network`, and publishes the application on port 8120. Pull both images and redeploy to update; publishing a release does not redeploy production. Ensure port 8120 is available. Restrict ingress through the host firewall/reverse proxy as appropriate for the VPS.
+
+The NMT service has no host port and only joins a dedicated internal network without outbound access. It has two CPUs, 2 GiB memory with no additional swap allowance, 64 processes/threads and 128 MiB temporary storage. Main readiness does not depend on NMT; local cleaning and PDF processing remain available if it is unavailable.
+
+For an installation without NMT, use the versioned [release Compose](../deploy/compose.release.yaml). To add NMT to that installation, run from the repository root:
+
+```sh
+docker compose --project-directory . -f deploy/compose.release.yaml -f deploy/compose.paraphrase.yaml pull
+docker compose --project-directory . -f deploy/compose.release.yaml -f deploy/compose.paraphrase.yaml up -d
+```
+
+The eighty reviewed model outputs pass the limited-edit quality gate; most inputs are retained unchanged. This does not establish general semantic accuracy or watermark removal. See [Paraphrasing](PARAPHRASE.md).

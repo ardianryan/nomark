@@ -1,4 +1,4 @@
-# Combine with compose.yaml (build) or compose.release.yaml (published images).
+# Combine with deploy/compose.release.yaml for the optional published NMT image.
 services:
   nomark:
     environment:
@@ -12,6 +12,7 @@ services:
       context: ./nmt-service
     image: registry.gitlab.com/ardianryan/nomark/nmt:0.1.0-alpha.6
     restart: unless-stopped
+    init: true
     read_only: true
     tmpfs:
       - /tmp:size=128m,mode=1777,noexec,nosuid,nodev

@@ -10,6 +10,7 @@ No changes yet.
 
 ### Added
 
+- Include both services in the development Compose and supply a complete Portainer stack using both `latest` images, preserving the existing temporary volume and application network. Keep the single-container published configuration available separately.
 - Highlight paraphrase changes with accessible word-choice menus, original-text restoration, manual editing, and restoration of the initial model result.
 - Compare text in a bounded browser worker using locally served JsDiff 9.0.0. Suggestions and manual edits never resend text or trigger additional inference.
 - Return bounded, optional code-point edit metadata from existing reviewed equivalences; discard malformed metadata while retaining valid text results.

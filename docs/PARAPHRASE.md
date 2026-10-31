@@ -7,7 +7,7 @@ This feature back-translates Indonesian through English, or English through Indo
 From the repository root, build and run with:
 
 ```sh
-docker compose --project-directory . -f compose.yaml -f deploy/compose.paraphrase.yaml up -d --build
+docker compose up -d --build
 ```
 
 The same override can accompany `deploy/compose.release.yaml` after the corresponding images have actually been published. The base single-container configuration does not enable NMT. No hard readiness dependency is added to the main application.

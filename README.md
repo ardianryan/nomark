@@ -62,7 +62,7 @@ Restart the server and check `/health` for `pdf_ready: true`. Docker is not requ
 
 ## Deployment
 
-For Portainer, use `registry.gitlab.com/ardianryan/nomark:latest` and pull/redeploy after each release. This rolling tag currently includes alpha releases; versioned tags remain available for rollback.
+For Portainer, copy [the complete two-service stack](deploy/compose.portainer.yaml) and pull/redeploy after each release. This rolling tag currently includes alpha releases; versioned tags remain available for rollback.
 
 Published images and tagged releases are available from [GitLab](https://gitlab.com/ardianryan/nomark/-/releases). See [Releasing](docs/RELEASING.md) for version policy and image verification. Alpha limitations are recorded in [Changelog](CHANGELOG.md).
 
@@ -71,7 +71,7 @@ docker compose up --build -d
 curl http://127.0.0.1:8000/health
 ```
 
-**The default one-image, one-container deployment** includes FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database or Redis. Optional paraphrasing adds a separate local NMT container. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
+The root Compose file builds both the application and its isolated NMT service. The application image includes FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database or Redis. For a single-container installation without paraphrasing, use `deploy/compose.release.yaml`; add `deploy/compose.paraphrase.yaml` to enable NMT. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
 
 ## Limits
 

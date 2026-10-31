@@ -1,0 +1,81 @@
+# NoMark 0.1.0-alpha.6. Both latest tags follow verified alpha releases.
+services:
+  nomark:
+    image: registry.gitlab.com/ardianryan/nomark:latest
+    platform: linux/amd64
+    pull_policy: always
+    restart: unless-stopped
+    init: true
+    ports:
+      - "0.0.0.0:8120:8000"
+    environment:
+      TZ: Asia/Jakarta
+      NOMARK_TIMEOUT: "60"
+      NOMARK_WORKDIR: /tmp/nomark-work
+      TMPDIR: /tmp
+      WATERMARKS_MAX_INPUT_BYTES: "20971520"
+      NOMARK_TRUSTED_PROXIES: "172.16.0.0/12"
+      NOMARK_NMT_URL: http://nomark-nmt:8001
+      OMP_NUM_THREADS: "1"
+    volumes:
+      - nomark_temp:/tmp
+    networks: [nomark_network, nomark_nmt_network]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 2g
+    memswap_limit: 2g
+    cpus: 2
+    pids_limit: 128
+    stop_grace_period: 95s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  nomark-nmt:
+    image: registry.gitlab.com/ardianryan/nomark/nmt:latest
+    platform: linux/amd64
+    pull_policy: always
+    restart: unless-stopped
+    init: true
+    user: "10002:10002"
+    environment:
+      TZ: Asia/Jakarta
+      OMP_NUM_THREADS: "2"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    networks: [nomark_nmt_network]
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777,noexec,nosuid,nodev
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 2g
+    memswap_limit: 2g
+    cpus: 2
+    pids_limit: 64
+    stop_grace_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  nomark_temp:
+    name: nomark_temp
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=512m,mode=1777"
+networks:
+  nomark_network:
+    name: nomark_network
+    driver: bridge
+  nomark_nmt_network:
+    name: nomark_nmt_network
+    driver: bridge
+    internal: true
