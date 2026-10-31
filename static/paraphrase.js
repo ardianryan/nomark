@@ -103,8 +103,8 @@ document.addEventListener('alpine:init', () => {
     closeSuggestions() {
       if (this.$refs.suggestions?.open) {
         this.$refs.suggestions.close();
-        if (this.suggestionTrigger?.isConnected) this.suggestionTrigger.focus();
-        else this.$refs.outputView?.focus();
+        if (this.suggestionTrigger?.isConnected) this.suggestionTrigger.focus({ preventScroll: true });
+        else this.$refs.outputView?.focus({ preventScroll: true });
       }
       this.selectedChange = null;
     },

@@ -48,6 +48,8 @@ async function openEditor(page, options = {}) {
 }
 
 test('suggestions preserve Unicode positions after replacement, restore and reset', async ({ page }) => {
+  // Measure dialog movement independently of the page's smooth focus scrolling.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const session = await openEditor(page);
   const choices = page.getByRole('button', { name: "Word choices: can't", exact: true });
   await expect(choices).toHaveCount(2);
