@@ -20,6 +20,7 @@ verify:
     - if [ -n "$CI_COMMIT_TAG" ]; then .venv/bin/python scripts/nmt_quality_gate.py; fi
     - .venv/bin/python -m pytest tests nmt-service/tests
     - npm ci --no-audit --no-fund
+    - npm run test:unit
     - npx playwright install --with-deps chromium
     - npm test
   artifacts:

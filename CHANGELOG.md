@@ -6,6 +6,21 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.6] - 2026-10-31
+
+### Added
+
+- Highlight paraphrase changes with accessible word-choice menus, original-text restoration, manual editing, and restoration of the initial model result.
+- Compare text in a bounded browser worker using locally served JsDiff 9.0.0. Suggestions and manual edits never resend text or trigger additional inference.
+- Return bounded, optional code-point edit metadata from existing reviewed equivalences; discard malformed metadata while retaining valid text results.
+- Autosave the latest edited result in its existing browser-history item, with legacy-history support and the existing combined storage limits.
+
+### Changed
+
+- Simplify the workspace in Indonesian and English; move technical explanations and processing details into collapsed FAQ answers and the privacy policy.
+- Preserve the original NMT models, edit vocabulary, admission limits and quality-release gate. Production deployment remains separate from publishing images.
+- Verify 177 local Python tests (one Linux-only test deferred to GitLab), 29 browser tests and eight JavaScript tests. All eighty real-model outputs match reviewed alpha.5 results; metadata ranges and alternatives pass validation. Remove all alpha.6 test containers/images and temporary files while preserving production and `scc-*` images.
+
 ## [0.1.0-alpha.5] - 2026-10-30
 
 ### Added

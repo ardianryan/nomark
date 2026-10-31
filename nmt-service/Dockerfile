@@ -7,7 +7,7 @@ COPY models.lock.json build_models.py ./
 RUN python build_models.py
 
 FROM python:3.11-slim-bookworm
-ARG VERSION=0.1.0-alpha.5
+ARG VERSION=0.1.0-alpha.6
 ARG REVISION=unknown
 LABEL org.opencontainers.image.title="NoMark NMT" org.opencontainers.image.licenses="MIT AND Apache-2.0" \
       org.opencontainers.image.version=$VERSION org.opencontainers.image.revision=$REVISION

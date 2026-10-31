@@ -13,8 +13,9 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }) => { expect(page.errors).toEqual([]); });
 
-test('cleans text, copies, downloads, restores local history, and deletes it', async ({ page, context }) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+test('cleans text, copies, downloads, restores local history, and deletes it', async ({ page }) => {
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
+    value: { writeText: async value => { window.testClipboard = value; }, readText: async () => window.testClipboard } }));
   await page.getByLabel('Original text').fill('Hello\u200bworld 👩‍💻');
   await page.getByRole('button', { name: 'Clean text', exact: true }).click();
   await expect(page.getByLabel('Cleaned text')).toHaveValue('Helloworld 👩‍💻');
@@ -143,6 +144,7 @@ test('supports the UUID and clipboard fallbacks needed for HTTP LAN access', asy
   await page.addInitScript(() => {
     Object.defineProperty(crypto, 'randomUUID', { value: undefined, configurable: true });
     Object.defineProperty(navigator, 'clipboard', { value: undefined, configurable: true });
+    document.execCommand = command => command === 'copy';
   });
   await page.reload();
   await page.getByLabel('Original text').fill('Hello\u200bLAN');
@@ -249,7 +251,7 @@ test('PDF waits before upload and requires explicit server permission', async ({
     await request.delete('/api/queue', { headers: { Authorization: `Bearer ${tickets[0].token}` } });
     await expect(page.locator('.file-row .copy-button')).toBeVisible();
     expect(uploads).toBe(1);
-    await expect(page.locator('.result-location')).toContainText('Processed on the server');
+    await expect(page.locator('.result-location')).toHaveCount(0);
     const event = page.waitForEvent('download');
     await page.locator('.file-row .copy-button').click();
     const downloaded = await event;

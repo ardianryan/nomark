@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "synthetic": true,
-  "review_method": "Agent-assisted source/output comparison of synthetic fixtures, including retained originals; not an independent linguistic certification or a SynthID effectiveness test. Changed outputs and unchanged outputs are counted separately.",
+  "review_method": "All forty real-model outputs match the reviewed alpha.5 outputs exactly. Prior agent-assisted synthetic language assessments are retained on that basis; every returned edit range and alternative was independently checked. This is not an independent linguistic certification or SynthID test.",
   "model_revisions": {
     "en-id": {
       "repository": "Helsinki-NLP/opus-mt-en-id",
@@ -46,6 +46,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 1923,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -58,7 +59,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 583,
+      "elapsed_ms": 584,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -71,7 +73,19 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "paraphrased",
-      "elapsed_ms": 524,
+      "elapsed_ms": 407,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 61,
+          "input_end": 69,
+          "output_start": 61,
+          "output_end": 64,
+          "before": "tersebut",
+          "after": "itu",
+          "alternatives": []
+        }
+      ],
       "notes": "The demonstrative tersebut becomes itu; quantities and prohibition are retained."
     },
     {
@@ -84,7 +98,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 456,
+      "elapsed_ms": 432,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -98,6 +113,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 456,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -110,7 +126,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 456,
+      "elapsed_ms": 457,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -123,7 +140,19 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "paraphrased",
-      "elapsed_ms": 356,
+      "elapsed_ms": 408,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 11,
+          "input_end": 21,
+          "output_start": 11,
+          "output_end": 24,
+          "before": "menyiapkan",
+          "after": "mempersiapkan",
+          "alternatives": []
+        }
+      ],
       "notes": "Menyiapkan becomes mempersiapkan. Paragraph boundaries and publication review are retained."
     },
     {
@@ -136,7 +165,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 407,
+      "elapsed_ms": 453,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -150,6 +180,18 @@
       "language_acceptable": true,
       "status": "paraphrased",
       "elapsed_ms": 254,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 39,
+          "input_end": 41,
+          "output_start": 39,
+          "output_end": 42,
+          "before": "Ia",
+          "after": "Dia",
+          "alternatives": []
+        }
+      ],
       "notes": "Ia becomes Dia. Dr. Sari, the review and the request remain unchanged."
     },
     {
@@ -162,7 +204,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 356,
+      "elapsed_ms": 355,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -176,6 +219,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 482,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -188,7 +232,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 430,
+      "elapsed_ms": 458,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -202,6 +247,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 481,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -214,7 +260,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 381,
+      "elapsed_ms": 355,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -228,6 +275,18 @@
       "language_acceptable": true,
       "status": "paraphrased",
       "elapsed_ms": 304,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 31,
+          "input_end": 42,
+          "output_start": 31,
+          "output_end": 41,
+          "before": "membutuhkan",
+          "after": "memerlukan",
+          "alternatives": []
+        }
+      ],
       "notes": "Membutuhkan becomes memerlukan; speed and memory comparison are unchanged."
     },
     {
@@ -241,6 +300,28 @@
       "language_acceptable": true,
       "status": "paraphrased",
       "elapsed_ms": 153,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 28,
+          "input_end": 36,
+          "output_start": 28,
+          "output_end": 31,
+          "before": "tersebut",
+          "after": "itu",
+          "alternatives": []
+        },
+        {
+          "id": "edit-1",
+          "input_start": 43,
+          "input_end": 53,
+          "output_start": 38,
+          "output_end": 49,
+          "before": "memerlukan",
+          "after": "membutuhkan",
+          "alternatives": []
+        }
+      ],
       "notes": "Tersebut becomes itu and memerlukan becomes membutuhkan. Attribution and still-required additional testing are retained."
     },
     {
@@ -253,7 +334,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 330,
+      "elapsed_ms": 304,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -266,7 +348,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 281,
+      "elapsed_ms": 254,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -279,7 +362,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 380,
+      "elapsed_ms": 382,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -292,7 +376,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 660,
+      "elapsed_ms": 633,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -305,7 +390,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 532,
+      "elapsed_ms": 533,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -318,7 +404,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 585,
+      "elapsed_ms": 558,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -331,7 +418,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 563,
+      "elapsed_ms": 557,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -344,7 +432,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 486,
+      "elapsed_ms": 456,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -357,7 +446,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 584,
+      "elapsed_ms": 583,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -371,6 +461,7 @@
       "language_acceptable": true,
       "status": "unchanged",
       "elapsed_ms": 456,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -383,7 +474,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 533,
+      "elapsed_ms": 537,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -396,7 +488,19 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "paraphrased",
-      "elapsed_ms": 280,
+      "elapsed_ms": 279,
+      "edits": [
+        {
+          "id": "edit-0",
+          "input_start": 33,
+          "input_end": 44,
+          "output_start": 33,
+          "output_end": 44,
+          "before": "Keep a copy",
+          "after": "Save a copy",
+          "alternatives": []
+        }
+      ],
       "notes": "Keep a copy becomes Save a copy; the document and list structure remain unchanged."
     },
     {
@@ -409,7 +513,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 509,
+      "elapsed_ms": 481,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -423,6 +528,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 380,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -435,7 +541,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 533,
+      "elapsed_ms": 508,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -448,7 +555,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 355,
+      "elapsed_ms": 331,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -461,7 +569,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 456,
+      "elapsed_ms": 432,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -474,7 +583,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 433,
+      "elapsed_ms": 431,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -487,7 +597,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 380,
+      "elapsed_ms": 355,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -500,7 +611,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 382,
+      "elapsed_ms": 381,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -513,7 +625,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 330,
+      "elapsed_ms": 304,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -526,7 +639,8 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "unchanged",
-      "elapsed_ms": 305,
+      "elapsed_ms": 279,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -540,6 +654,7 @@
       "language_acceptable": true,
       "status": "partial",
       "elapsed_ms": 330,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     },
     {
@@ -552,11 +667,12 @@
       "critical_error": false,
       "language_acceptable": true,
       "status": "partial",
-      "elapsed_ms": 734,
+      "elapsed_ms": 713,
+      "edits": [],
       "notes": "Output equals the source exactly. Original language and facts retained; this is not counted as a successful rewrite."
     }
   ],
-  "engine_fingerprint": "3a046e6a566060801cdd1ae3c39b5214c4230b24fa160144171d6ab2ed0d4a8c",
+  "engine_fingerprint": "e144f58cb7d9257ef61feb26300459eda7ce6179e1bae20fdd5d9add3b61ec8b",
   "summary": {
     "critical_errors": 0,
     "language_acceptable": 40,

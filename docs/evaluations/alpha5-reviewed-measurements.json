@@ -1,0 +1,24 @@
+{
+  "disconnect_stopped_existing_worker": true,
+  "maximum_input": [
+    {
+      "language": "en",
+      "characters": 5000,
+      "elapsed_ms": 30077,
+      "status": "unchanged"
+    },
+    {
+      "language": "id",
+      "characters": 5000,
+      "elapsed_ms": 36205,
+      "status": "partial"
+    }
+  ],
+  "real_timeout": {
+    "cold_ms": 1570,
+    "shortened_timeout_stopped_worker": true
+  },
+  "container_memory_peak_bytes": 683941888,
+  "version": "0.1.0-alpha.5",
+  "scope": "Two CPU limit, 2 GiB memory limit, offline dedicated Linux staging. Peak includes the service and a separate real-model timeout probe; maximum-size fixtures repeat sentences and do not establish a worst-case runtime."
+}

@@ -149,3 +149,31 @@ def test_quality_gate_does_not_accept_retained_inputs_as_rewrites(monkeypatch):
         row['output'] = row['input'].replace(' ', '  ')
     with pytest.raises(ValueError, match='actual rewrites'):
         check_quality(data)
+
+
+@pytest.mark.parametrize('malformation', ['none', 'offset', 'bool', 'overlap', 'alternative', 'surrogate', 'many'])
+def test_optional_metadata_is_validated_without_losing_text(malformation):
+    from nomark.paraphrase import validate_edits
+    source, output = '🙂 cannot', "🙂 can't"
+    edit = {'id': 'one', 'input_start': 2, 'input_end': 8, 'output_start': 2,
+            'output_end': 7, 'before': 'cannot', 'after': "can't", 'alternatives': ['can not']}
+    value = [edit]
+    if malformation == 'offset': edit['output_start'] = 3
+    if malformation == 'bool': edit['input_start'] = True
+    if malformation == 'overlap': value.append(dict(edit, id='two'))
+    if malformation == 'alternative': edit['alternatives'] = [dict(text='bad')]
+    if malformation == 'surrogate': edit['alternatives'] = ['\ud800']
+    if malformation == 'many': value *= 257
+    assert bool(validate_edits(value, source, output)) == (malformation == 'none')
+
+
+def test_client_keeps_valid_output_when_optional_metadata_is_malformed():
+    async def scenario():
+        def response(request):
+            return httpx.Response(200, json={'ok': True, 'paraphrased_text': "We can't proceed.",
+                'language': 'en', 'status': 'paraphrased', 'warnings': ['review_required'],
+                'edits': [{'output_start': -1, 'alternatives': ['untrusted']}]})
+        result = await NMTClient('http://nmt', transport=httpx.MockTransport(response)).process('We cannot proceed.', 'en')
+        assert result['paraphrased_text'] == "We can't proceed."
+        assert result['edits'] == []
+    asyncio.run(scenario())

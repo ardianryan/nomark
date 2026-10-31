@@ -4,21 +4,21 @@
     {
       "language": "en",
       "characters": 5000,
-      "elapsed_ms": 30077,
+      "elapsed_ms": 29339,
       "status": "unchanged"
     },
     {
       "language": "id",
       "characters": 5000,
-      "elapsed_ms": 36205,
+      "elapsed_ms": 35374,
       "status": "partial"
     }
   ],
   "real_timeout": {
-    "cold_ms": 1570,
+    "cold_ms": 1571,
     "shortened_timeout_stopped_worker": true
   },
-  "container_memory_peak_bytes": 683941888,
-  "version": "0.1.0-alpha.5",
-  "scope": "Two CPU limit, 2 GiB memory limit, offline dedicated Linux staging. Peak includes the service and a separate real-model timeout probe; maximum-size fixtures repeat sentences and do not establish a worst-case runtime."
+  "container_memory_peak_bytes": 684539904,
+  "version": "0.1.0-alpha.6",
+  "scope": "Offline source-overlay staging on the tested alpha.5 NMT runtime, two CPUs and 2 GiB memory. Maximum-size fixtures repeat sentences. The memory peak includes both the service and a separate model timeout probe; this is not a worst-case latency or isolated steady-state memory claim."
 }

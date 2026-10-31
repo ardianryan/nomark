@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0-alpha.6",
+  "time_utc": "2026-10-31T04:41:15.857982+00:00",
+  "removed_containers": [
+    "nomark-staging-alpha6-nmt"
+  ],
+  "removed_images_and_build_intermediates": [
+    "sha256:31d54565cc09bb5706ac29b23b43a897f2ed2bbe179510dd8f3dad24e1ef89e2",
+    "sha256:9ea0b6700adb7bd1986d0469e3ebc63e40b2806294c47c896bce3093afdc346d"
+  ],
+  "own_staging_containers_and_images_remaining": 0,
+  "expiry_timer_stopped": true,
+  "temporary_directory_removed": "/opt/nomark-staging-alpha6",
+  "all_preexisting_containers_unchanged": true,
+  "preexisting_scc_images_preserved": 12,
+  "global_prune_or_force_removal_used": false
+}

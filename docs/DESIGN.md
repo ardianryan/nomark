@@ -21,8 +21,14 @@ rounded panels, and a task-first composition. ENERGY 2 / RHYTHM 2 / MOTION 1.
 - The service is public; the footer says "Open to everyone" rather than naming a personal tool.
 - Theme defaults to the OS setting. A saved light/dark/system choice wins; the
   light pastel palette becomes dark forest/muted warm surfaces with readable ink.
-- Processing-location labels describe a real privacy decision: local for text
-  and non-PDF documents; an explicit permission control for server PDF uploads.
+- A concise permission control precedes server PDF uploads and paraphrasing.
+  Processing details live in closed FAQ answers and the privacy policy.
 - Privacy and terms have English and Indonesian HTML pages and an actual contact.
 
 - The Files workspace places four native radio choices (Documents, Images, Audio, Video) above the picker. The choices wrap to two columns on phones; each explains its scope before a file is selected. Mixed queues, processing routes, reports, and history retain the shared workflow.
+
+- The paraphrase result keeps the mint editor surface. Muted green highlights
+  and underlines identify changed phrases without relying on color alone.
+  A small native dialog presents choices; plain-text manual editing uses the
+  existing textarea style. The quiet workspace avoids infrastructure badges and
+  repeated implementation explanations. Model details remain discoverable in FAQ.

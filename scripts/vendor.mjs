@@ -4,6 +4,8 @@ import { execFileSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
 
 await mkdir('static/vendor', { recursive: true });
+await copyFile('node_modules/diff/dist/diff.min.js', 'static/vendor/diff.min.js');
+await copyFile('node_modules/diff/LICENSE', 'static/vendor/DIFF-LICENSE.txt');
 const source = 'node_modules/@alpinejs/csp/dist/cdn.min.js';
 await copyFile(source, 'static/vendor/alpine-csp.min.js');
 const { version } = JSON.parse(await readFile('node_modules/@alpinejs/csp/package.json', 'utf8'));
@@ -19,6 +21,7 @@ for (const name of ['reactivity', 'shared']) {
   const license = await readFile(`node_modules/@vue/${name}/LICENSE`, 'utf8');
   await writeFile('static/notices.txt', `${await readFile('static/notices.txt', 'utf8')}\n\n@vue/${name}\n\n${license}`);
 }
+await writeFile('static/notices.txt', `${await readFile('static/notices.txt', 'utf8')}\n\nJsDiff 9.0.0\nhttps://github.com/kpdecker/jsdiff\n\n${await readFile('static/vendor/DIFF-LICENSE.txt', 'utf8')}`);
 
 const pyodideDirectory = 'static/vendor/pyodide/314.0.7';
 await mkdir(pyodideDirectory, { recursive: true });

@@ -7,7 +7,7 @@ import httpx
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from nmt_service.pipeline import Pipeline, acceptable_edit, sentences
+from nmt_service.pipeline import Pipeline, acceptable_edit, sentences, build_edits
 from nmt_service.main import create_app
 
 
@@ -111,6 +111,27 @@ def test_whitespace_alone_is_not_a_paraphrase():
 
 def test_generated_space_before_punctuation_is_rejected():
     assert not acceptable_edit('Ia menunggu.', 'Ia menunggu .', 'id')
+
+
+def test_edit_metadata_uses_codepoints_and_context_checked_alternatives():
+    source, output = '🙂 We cannot proceed.', "🙂 We can't proceed."
+    edits = build_edits(source, output, 'en')
+    assert len(edits) == 1
+    edit = edits[0]
+    assert source[edit['input_start']:edit['input_end']] == 'cannot'
+    assert output[edit['output_start']:edit['output_end']] == "can't"
+    assert edit['output_start'] == 5
+    assert edit['alternatives'] == ['can not']
+    for choice in edit['alternatives']:
+        assert acceptable_edit(source, output[:5] + choice + output[10:], 'en')
+
+
+def test_metadata_limits_do_not_truncate_the_result():
+    source, output = 'ia ' * 300, 'dia ' * 300
+    edits = build_edits(source, output, 'id')
+    assert len(edits) == 256
+    assert edits[-1]['output_end'] < len(output)
+    assert build_edits('She arrived.', 'He arrived.', 'en') == []
 
 
 @pytest.mark.parametrize('payload,status', [({'text': 'hello', 'language': 'en'}, 200),

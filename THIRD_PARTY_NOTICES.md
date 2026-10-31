@@ -19,3 +19,6 @@ Brand assets outline the wordmark selected for NoMark; no font binary is bundled
 ## Optional NMT service (0.1.0-alpha.5)
 
 Helsinki-NLP OPUS-MT en-id and id-en model cards declare Apache-2.0. Immutable source revisions and file SHA-256 values are in `nmt-service/models.lock.json`; license terms are in `nmt-service/LICENSE.models`. Converted model/tokenizer checksums are generated inside the NMT image. CTranslate2 and Transformers dependencies retain their own distribution licenses. NMT dependencies and models are not bundled into the browser engine or the main application image.
+## JsDiff
+
+The browser text-comparison worker uses JsDiff (`diff` npm package) version 9.0.0, under the BSD-3-Clause license. Source: https://github.com/kpdecker/jsdiff. A local distribution and license are provided under `static/vendor`; the browser does not load it from a CDN. Full terms are also included in `static/notices.txt`.

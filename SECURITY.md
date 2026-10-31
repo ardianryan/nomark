@@ -40,3 +40,7 @@ The [security verification record](docs/SECURITY-VERIFICATION.md) identifies the
 ## Optional NMT boundary — 0.1.0-alpha.5
 
 Paraphrasing introduces an internal HTTP/model-parser boundary and requires a new quality/runtime review. It is disabled when `NOMARK_NMT_URL` is unset. Never expose its unauthenticated internal port publicly. Use the isolated network, single-replica admission and resource bounds described in [Paraphrasing](docs/PARAPHRASE.md). It does not inherit an ASVS compliance claim from earlier cleaner tests. Model source revisions/checksums and converted artefact checksums are recorded separately from application dependencies; actual language quality and dependency/image review remain distinct gates.
+
+## Browser editor boundary — 0.1.0-alpha.6
+
+Optional suggestion metadata is bounded and validated for code-point ranges, text correspondence, ordering and alternatives; invalid metadata is discarded without discarding valid output. Browser comparison runs in a worker with time/edit-distance bounds. Result and suggestion strings are rendered as text, not HTML. Manual edits and suggestion choices never call the model or send text again, and manual edits are not validated by the model. These changes do not close the outstanding audit hypotheses, dependency advisory follow-up or production infrastructure checks above.

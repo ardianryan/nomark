@@ -1,7 +1,7 @@
 from html import escape
 
 CONTACT = "me@ardianryan.com"
-UPDATED = "2026-10-30"
+UPDATED = "2026-10-31"
 
 POLICIES = {
     "id": {
@@ -78,6 +78,14 @@ POLICIES['id']['terms']['sections'].insert(1, ('Batas parafrasa', [
 ]))
 POLICIES['en']['terms']['sections'].insert(1, ('Paraphrase limitations', [
     'Back-translation can change meaning, facts, names or style. Review output before use. Language-rule compliance is not guaranteed. This feature does not detect SynthID, decrypt text, or guarantee statistical watermark removal or acceptance by AI detectors.'
+]))
+POLICIES['id']['privacy']['sections'].insert(3, ('Sorotan dan penyuntingan', [
+    'Perbandingan teks, sorotan perubahan, pemilihan saran, dan suntingan manual berjalan di browser. Tindakan tersebut tidak mengirim ulang teks dan tidak memanggil model. Hasil terbaru dan hasil awal model disimpan bersama dalam satu entri riwayat lokal, dengan batas gabungan 20 entri atau 100 MiB. Riwayat ini dapat Anda hapus melalui antarmuka atau pengaturan browser.',
+    'Saran berasal dari padanan yang telah diperiksa oleh layanan parafrasa. Pilihan dapat terbatas atau tidak tersedia. Suntingan manual merupakan perubahan Anda sendiri dan tidak diperiksa ulang oleh model. Tetap tinjau makna, fakta, nama, dan ejaan hasil sebelum digunakan.'
+]))
+POLICIES['en']['privacy']['sections'].insert(3, ('Highlights and editing', [
+    'Text comparison, change highlights, suggestion choices, and manual editing run in your browser. These actions do not resend text or call the model. The latest result and initial model result are kept together in one local history item, within the combined limit of 20 items or 100 MiB. You can remove history through the interface or your browser settings.',
+    'Suggestions come from equivalences checked by the paraphrasing service. Choices may be limited or unavailable. Manual edits are your own changes and are not checked again by the model. Review meaning, facts, names, and spelling before use.'
 ]))
 
 

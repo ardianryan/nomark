@@ -19,6 +19,7 @@ for row in data['samples']:
     with urllib.request.urlopen(request, timeout=85) as response:
         result = json.load(response)
     row.update(output=result['paraphrased_text'], status=result['status'],
+               edits=result.get('edits', []),
                elapsed_ms=round((time.monotonic() - started) * 1000),
                reviewed=False, critical_error=None, language_acceptable=None)
     row.pop('notes', None)

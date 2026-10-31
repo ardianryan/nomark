@@ -1,6 +1,20 @@
 # Verification
 
-## Current candidate: 0.1.0-alpha.5
+## 0.1.0-alpha.6 editor verification
+
+Verified on 31 October 2026 before publication. The local Python suite passed **177 tests**, with one Linux-only resource-limit test deferred to GitLab; the existing framework TestClient deprecation warning remains. **29 browser tests** and **8 JavaScript unit tests** passed. A focused seven-test editor rerun additionally verified the final popup-position fix without a page-scroll jump. GitLab must pass the complete Linux suite, both image builds and runtime smoke checks before release promotion.
+
+Coverage includes code-point metadata validation and malformed-metadata fallback; replacement/deletion and shared-word boundaries; Unicode, emoji and line endings; suggestion changes after length shifts; original/model restoration; manual editing with unaffected suggestions retained; draft autosave, reload and single-entry history; history deletion without resurrection; clipboard fallback/export; literal markup rendering; storage/worker failures; length limits; keyboard/dialog accessibility; language and dark/light/mobile behavior. Browser clipboard calls are captured in test doubles so testing does not overwrite the operator's clipboard. Comparison work is bounded and no local editing action sends text back to the model.
+
+All eighty real-model outputs matched the reviewed alpha.5 outputs exactly. The previous agent-assisted language assessments are retained on that explicit basis: zero observed critical changes, twelve limited rewrites and sixty-eight preserved inputs. Every returned metadata range and alternative was checked. The current source-bound reports are [original samples](nmt-evaluation.json) and [holdout](nmt-holdout.json); the reviewed alpha.5 reports remain archived.
+
+The isolated NMT source-overlay test used the published alpha.5 runtime with unchanged pinned models/dependencies, two CPUs, 2 GiB RAM and no network. Repeated-sentence 5,000-character requests took 29,339 ms (English) and 35,374 ms (Indonesian). A real disconnect and a shortened 50 ms warmed-inference deadline stopped model processes. The observed memory peak was 684,539,904 bytes including a second timeout-probe model process. These fixtures do not establish worst-case latency or steady-state memory. See [measurements](nmt-measurements.json).
+
+Desktop light and mobile dark views were inspected in two bounded capture rounds. The existing typography, logo, mint/peach surfaces and system theme remain. The small dialog separates word choices without changing the editor layout; underlined phrase highlights do not rely on color alone. Keyboard, automated WCAG and mobile-overflow checks passed. Captures are development artifacts, not repository brand assets.
+
+The [cleanup record](evaluations/alpha6-staging-cleanup.json) confirms removal of the staging container and both staging/build image records, the expiry timer and temporary directory. Existing production containers and all twelve preexisting `scc-*` images were preserved. No global prune or force deletion was used. Deployment remains a separate Portainer action.
+
+## Historical verification: 0.1.0-alpha.5
 
 The unreleased alpha.5 working tree is based on `3ed8d3916a9549ae00d5b5bd21414e542b9f0dba`. **168 Python tests passed** in offline Linux staging, including NMT queue/client/API/lifecycle tests, adversarial edit rejection and release-gate tests. **22 browser tests passed**, including consent, local waiting, copy/download/history, unavailability, cancellation and the existing cleaner regressions. One framework TestClient adapter deprecation warning remains. Both optional Compose combinations validate; GitLab YAML parses locally. The modified GitLab pipeline has not been executed remotely or published.
 

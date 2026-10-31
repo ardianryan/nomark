@@ -55,7 +55,7 @@ document.addEventListener('alpine:init', () => {
       for (const item of data['@graph']) {
         if (item['@type'] === 'WebPage') Object.assign(item, { '@id': `${url}#page`, url, name: this.t('seoTitle'), description: this.t('seoDescription'), inLanguage: this.locale });
         if (item['@type'] === 'WebApplication') Object.assign(item, { url, description: this.t('seoDescription') });
-        if (item['@type'] === 'FAQPage') Object.assign(item, { '@id': `${url}#faq`, inLanguage: this.locale, mainEntity: [1, 2, 3, 4].map(i => ({ '@type': 'Question', name: this.t(`faq${i}Q`), acceptedAnswer: { '@type': 'Answer', text: this.t(`faq${i}A`) } })) });
+        if (item['@type'] === 'FAQPage') Object.assign(item, { '@id': `${url}#faq`, inLanguage: this.locale, mainEntity: [1, 2, 3, 4, 5, 6].map(i => ({ '@type': 'Question', name: this.t(`faq${i}Q`), acceptedAnswer: { '@type': 'Answer', text: this.t(`faq${i}A`) } })) });
       }
       schema.textContent = JSON.stringify(data);
     },
@@ -67,11 +67,10 @@ document.addEventListener('alpine:init', () => {
     get isTextTab() { return this.tab === 'text'; }, get isFileTab() { return this.tab === 'file'; },
     get textTabClass() { return this.isTextTab ? 'selected' : ''; }, get fileTabClass() { return this.isFileTab ? 'selected' : ''; },
     get textTabIndex() { return this.isTextTab ? 0 : -1; }, get fileTabIndex() { return this.isFileTab ? 0 : -1; },
-    setTextTab() { if (!this.busy) { this.tab = 'text'; this.error = ''; } }, setFileTab() { if (!this.busy) { this.tab = 'file'; this.error = ''; } },
+    setTextTab() { if (!this.busy) { window.NoMarkParaphraseFlush?.(); this.tab = 'text'; this.error = ''; } }, setFileTab() { if (!this.busy) { window.NoMarkParaphraseFlush?.(); this.tab = 'file'; this.error = ''; } },
     get isParaphraseTab() { return this.tab === 'paraphrase'; },
     get paraphraseTabClass() { return this.isParaphraseTab ? 'selected' : ''; },
     get paraphraseTabIndex() { return this.isParaphraseTab ? 0 : -1; },
-    get modeNote() { return this.t(this.isParaphraseTab ? 'paraphraseServer' : 'noRewrite'); },
     setParaphraseTab() { if (!this.busy) { this.tab = 'paraphrase'; this.error = ''; } },
     tabKey(event) { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); if (this.busy) return; const tabs = ['text', 'file', 'paraphrase']; this.tab = event.key === 'Home' ? 'text' : event.key === 'End' ? 'paraphrase' : tabs[(tabs.indexOf(this.tab) + (event.key === 'ArrowLeft' ? 2 : 1)) % 3]; document.getElementById(`${this.tab}-tab`).focus(); } },
     get notBusy() { return !this.busy; }, get characterCount() { return Array.from(this.input).length.toLocaleString(this.locale); },
@@ -197,6 +196,7 @@ document.addEventListener('alpine:init', () => {
     async restore(id) {
       if (this.busy) return;
       try {
+        await window.NoMarkParaphraseFlush?.();
         const record = await NoMarkHistory.get(id);
         if (!record) { this.notice = this.t('historyMissing'); await this.refreshHistory(); return; }
         this.tab = record.mode;
@@ -206,9 +206,9 @@ document.addEventListener('alpine:init', () => {
         this.error = ''; this.notice = this.t('pendingResult');
       } catch { this.notice = this.t('storageFailed'); }
     },
-    async downloadHistory(id) { try { const record = await NoMarkHistory.get(id); if (!record) { this.notice = this.t('historyMissing'); return; } if (record.mode === 'paraphrase') download(new Blob([record.result.paraphrased_text], { type: 'text/plain;charset=utf-8' }), 'text.paraphrased.txt'); else if (record.mode === 'text') download(new Blob([record.result.cleaned_text], { type: 'text/plain;charset=utf-8' }), 'text.cleaned.txt'); else download(record.outputBlob, record.result.cleaned_name); } catch { this.notice = this.t('storageFailed'); } },
-    async deleteHistory(id) { try { await NoMarkHistory.remove(id); await this.refreshHistory(); } catch { this.notice = this.t('storageFailed'); } },
+    async downloadHistory(id) { try { await window.NoMarkParaphraseFlush?.(); const record = await NoMarkHistory.get(id); if (!record) { this.notice = this.t('historyMissing'); return; } if (record.mode === 'paraphrase') download(new Blob([record.result.paraphrased_text], { type: 'text/plain;charset=utf-8' }), 'text.paraphrased.txt'); else if (record.mode === 'text') download(new Blob([record.result.cleaned_text], { type: 'text/plain;charset=utf-8' }), 'text.cleaned.txt'); else download(record.outputBlob, record.result.cleaned_name); } catch { this.notice = this.t('storageFailed'); } },
+    async deleteHistory(id) { try { await window.NoMarkParaphraseFlush?.(); await NoMarkHistory.remove(id); window.dispatchEvent(new CustomEvent('nomark-history-removed', { detail: id })); await this.refreshHistory(); } catch { this.notice = this.t('storageFailed'); } },
     requestClearHistory() { this.$refs.confirmDialog.showModal(); }, cancelClearHistory() { this.$refs.confirmDialog.close(); },
-    async clearHistory() { try { await NoMarkHistory.clear(); await this.refreshHistory(); this.notice = this.t('historyCleared'); } catch { this.notice = this.t('storageFailed'); } this.$refs.confirmDialog.close(); },
+    async clearHistory() { try { await window.NoMarkParaphraseFlush?.(); await NoMarkHistory.clear(); window.dispatchEvent(new CustomEvent('nomark-history-removed')); await this.refreshHistory(); this.notice = this.t('historyCleared'); } catch { this.notice = this.t('storageFailed'); } this.$refs.confirmDialog.close(); },
   }));
 });

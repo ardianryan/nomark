@@ -1,4 +1,4 @@
-# Optional paraphrasing — 0.1.0-alpha.5
+# Optional paraphrasing — 0.1.0-alpha.6
 
 This feature back-translates Indonesian through English, or English through Indonesian, with locally operated OPUS-MT models. It does not detect SynthID, decrypt text, guarantee watermark removal, or provide a semantic-equivalence score. The browser cleaning engine remains deterministic and model-free.
 
@@ -32,11 +32,23 @@ Inputs/outputs are not written as server history. IndexedDB retains them under t
 
 ## Evaluation and release gate
 
-`docs/nmt-evaluation.json` contains the original forty explicitly synthetic samples, twenty per language. A second forty-sample [holdout](evaluations/alpha5-holdout.json) was fixed before inspecting its outputs. The [failed baseline](evaluations/alpha5-baseline.json) remains available, including all eleven original critical errors. `scripts/evaluate_nmt.py` collects real outputs without marking them reviewed. Review compares facts, negation, names, quantities, paragraphs and language quality. It does not measure SynthID removal.
+`docs/nmt-evaluation.json` contains the original forty explicitly synthetic samples, twenty per language. A second forty-sample [holdout](nmt-holdout.json) was fixed before inspecting its outputs. The [failed baseline](evaluations/alpha5-baseline.json) remains available, including all eleven original critical errors. The reviewed alpha.5 reports are archived separately. `scripts/evaluate_nmt.py` collects real outputs without marking them reviewed. Review compares facts, negation, names, quantities, paragraphs and language quality. It does not measure SynthID removal.
 
 `python scripts/nmt_quality_gate.py` applies the existing criteria to **both** forty-sample reports: all reviews completed, no critical factual errors, at least 32 acceptable language results, actual non-whitespace rewrites in both languages, and exact model/source fingerprints. Returning every input unchanged cannot pass. GitLab blocks tagged builds and latest promotion until that gate passes. A branch can build SHA images for isolated staging even if language evaluation fails. Review evidence must be refreshed after model/tokenizer changes.
 
 GitLab builds separate main and `/nmt` images. Both smoke stages must finish before release promotion; the promotion script verifies each tested manifest digest. Registry updates are sequential, not an atomic two-image transaction: use matching explicit version tags for coordinated rollback if publication fails partway through. There is no SSH deployment or host-wide image pruning.
+
+## Browser editing and suggestions
+
+The result highlights changed words or phrases. Each highlight opens an accessible dialog with available replacements and an original-text restoration action. The service returns optional `edits` metadata containing an ID, input/output start and end offsets, before/after text and alternatives. Offsets count Unicode code points. Metadata is bounded to 256 changes and three alternatives per change, checked against the full segment, and generated without additional inference or a larger edit vocabulary. The main application discards invalid optional metadata while preserving a valid text result.
+
+JsDiff 9.0.0 runs in a same-origin worker with a 150 ms comparison budget, a maximum edit distance of 2,000 tokens and a one-second worker deadline. Verified phrase boundaries anchor comparison so multiword suggestions stay together. A failed comparison falls back to plain, editable text. Rendering uses text nodes; uploaded or pasted markup is not executed. Suggestions and manual editing make no server requests.
+
+Manual editing uses a plain textarea with a 50,000-code-point limit. Finishing an edit remaps untouched suggestions and invalidates suggestions overlapping the edited spans. Copy/download use the current text, excluding deletion markers. Reset restores the initial model output. Manual changes are not model-validated or evidence of watermark removal.
+
+The initial model text, current output and editor state share one IndexedDB item. Drafts autosave after 500 ms; completion, export and history actions flush pending saves. Input/language snapshots remain attached to the original processing job. All editor metadata is included in the existing 20-item/100-MiB accounting. Legacy items gain local highlights and manual editing without a model request; server suggestions require their optional metadata.
+
+Technical explanations now appear in closed FAQ answers and the privacy policy. The workspace retains concise consent and a short review reminder in both languages.
 
 ## Verification record
 
@@ -47,6 +59,7 @@ Runtime and browser results, model measurements, sample review outcome and stagi
 - Real-model smoke: passed for both languages, with the runtime network internal-only.
 - Baseline: eleven critical meaning/fact changes and 29/40 acceptable language outputs (72.5%). Examples included an instruction to keep the original schedule becoming a rescheduling instruction, and `She` becoming `He`.
 - Revised pipeline: **quality gate passed**, with zero observed critical changes and 40/40 language-acceptable results in each report. Of 80 results, 12 contain actual limited rewrites and 68 equal the source. The 100% language acceptance includes preserved inputs; it is **not** a 100% paraphrasing success rate. All original eleven critical changes are rejected or avoided. The translation weights were not retrained; the improvement comes from candidate selection and original-segment fallback.
-- Runtime: 5,000-character repeated-sentence requests took 30,077 ms (English) and 36,205 ms (Indonesian) on two CPUs. The real disconnect and shortened-deadline probes killed inference. See [measurements](nmt-measurements.json) for exact values and [Verification](VERIFICATION.md) for measurement scope. More candidates cost additional CPU time.
+- Alpha.6 metadata regression: all eighty text outputs exactly match the reviewed alpha.5 outputs, and all returned edit ranges and alternatives passed validation. Manual user edits are excluded from model-quality claims.
+- Runtime: alpha.6 5,000-character repeated-sentence requests took 29,339 ms (English) and 35,374 ms (Indonesian) on two CPUs. The real disconnect and shortened-deadline probes killed inference. See [measurements](nmt-measurements.json) for exact values and [Verification](VERIFICATION.md) for measurement scope. More candidates cost additional CPU time.
 - Review was agent-assisted on synthetic examples, not an independent linguistic certification or a measurement of SynthID detectability.
-- Testing used an isolated application/NMT pair and a localhost SSH tunnel, without a published host port. Temporary staging resources are removed after verification at the owner's request. Passing the local quality gate does not itself publish a release, promote `latest` or change production.
+- Alpha.6 model tests used a separate offline NMT container without a published host port; browser tests used a separate local development process. Temporary staging resources were removed after verification. Passing the local quality gate does not itself publish a release, promote `latest` or change production.

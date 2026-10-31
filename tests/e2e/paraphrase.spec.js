@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
-test('paraphrase consent, waiting without text upload, output and history', async ({ page, context }) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+test('paraphrase consent, waiting without text upload, output and history', async ({ page }) => {
+  await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
+    value: { writeText: async value => { window.testClipboard = value; }, readText: async () => window.testClipboard } }));
   let uploaded = 0, polls = 0, cancelled = 0;
   await page.route('**/api/paraphrase/capabilities', route => route.fulfill({ json: { ok: true, available: true } }));
   await page.route('**/api/paraphrase/queue', route => {
@@ -28,7 +29,7 @@ test('paraphrase consent, waiting without text upload, output and history', asyn
   await page.getByRole('button', { name: 'Paraphrase text', exact: true }).click();
   await expect(page.locator('.process-status')).toContainText('stays on your device');
   expect(uploaded).toBe(0);
-  await expect(page.getByLabel('Paraphrased text', { exact: true })).toHaveValue('A rewritten sentence.');
+  await expect(page.getByLabel('Paraphrased text', { exact: true })).toHaveText('A rewritten sentence.');
   expect(polls).toBe(1);
   const section = page.locator('#paraphrase-panel');
   await section.getByRole('button', { name: 'Copy', exact: true }).click();
@@ -38,7 +39,7 @@ test('paraphrase consent, waiting without text upload, output and history', asyn
   expect((await download).suggestedFilename()).toBe('text.paraphrased.txt');
   await page.reload();
   await page.locator('.history-item').click();
-  await expect(page.getByLabel('Paraphrased text', { exact: true })).toHaveValue('A rewritten sentence.');
+  await expect(page.getByLabel('Paraphrased text', { exact: true })).toHaveText('A rewritten sentence.');
   await expect(page.getByRole('checkbox', { name: /I allow this text/ })).not.toBeChecked();
   const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
   expect(axe.violations.map(item => item.id)).toEqual([]);

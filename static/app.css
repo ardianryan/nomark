@@ -91,4 +91,26 @@ html[data-theme=dark] .skip-link{background:var(--accent);color:var(--on-accent)
 .paraphrase-options > label:first-child { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
 .paraphrase-options select { padding: .65rem; border: 1px solid currentColor; border-radius: .6rem; background: transparent; color: inherit; font: inherit; }
 .tabs { flex-wrap: wrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.paraphrase-result { flex: 1; min-height: 340px; padding: 0 24px 24px; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+.paraphrase-result:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.changed-phrase { display: inline; padding: 1px 2px; margin: 0; border-radius: 3px; background: #c5dbc8; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; line-height: inherit; overflow-wrap: anywhere; }
+.changed-phrase:hover { background: #b3cfb7; }
+.changed-phrase[data-deletion=true]::before { content: '−'; }
+.manual-editor { flex: 1; display: flex; flex-direction: column; }
+.manual-editor textarea { width: 100%; flex: 1; }
+.manual-actions { display: flex; justify-content: flex-end; gap: 16px; padding: 12px 24px; }
+.paraphrase-run { justify-content: flex-end; }
+.suggestion-dialog { position: fixed; margin: 0; padding: 20px; width: min(320px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--ground); color: var(--ink); box-shadow: 0 8px 28px #18332322; }
+.suggestion-dialog::backdrop { background: transparent; }
+.suggestion-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.suggestion-heading button { min-width: 36px; min-height: 36px; font-size: 22px; }
+.suggestion-before { overflow-wrap: anywhere; font-size: 13px; color: var(--muted); }
+.suggestion-list { display: grid; gap: 6px; }
+.suggestion-option { text-align: left; padding: 10px 12px; border-radius: 8px; background: var(--mint); overflow-wrap: anywhere; }
+.suggestion-empty { color: var(--muted); font-size: 13px; }
+.restore-change { min-height: 40px; margin-top: 10px; text-align: left; }
+.result-actions { flex-wrap: wrap; gap: 12px; }
+html[data-theme=dark] .changed-phrase { background: #3a624a; color: #eff5ec; }
+html[data-theme=dark] .changed-phrase:hover { background: #497658; }
 @media (max-width: 600px) { .workspace-toolbar { flex-wrap: wrap; gap: .6rem; } .tabs { width: 100%; } .tabs button { flex: 1; } }

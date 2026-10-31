@@ -28,20 +28,47 @@ EQUIVALENTS = {
 }
 
 
-def signature(text, language):
-    """Normalize only reviewed surface edits, retaining the ordered token stream."""
-    tokens = WORDS.findall(text.replace('’', "'"))
+def signature_spans(text, language):
+    tokens = [(match.group().replace('’', "'"), match.start(), match.end())
+              for match in WORDS.finditer(text)]
     for index, group in enumerate(EQUIVALENTS[language]):
         for phrase in sorted(group, key=len, reverse=True):
             pattern = WORDS.findall(phrase)
             cursor = 0
             while cursor <= len(tokens) - len(pattern):
-                # Only the first token may change case at the start of a sentence.
                 window = tokens[cursor:cursor + len(pattern)]
-                if [word.lower() for word in window] == pattern:
-                    tokens[cursor:cursor + len(pattern)] = [f'@{index}']
+                if [word[0].lower() for word in window] == pattern:
+                    tokens[cursor:cursor + len(pattern)] = [(f'@{index}', window[0][1], window[-1][2])]
                 cursor += 1
     return tokens
+
+
+def signature(text, language):
+    """Normalize only reviewed surface edits, retaining the ordered token stream."""
+    return [token[0] for token in signature_spans(text, language)]
+
+
+def build_edits(original, output, language):
+    source, target = signature_spans(original, language), signature_spans(output, language)
+    if [item[0] for item in source] != [item[0] for item in target]:
+        return []
+    edits = []
+    for left, right in zip(source, target):
+        before, after = original[left[1]:left[2]], output[right[1]:right[2]]
+        if before == after or not right[0].startswith('@'):
+            continue
+        alternatives = []
+        for phrase in EQUIVALENTS[language][int(right[0][1:])]:
+            phrase = phrase.upper() if after.isupper() else phrase[0].upper() + phrase[1:] if after[0].isupper() else phrase
+            candidate = output[:right[1]] + phrase + output[right[2]:]
+            if phrase not in (before, after) and phrase not in alternatives and acceptable_edit(original, candidate, language):
+                alternatives.append(phrase)
+        edits.append({'id': f'edit-{len(edits)}', 'input_start': left[1], 'input_end': left[2],
+                      'output_start': right[1], 'output_end': right[2], 'before': before,
+                      'after': after, 'alternatives': alternatives[:3]})
+        if len(edits) >= 256:
+            break
+    return edits
 
 
 def acceptable_edit(original, candidate, language):
@@ -145,4 +172,5 @@ class Pipeline:
         output = ''.join(pieces)
         return {'ok': True, 'paraphrased_text': output, 'language': language,
                 'status': 'partial' if preserved else 'unchanged' if output == text else 'paraphrased',
+                'edits': build_edits(text, output, language),
                 'warnings': ['review_required'] + (['segments_preserved'] if preserved else [])}

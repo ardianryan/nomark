@@ -129,6 +129,8 @@ The upstream cleaner is MIT-licensed. Alpine.js, Vue, Pyodide, and CPython retai
 
 NoMark's original application code is licensed under the [MIT License](LICENSE). Third-party components retain their own licenses and required notices.
 
-## Optional paraphrasing (alpha.5 candidate)
+## Optional paraphrasing
 
 A separate, staging-first NMT service supports limited Indonesian and English back-translation with explicit server consent. Its conservative edit filter retains original segments when a candidate cannot be accepted; many texts remain unchanged. It is not a SynthID detector or a guaranteed watermark remover. The default single-container cleaner works without it. See [Paraphrasing](docs/PARAPHRASE.md) for data flow, two-container setup, limits and the model-quality release gate.
+
+The result editor highlights changes, offers available word/phrase alternatives, and supports manual editing or restoration of the original text. Comparison, choices and editing run in the browser without another model request. Copy, download and local history follow the latest result. Technical details remain available in the FAQ and privacy policy.

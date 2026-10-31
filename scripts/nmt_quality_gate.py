@@ -7,7 +7,7 @@ from pathlib import Path
 def check_quality(data=None):
     root = Path(__file__).resolve().parents[1]
     if data is None:
-        for name in ('docs/nmt-evaluation.json', 'docs/evaluations/alpha5-holdout.json'):
+        for name in ('docs/nmt-evaluation.json', 'docs/nmt-holdout.json'):
             check_quality(json.loads((root / name).read_text()))
         return
     rows = data['samples']
