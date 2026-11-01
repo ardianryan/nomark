@@ -1,0 +1,104 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Saya tidak setuju dengan perubahan jadwal tersebut. Mohon gunakan jadwal yang semula.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3899
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Ayu dan Budi pergi ke perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3644
+    },
+    {
+      "id": "id-03",
+      "language": "id",
+      "input": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "output": "Peserta membawa 12 buku dan 3 pensil. Jangan ubah jumlah tersebut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3651
+    },
+    {
+      "id": "id-04",
+      "language": "id",
+      "input": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "output": "Kegiatan tersebut dilaksanakan pada tanggal 30 Oktober 2026 jam 09.00 WIB.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3805
+    },
+    {
+      "id": "id-06",
+      "language": "id",
+      "input": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "output": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1998
+    },
+    {
+      "id": "id-07",
+      "language": "id",
+      "input": "Tim sedang menyiapkan laporan.\n\nLaporan akan ditinjau sebelum dipublikasikan.",
+      "output": "Tim sedang menyusun laporan.\n\nLaporan akan direview sebelum diterbitkan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2781
+    },
+    {
+      "id": "id-15",
+      "language": "id",
+      "input": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak memori.",
+      "output": "Versi baru memiliki kecepatan yang lebih tinggi, namun memerlukan kapasitas memori yang lebih besar.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2562
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "I do not approve the schedule change. Please use the original schedule.",
+      "fallback_segments": 0,
+      "elapsed_ms": 4044
+    },
+    {
+      "id": "en-02",
+      "language": "en",
+      "input": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "output": "On Monday, Alice and Robert went to the library in Jakarta. They took a history book.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3472
+    },
+    {
+      "id": "en-03",
+      "language": "en",
+      "input": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "output": "Participants brought 12 books and 3 pencils. Do not alter these quantities.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3309
+    },
+    {
+      "id": "en-20",
+      "language": "en",
+      "input": "Keep the original input, review the result, and download a copy. Do not close the page before it finishes.",
+      "output": "Retain the original input, review the output, and download a copy. Do not close the page until it is finished.",
+      "fallback_segments": 0,
+      "elapsed_ms": 4349
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "fallback_segments": 1,
+      "elapsed_ms": 3872
+    }
+  ]
+}

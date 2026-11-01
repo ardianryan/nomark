@@ -29,6 +29,14 @@ The configuration enables HTTPS, a 21 MB request limit, compression, and a 100-s
 
 `NOMARK_TRUSTED_PROXIES` is a comma-separated list of proxy CIDRs permitted to supply client forwarding headers. Compose uses Docker's common private bridge range; narrow it to the actual bridge or proxy address on the VPS. If a CDN is later placed in front of Caddy, configure its trusted proxy ranges in Caddy as well. Do not trust arbitrary forwarded headers.
 
+### Current Cloudflare and Nginx topology
+
+On 2026-11-01, a connection from the Nginx proxy at `10.1.0.18` to `10.1.0.9:8120` was observed by the application container as `10.1.0.18`. The running stack trusted only `172.16.0.0/12`, so it ignored the forwarded address and shared a rate-limit bucket across clients arriving through that proxy. Nginx appended its peer to the forwarding chain and had no active Cloudflare real-IP directives. This diagnosis applies to that observed topology and should be rechecked if networking changes.
+
+The Portainer example now trusts only `10.1.0.18/32`. Coordinate it with the Nginx configuration: install [the Cloudflare real-IP include](../deploy/nginx-cloudflare-realip.conf) inside the NoMark server block, then merge the header directives in [the NoMark proxy example](../deploy/nginx-nomark-proxy.conf) into its existing location. In particular, Nginx must replace `X-Forwarded-For` with the verified `$remote_addr`; appending the incoming chain makes the backend choose the wrong address. Only Cloudflare source ranges should be trusted for `CF-Connecting-IP`, and those ranges must be refreshed against [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/) before use. Direct clients are identified by their socket address and cannot select their bucket by sending their own forwarded header.
+
+Validate the complete live Nginx configuration with `nginx -t` before reloading; keep aaPanel's existing TLS, routes and unrelated sites. Update both Nginx and the Portainer stack as one deployment, verify separate real clients and a spoofed direct request, and retain the previous configuration for rollback. The repository examples do not alter production by themselves. Restrict direct origin access as appropriate for the host and verify the actual firewall and ingress configuration separately.
+
 Production canonical URLs are defined by `SITE` in `nomark/seo.py`. If the public domain changes, update this constant, the browser metadata URL in `static/app.js`, social artwork, README, and Caddy configuration together.
 
 ## Verification before public use

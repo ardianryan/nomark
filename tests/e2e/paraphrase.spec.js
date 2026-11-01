@@ -45,7 +45,31 @@ test('paraphrase consent, waiting without text upload, output and history', asyn
   expect(axe.violations.map(item => item.id)).toEqual([]);
   await page.setViewportSize({ width: 320, height: 800 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  expect(cancelled).toBeGreaterThan(0);
+  expect(cancelled).toBe(0);
+});
+
+test('unchanged result stays editable and rate limit displays retry time', async ({ page }) => {
+  let count = 0, deletes = 0;
+  await page.route('**/api/paraphrase/capabilities', route => route.fulfill({ json: { ok: true, available: true } }));
+  await page.route('**/api/paraphrase/queue', route => {
+    if (route.request().method() === 'DELETE') { deletes++; return route.fulfill({ json: { ok: true } }); }
+    if (++count === 1) return route.fulfill({ json: { ok: true, token: 'test', state: 'ready' } });
+    return route.fulfill({ status: 429, headers: { 'Retry-After': '17' }, json: { ok: false, error: 'rate_limited' } });
+  });
+  await page.route('**/api/text/paraphrase', route => route.fulfill({ json: {
+    ok: true, paraphrased_text: 'Kalimat yang sama.', language: 'id', status: 'unchanged', warnings: []
+  } }));
+  await page.goto('/id');
+  await page.getByRole('tab', { name: 'Parafrasa', exact: true }).click();
+  await page.getByLabel('Teks untuk diparafrasakan').fill('Kalimat yang sama.');
+  await page.getByRole('checkbox', { name: /Saya mengizinkan/ }).check();
+  await page.getByRole('button', { name: 'Parafrasakan teks' }).click();
+  await expect(page.locator('.paraphrase-summary')).toHaveText('Hasil belum berubah. Coba sunting teks atau parafrasa lagi nanti.');
+  await expect(page.getByRole('button', { name: 'Sunting teks' })).toBeEnabled();
+  expect(deletes).toBe(0);
+  await page.getByRole('button', { name: 'Parafrasakan teks' }).click();
+  await expect(page.getByRole('alert')).toContainText('Tunggu 17 detik');
+  await expect(page.getByLabel('Hasil parafrasa')).toHaveText('Kalimat yang sama.');
 });
 
 test('unavailable paraphrasing leaves local cleaning available', async ({ page }) => {

@@ -1,0 +1,44 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "results": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Baik, berikut hasilnya: Saya tidak menyetujui perubahan jadwal tersebut. Baik, gunakan jadwal semula.",
+      "exit": 0,
+      "stderr_tail": "",
+      "elapsed_ms": 914
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Baik, berikut hasilnya: Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "exit": 0,
+      "stderr_tail": "",
+      "elapsed_ms": 944
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "Baik, berikut hasilnya: Saya tidak menyambut perubahan jadwal. Tolong gunakan jadwal yang semula.",
+      "exit": 0,
+      "stderr_tail": "",
+      "elapsed_ms": 901
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Baik, berikut hasilnya: Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "exit": 0,
+      "stderr_tail": "",
+      "elapsed_ms": 1182
+    }
+  ]
+}

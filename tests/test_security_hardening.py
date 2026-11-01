@@ -70,6 +70,36 @@ def test_forwarded_addresses_keep_separate_buckets(monkeypatch):
     asyncio.run(scenario())
 
 
+def test_nomark_proxy_only_accepts_sanitized_forwarded_address(monkeypatch):
+    monkeypatch.setenv('NOMARK_TRUSTED_PROXIES', '10.1.0.18/32')
+    async def application(scope, receive, send):
+        await send({'type': 'http.response.start', 'status': 200, 'headers': []})
+        await send({'type': 'http.response.body', 'body': b''})
+    guard = Guard(application)
+    async def request(peer, forwarded):
+        statuses = []
+        async def send(message):
+            if message['type'] == 'http.response.start':
+                statuses.append(message['status'])
+        async def receive():
+            return {'type': 'http.request', 'body': b''}
+        scope = {'type': 'http', 'path': '/api/paraphrase/queue', 'method': 'POST',
+                 'client': (peer, 1), 'headers': [(b'x-forwarded-for', forwarded.encode())]}
+        await guard(scope, receive, send)
+        return statuses[0]
+    async def scenario():
+        for _ in range(5):
+            assert await request('10.1.0.18', '203.0.113.10') == 200
+        assert await request('10.1.0.18', '203.0.113.10') == 429
+        assert await request('10.1.0.18', '203.0.113.11') == 200
+        # An unrelated peer cannot select the rate bucket using a forged header.
+        assert await request('10.1.0.19', '203.0.113.10') == 200
+        for _ in range(4):
+            assert await request('10.1.0.19', '203.0.113.11') == 200
+        assert await request('10.1.0.19', '203.0.113.12') == 429
+    asyncio.run(scenario())
+
+
 def test_cleanup_keeps_recent_jobs_and_symlink_targets(case_root):
     root = case_root / 'work'
     root.mkdir(exist_ok=True)

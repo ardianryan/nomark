@@ -10,7 +10,7 @@ services:
     platform: linux/amd64
     build:
       context: ./nmt-service
-    image: registry.gitlab.com/ardianryan/nomark/nmt:0.1.0-alpha.6
+    image: registry.gitlab.com/ardianryan/nomark/nmt:0.1.0-alpha.7
     restart: unless-stopped
     init: true
     read_only: true

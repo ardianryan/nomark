@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 import ipaddress
 import hashlib
 import hmac
+import math
 import os
 from pathlib import Path
 import shutil
@@ -63,8 +64,9 @@ class Guard:
                     extra.append((b"cache-control", b"no-cache"))
                 message["headers"] = list(message.get("headers", [])) + extra
             await send(message)
-        async def reject(code, status):
-            await JSONResponse({"ok": False, "error": code}, status_code=status)(scope, receive, secure_send)
+        async def reject(code, status, retry_after=None):
+            headers = {'Retry-After': str(retry_after)} if retry_after is not None else None
+            await JSONResponse({"ok": False, "error": code}, status_code=status, headers=headers)(scope, receive, secure_send)
         if is_api:
             if headers.get("sec-fetch-site") == "cross-site":
                 return await reject("cross_origin", 403)
@@ -94,21 +96,21 @@ class Guard:
                 while recent and recent[0] <= now - 60:
                     recent.popleft()
                 if len(recent) >= 60:
-                    return await reject('rate_limited', 429)
+                    return await reject('rate_limited', 429, max(1, math.ceil(60 - (now - recent[0]))))
                 recent.append(now)
             if not capability and not (path in {"/api/queue", "/api/paraphrase/queue"} and scope["method"] in {"GET", "DELETE"}):
                 recent = self.requests[address]
                 while recent and recent[0] <= now - 60:
                     recent.popleft()
                 if len(recent) >= 20:
-                    return await reject("rate_limited", 429)
+                    return await reject("rate_limited", 429, max(1, math.ceil(60 - (now - recent[0]))))
                 recent.append(now)
-                if scope['method'] == 'POST' and path in {'/api/paraphrase/queue', '/api/text/paraphrase'}:
+                if scope['method'] == 'POST' and path == '/api/paraphrase/queue':
                     nmt_recent = self.requests[(address, 'paraphrase')]
                     while nmt_recent and nmt_recent[0] <= now - 60:
                         nmt_recent.popleft()
                     if len(nmt_recent) >= 5:
-                        return await reject('rate_limited', 429)
+                        return await reject('rate_limited', 429, max(1, math.ceil(60 - (now - nmt_recent[0]))))
                     nmt_recent.append(now)
             try:
                 if int(headers.get("content-length", "0")) > BODY_LIMIT:

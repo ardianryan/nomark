@@ -1,0 +1,80 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Saya tidak setuju dengan perubahan jadwal tersebut. Harap gunakan jadwal semula.",
+      "finish_reason": "stop",
+      "elapsed_ms": 1384
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Ayu dan Budi pergi ke perpustakaan Jakarta pada hari Senin untuk meminjam buku sejarah.",
+      "finish_reason": "stop",
+      "elapsed_ms": 1248
+    },
+    {
+      "id": "id-03",
+      "language": "id",
+      "input": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "output": "Peserta membawa 12 buku dan 3 pensil.",
+      "finish_reason": "stop",
+      "elapsed_ms": 765
+    },
+    {
+      "id": "id-04",
+      "language": "id",
+      "input": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "output": "Pertemuan tersebut diadakan pada tanggal 30 Oktober 2026 pada pukul 09.00 waktu Indonesia Waktu Barat.",
+      "finish_reason": "stop",
+      "elapsed_ms": 1523
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "I do not support the new schedule. Please use the original one.",
+      "finish_reason": "stop",
+      "elapsed_ms": 857
+    },
+    {
+      "id": "en-02",
+      "language": "en",
+      "input": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "output": "Alice and Robert went to the library in Jakarta on Monday. They borrowed a history book.",
+      "finish_reason": "stop",
+      "elapsed_ms": 818
+    },
+    {
+      "id": "en-03",
+      "language": "en",
+      "input": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "output": "Participants brought 12 books and 3 pencils.",
+      "finish_reason": "stop",
+      "elapsed_ms": 608
+    },
+    {
+      "id": "en-04",
+      "language": "en",
+      "input": "The meeting takes place on 30 October 2026 at 09:00.",
+      "output": "The assembly will occur on October 30, 2026, at 09:00.",
+      "finish_reason": "stop",
+      "elapsed_ms": 1074
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Media yang membagikan cerita dan informasi tentang dunia remaja, musik, pop culture, pengembangan diri, gaya hidup anak muda, serta berita terkini.",
+      "finish_reason": "stop",
+      "elapsed_ms": 1884
+    }
+  ]
+}

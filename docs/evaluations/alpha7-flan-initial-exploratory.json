@@ -1,0 +1,848 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Parafrasa teks di bahwa Indonesia tidak mengubah bahwa:          .",
+      "elapsed_ms": 493
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Parafrasa teks adalah ini tidak membantu: Ayu dan Budi tidak tidak tidak tidak tidak tidak tidak tidak tidak.",
+      "elapsed_ms": 820
+    },
+    {
+      "id": "id-03",
+      "language": "id",
+      "input": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "output": "Parafrasa teks tidak adalah bahwa tidak adalah: peserta membawa 12 tahun dan 3 tahun tahun tahun tahun tahun tahun tahun.",
+      "elapsed_ms": 913
+    },
+    {
+      "id": "id-04",
+      "language": "id",
+      "input": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "output": "Parafrasa teks bahwa indonesia tidak menyebabkan: Perpetuhan berlangsung tidak 30 Oktober 2026 tahun 09.00 WIB.",
+      "elapsed_ms": 565
+    },
+    {
+      "id": "id-05",
+      "language": "id",
+      "input": "Baca panduan di https://example.com/guide sebelum mengirim formulir.",
+      "output": "Parafrasaan teksti tidak adalah bahwa mereka membantu: Bapak tidak adalah pemerintah pemerintah pemerintah pemerintah pemerintah pemerintah pemerintah.",
+      "elapsed_ms": 930
+    },
+    {
+      "id": "id-06",
+      "language": "id",
+      "input": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "output": "Parafrasa teks di bahwa ini tidak menyebabkan: Kirim pertanyaan ke help@example.com telah membantu.",
+      "elapsed_ms": 680
+    },
+    {
+      "id": "id-07",
+      "language": "id",
+      "input": "Tim sedang menyiapkan laporan.\n\nLaporan akan ditinjau sebelum dipublikasikan.",
+      "output": "Parafrasa teks bahwa tidak tidak adalah: Tim tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak.",
+      "elapsed_ms": 1128
+    },
+    {
+      "id": "id-08",
+      "language": "id",
+      "input": "- Baca petunjuk terlebih dahulu.\n- Simpan salinan dokumen asli.",
+      "output": "Parafrasa teks telah menyatakan bahwa adalah tahun adalah adalah adalah:",
+      "elapsed_ms": 519
+    },
+    {
+      "id": "id-09",
+      "language": "id",
+      "input": "Dr. Sari memeriksa laporan penelitian. Ia meminta penjelasan tambahan.",
+      "output": "Parafrasan teks adalah ini tidak menyebabkan: Dr. Sari adalah pelanggaran penelitian. Ia adalah pelanggaran tambahan.",
+      "elapsed_ms": 652
+    },
+    {
+      "id": "id-10",
+      "language": "id",
+      "input": "Jika hujan turun, acara akan dipindahkan ke dalam ruangan.",
+      "output": "Parafrasa teks tidak membantu: if a person dies, he or she will be killed.",
+      "elapsed_ms": 383
+    },
+    {
+      "id": "id-11",
+      "language": "id",
+      "input": "Pengguna boleh mengunduh hasil, tetapi tidak boleh membagikan data pribadi orang lain.",
+      "output": "Parafrasa teks bahwa ini adalah tidak adalah: Pengguna boleh mengkonfirmasi, tetapi boleh mengkonfirmasi data pribadi orang.",
+      "elapsed_ms": 744
+    },
+    {
+      "id": "id-12",
+      "language": "id",
+      "input": "Antrean membatasi pekerjaan yang berjalan secara bersamaan untuk menjaga kapasitas server.",
+      "output": "Parafrasa teks di tahanan tersebut adalah: Antrean adalah pemerintah sebagai pemerintah sebagai pemerintah sebagai kapasite server.",
+      "elapsed_ms": 717
+    },
+    {
+      "id": "id-13",
+      "language": "id",
+      "input": "Riwayat tersimpan di browser dan tidak disinkronkan antarperangkat.",
+      "output": "Parafrasa teks di bahwa ini adalah tidak adalah: Riwayat tersimpan di browser dan tidak adalah tidak adalah.",
+      "elapsed_ms": 880
+    },
+    {
+      "id": "id-14",
+      "language": "id",
+      "input": "Hasil penelitian ini belum membuktikan hubungan sebab akibat.",
+      "output": "Parafrasa teks tidak adalah bahwa dikatakan bahwa mereka tidak adalah: Penelitian tidak adalah tidak adalah mereka tidak adalah.",
+      "elapsed_ms": 907
+    },
+    {
+      "id": "id-15",
+      "language": "id",
+      "input": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak memori.",
+      "output": "Parafrasa teks adalah ini tidak membantu: Versi baru adalah adalah adalah adalah adalah adalah adalah adalah adalah.",
+      "elapsed_ms": 892
+    },
+    {
+      "id": "id-16",
+      "language": "id",
+      "input": "Menurut penulis, kesimpulan tersebut masih memerlukan pengujian tambahan.",
+      "output": "Parafrasan tidak adalah tidak adalah adalah adalah yang diluncurkan: yang tidak adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah",
+      "elapsed_ms": 3070
+    },
+    {
+      "id": "id-17",
+      "language": "id",
+      "input": "Dokumen akan dihapus setelah pemrosesan selesai.",
+      "output": "Parafrasa teks tidak menjadi bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adalah bahwa mereka adal",
+      "elapsed_ms": 3265
+    },
+    {
+      "id": "id-18",
+      "language": "id",
+      "input": "Apakah perubahan tersebut sudah diperiksa oleh pengelola?",
+      "output": "Parafrasa teksti adalah ini yang menjadi bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka tidak adalah bahwa mereka ti",
+      "elapsed_ms": 3224
+    },
+    {
+      "id": "id-19",
+      "language": "id",
+      "input": "Biaya kegiatan adalah Rp150.000 dan sudah termasuk perlengkapan.",
+      "output": "Parafrasaan teksti adalah ini tidak adalah yang tidak adalah: yang kegiatan adalah Rp150.000 dan tidak adalah tidak adalah.",
+      "elapsed_ms": 917
+    },
+    {
+      "id": "id-20",
+      "language": "id",
+      "input": "Simpan masukan asli, tinjau hasil, lalu unduh salinannya. Jangan menutup halaman sebelum selesai.",
+      "output": "Parafrasa teks adalah ini tidak adalah: Simpan tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak.",
+      "elapsed_ms": 888
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "I do not approve the schedule change. Please use the original schedule.",
+      "elapsed_ms": 135
+    },
+    {
+      "id": "en-02",
+      "language": "en",
+      "input": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "output": "Alice and Robert visited the library on Monday. They borrowed a history book.",
+      "elapsed_ms": 162
+    },
+    {
+      "id": "en-03",
+      "language": "en",
+      "input": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "output": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "elapsed_ms": 148
+    },
+    {
+      "id": "en-04",
+      "language": "en",
+      "input": "The meeting takes place on 30 October 2026 at 09:00.",
+      "output": "The meeting takes place on 30 October 2026 at 09:00.",
+      "elapsed_ms": 142
+    },
+    {
+      "id": "en-05",
+      "language": "en",
+      "input": "Read the guide at https://example.com/guide before submitting the form.",
+      "output": "Read the guide at https://example.com/guide before submitting the form.",
+      "elapsed_ms": 193
+    },
+    {
+      "id": "en-06",
+      "language": "en",
+      "input": "Send questions to help@example.com after reading the instructions.",
+      "output": "Send questions to help@example.com after reading the instructions.",
+      "elapsed_ms": 151
+    },
+    {
+      "id": "en-07",
+      "language": "en",
+      "input": "The team is preparing a report.\n\nIt will be reviewed before publication.",
+      "output": "The team is preparing a report. It will be reviewed before publication.",
+      "elapsed_ms": 150
+    },
+    {
+      "id": "en-08",
+      "language": "en",
+      "input": "- Read the instructions first.\n- Keep a copy of the original document.",
+      "output": "Read the instructions first.",
+      "elapsed_ms": 134
+    },
+    {
+      "id": "en-09",
+      "language": "en",
+      "input": "Dr. Smith reviewed the research report. She requested additional explanation.",
+      "output": "Dr. Smith reviewed the research report. She requested additional explanation.",
+      "elapsed_ms": 123
+    },
+    {
+      "id": "en-10",
+      "language": "en",
+      "input": "If it rains, the event will be moved indoors.",
+      "output": "If it rains, the event will be moved indoors.",
+      "elapsed_ms": 123
+    },
+    {
+      "id": "en-11",
+      "language": "en",
+      "input": "Users may download results, but must not share other people's personal information.",
+      "output": "Users may download results, but must not share other people's personal information.",
+      "elapsed_ms": 149
+    },
+    {
+      "id": "en-12",
+      "language": "en",
+      "input": "The queue limits concurrent jobs to preserve server capacity.",
+      "output": "The queue limits concurrent jobs to preserve server capacity.",
+      "elapsed_ms": 113
+    },
+    {
+      "id": "en-13",
+      "language": "en",
+      "input": "History is stored in the browser and is not synchronized between devices.",
+      "output": "History is stored in the browser and is not synchronized between devices.",
+      "elapsed_ms": 150
+    },
+    {
+      "id": "en-14",
+      "language": "en",
+      "input": "These research results do not yet establish a causal relationship.",
+      "output": "These research results do not yet establish a causal relationship.",
+      "elapsed_ms": 115
+    },
+    {
+      "id": "en-15",
+      "language": "en",
+      "input": "The new version is faster, but requires more memory.",
+      "output": "The new version is faster, but requires more memory.",
+      "elapsed_ms": 107
+    },
+    {
+      "id": "en-16",
+      "language": "en",
+      "input": "According to the author, that conclusion still requires further testing.",
+      "output": "According to the author, that conclusion still requires further testing.",
+      "elapsed_ms": 117
+    },
+    {
+      "id": "en-17",
+      "language": "en",
+      "input": "The document will be deleted after processing finishes.",
+      "output": "The document will be deleted after processing finishes.",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "en-18",
+      "language": "en",
+      "input": "Has the change been reviewed by the operator?",
+      "output": "Has the change been reviewed by the operator?",
+      "elapsed_ms": 90
+    },
+    {
+      "id": "en-19",
+      "language": "en",
+      "input": "The activity costs USD150 and includes equipment.",
+      "output": "The activity costs USD150 and includes equipment.",
+      "elapsed_ms": 90
+    },
+    {
+      "id": "en-20",
+      "language": "en",
+      "input": "Keep the original input, review the result, and download a copy. Do not close the page before it finishes.",
+      "output": "Review the result, and download a copy. Do not close the page before it finishes.",
+      "elapsed_ms": 206
+    },
+    {
+      "id": "holdout-id-01",
+      "language": "id",
+      "input": "Rapat belum dimulai. Peserta tidak boleh meninggalkan ruangan.",
+      "output": "Parafrasa teks adalah bahwa mereka tidak adalah adalah yang diluncurkan: adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adalah adal",
+      "elapsed_ms": 3058
+    },
+    {
+      "id": "holdout-id-02",
+      "language": "id",
+      "input": "Nadia mengirim berkas kepada Farhan. Farhan membalas pesan Nadia.",
+      "output": "Parafrasa teks adalah ini tidak adalah: Nadia tidak berkas dari Farhan. Farhan tidak adalah dari Nadia.",
+      "elapsed_ms": 664
+    },
+    {
+      "id": "holdout-id-03",
+      "language": "id",
+      "input": "Petugas menerima satu kotak, bukan dua kotak.",
+      "output": "Parafrasa teks adalah bahwa mereka tidak adalah: Petugas menyatakan satu kotak, tidak tidak adalah.",
+      "elapsed_ms": 661
+    },
+    {
+      "id": "holdout-id-04",
+      "language": "id",
+      "input": "Batas pendaftaran adalah 14 November 2026 pukul 16.30 WIB.",
+      "output": "Parafrasaan teksti adalah ini tidak menjadi bahwa yang terjadi: Pendaftar adalah 14 November 2026 tahun 16.30 WIB.",
+      "elapsed_ms": 675
+    },
+    {
+      "id": "holdout-id-05",
+      "language": "id",
+      "input": "Gunakan https://example.org/a?x=7 untuk membuka halaman bantuan.",
+      "output": "Parafrasa teks di bahwa ini tidak membantu: http://example.org/a?x=7 para pengadilan bantuan.",
+      "elapsed_ms": 663
+    },
+    {
+      "id": "holdout-id-06",
+      "language": "id",
+      "input": "Jangan mengirim kata sandi ke admin@example.org.",
+      "output": "Parafrasa teks di bahwa ini tidak membantu: Jangan menyatakan tidak sandi ke admin@example.org.",
+      "elapsed_ms": 516
+    },
+    {
+      "id": "holdout-id-07",
+      "language": "id",
+      "input": "Ia telah menyiapkan materi pelatihan.\n\nPeserta memerlukan penjelasan tambahan.",
+      "output": "Parafrasa teks adalah bahwa mereka tidak adalah: Ia adalah materiasional yang terhadap tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak.",
+      "elapsed_ms": 1504
+    },
+    {
+      "id": "holdout-id-08",
+      "language": "id",
+      "input": "1. Periksa usulan tersebut.\n2. Simpan berkas asli.",
+      "output": "Parafrasan teks adalah bahwa mereka tidak adalah yang terjadi: 1. Akan tidak adalah. 2. Akan tidak adalah.",
+      "elapsed_ms": 708
+    },
+    {
+      "id": "holdout-id-09",
+      "language": "id",
+      "input": "Prof. Ratna tidak hadir. Dr. Hasan menggantikannya.",
+      "output": "Parafrasa teks tidak adalah bahwa mereka tidak adalah: Prof. Ratna tidak adalah. Dr. Hasan tidak adalah.",
+      "elapsed_ms": 755
+    },
+    {
+      "id": "holdout-id-10",
+      "language": "id",
+      "input": "Jika pembayaran belum diterima, pesanan tidak akan dikirim.",
+      "output": "Parafrasan tetapi tidak membantu: if a person dies, he or she will die.",
+      "elapsed_ms": 612
+    },
+    {
+      "id": "holdout-id-11",
+      "language": "id",
+      "input": "Pengunjung boleh membaca arsip, tetapi dilarang memotret dokumen.",
+      "output": "Parafrasa teks tidak adalah ini tidak adalah: Pengunjung boleh membaca arsip, tetapi memotret dokumen.",
+      "elapsed_ms": 664
+    },
+    {
+      "id": "holdout-id-12",
+      "language": "id",
+      "input": "Kunci privat tidak boleh ditulis ke dalam log aplikasi.",
+      "output": "Parafrasa tekst adalah bahwa yang terjadi: Kunci privat tidak boleh dalam log application.",
+      "elapsed_ms": 499
+    },
+    {
+      "id": "holdout-id-13",
+      "language": "id",
+      "input": "Data sementara dihapus dalam satu jam dan tidak dijadikan data pelatihan.",
+      "output": "Parafrasan teks di bahwa ini adalah: Data sementara dihapus atau satu jam dan tidak dijadikan data pelatihan.",
+      "elapsed_ms": 550
+    },
+    {
+      "id": "holdout-id-14",
+      "language": "id",
+      "input": "Hasil ini mungkin dipengaruhi cuaca; penyebabnya belum dipastikan.",
+      "output": "Parafrasa teks adalah bahwa mereka tidak adalah: Itu adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak.",
+      "elapsed_ms": 1176
+    },
+    {
+      "id": "holdout-id-15",
+      "language": "id",
+      "input": "Suhu turun dua derajat, sedangkan tekanan tetap.",
+      "output": "Parafrasa teks adalah ini yang menyebabkan: Suhu tidak tidak adalah tidak adalah.",
+      "elapsed_ms": 551
+    },
+    {
+      "id": "holdout-id-16",
+      "language": "id",
+      "input": "Menurut dokter, pasien tersebut masih memerlukan observasi.",
+      "output": "Parafrasan teksti ini tidak menyatakan bahwa mereka tidak adalah: Ini, pasien tidak adalah tidak membantu observasi.",
+      "elapsed_ms": 710
+    },
+    {
+      "id": "holdout-id-17",
+      "language": "id",
+      "input": "Kedua salinan harus diperiksa sebelum salah satunya dihapus.",
+      "output": "Parafrasaan tekst adalah bahwa mereka adalah tahun: Kedua salinan adalah sebuah tahun adalah dilaporkan.",
+      "elapsed_ms": 668
+    },
+    {
+      "id": "holdout-id-18",
+      "language": "id",
+      "input": "Apakah ia sudah mempersiapkan laporan tersebut?",
+      "output": "Parafrasa teks di bahwa bahwa mereka tidak adalah tidak adalah adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adalah tidak adala",
+      "elapsed_ms": 3008
+    },
+    {
+      "id": "holdout-id-19",
+      "language": "id",
+      "input": "Pembeli membayar Rp75.000 setelah menerima barang, bukan sebelumnya.",
+      "output": "Parafrasan teksti adalah bahwa tidak adalah yang tidak adalah: Pembeli membayar Rp75,000 tahun tidak adalah tidak adalah tidak adalah.",
+      "elapsed_ms": 1011
+    },
+    {
+      "id": "holdout-id-20",
+      "language": "id",
+      "input": "Ia sudah menyiapkan usulan itu. Tinjau usulan tersebut terlebih dahulu.",
+      "output": "Parafrasa teks bahwa ini adalah yang terjadi: Ia adalah tidak tidak tidak tidak tidak tidak tidak tidak tidak tidak.",
+      "elapsed_ms": 902
+    },
+    {
+      "id": "holdout-en-01",
+      "language": "en",
+      "input": "We cannot accept the offer. They did not approve the revised terms.",
+      "output": "We cannot accept the offer because they did not approve the revised terms.",
+      "elapsed_ms": 140
+    },
+    {
+      "id": "holdout-en-02",
+      "language": "en",
+      "input": "Lina called Marcus after Rosa left the office.",
+      "output": "Lina called Marcus after Rosa left the office.",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "holdout-en-03",
+      "language": "en",
+      "input": "The nurse gave one tablet, not two tablets.",
+      "output": "The nurse gave one tablet not two tablets.",
+      "elapsed_ms": 90
+    },
+    {
+      "id": "holdout-en-04",
+      "language": "en",
+      "input": "The appointment is on 14 November 2026 at 16:30 UTC.",
+      "output": "The appointment is on 14 November 2026 at 16:30 UTC.",
+      "elapsed_ms": 141
+    },
+    {
+      "id": "holdout-en-05",
+      "language": "en",
+      "input": "Do not change https://example.org/a?x=7 when copying the link.",
+      "output": "Do not change https://example.org/a?x=7 when copying the link.",
+      "elapsed_ms": 201
+    },
+    {
+      "id": "holdout-en-06",
+      "language": "en",
+      "input": "Send the public report to archive@example.org, never the private key.",
+      "output": "Send the public report to archive@example.org, never the private key.",
+      "elapsed_ms": 166
+    },
+    {
+      "id": "holdout-en-07",
+      "language": "en",
+      "input": "We do not require additional payment.\n\nKeep a copy of the signed agreement.",
+      "output": "We do not require additional payment. Keep a copy of the signed agreement",
+      "elapsed_ms": 141
+    },
+    {
+      "id": "holdout-en-08",
+      "language": "en",
+      "input": "- Keep a copy of the receipt.\n- Do not discard the original.",
+      "output": "Do not discard the original.",
+      "elapsed_ms": 87
+    },
+    {
+      "id": "holdout-en-09",
+      "language": "en",
+      "input": "Ms. Rivera spoke to Dr. Chen. She declined his request.",
+      "output": "Ms. Rivera spoke to Dr. Chen. She declined his request.",
+      "elapsed_ms": 149
+    },
+    {
+      "id": "holdout-en-10",
+      "language": "en",
+      "input": "Unless payment arrives today, the shipment will not leave.",
+      "output": "Unless payment arrives today, the shipment will not leave.",
+      "elapsed_ms": 122
+    },
+    {
+      "id": "holdout-en-11",
+      "language": "en",
+      "input": "Guests may read the records but must not photograph them.",
+      "output": "Guests may read the records but must not photograph them.",
+      "elapsed_ms": 115
+    },
+    {
+      "id": "holdout-en-12",
+      "language": "en",
+      "input": "The encryption key must never appear in application logs.",
+      "output": "The encryption key must never appear in application logs.",
+      "elapsed_ms": 106
+    },
+    {
+      "id": "holdout-en-13",
+      "language": "en",
+      "input": "Temporary files expire after an hour and are not used for training.",
+      "output": "Temporary files expire after an hour and are not used for training.",
+      "elapsed_ms": 154
+    },
+    {
+      "id": "holdout-en-14",
+      "language": "en",
+      "input": "The evidence may indicate a fault but does not prove its cause.",
+      "output": "The evidence may indicate a fault but does not prove its cause.",
+      "elapsed_ms": 140
+    },
+    {
+      "id": "holdout-en-15",
+      "language": "en",
+      "input": "The temperature fell while the pressure increased.",
+      "output": "The temperature fell while the pressure increased.",
+      "elapsed_ms": 81
+    },
+    {
+      "id": "holdout-en-16",
+      "language": "en",
+      "input": "The engineer requested additional measurements before approval.",
+      "output": "The engineer requested additional measurements before approval.",
+      "elapsed_ms": 93
+    },
+    {
+      "id": "holdout-en-17",
+      "language": "en",
+      "input": "Both copies must be checked before either is deleted.",
+      "output": "Both copies must be checked before either is deleted.",
+      "elapsed_ms": 99
+    },
+    {
+      "id": "holdout-en-18",
+      "language": "en",
+      "input": "Did she submit the document before he arrived?",
+      "output": "Did she submit the document before he arrived?",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "holdout-en-19",
+      "language": "en",
+      "input": "The refund is USD75, excluding the delivery charge.",
+      "output": "The refund is USD75, excluding the delivery charge.",
+      "elapsed_ms": 114
+    },
+    {
+      "id": "holdout-en-20",
+      "language": "en",
+      "input": "They will not proceed without permission. Keep a copy of the notice.",
+      "output": "They will not proceed without a copy of the notice.",
+      "elapsed_ms": 133
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Parafrasa tidak tidak adalah: Media yang menjadi cerita dan informasi Dunia remaja tidak musik, pop culture, pengembangan diri, gaya hidup anak, dan berita.",
+      "elapsed_ms": 861
+    },
+    {
+      "id": "alpha7-id-02",
+      "language": "id",
+      "input": "Kami tidak membatalkan rapat pada hari Selasa.",
+      "output": "Parafrasan teksti tersebut tidak menjadi bahwa mereka adalah: Kami tidak adalah tidak adalah hari Selasa.",
+      "elapsed_ms": 668
+    },
+    {
+      "id": "alpha7-id-03",
+      "language": "id",
+      "input": "Dokumen ini belum disetujui oleh kepala sekolah.",
+      "output": "Parafrasa teks di bahwa ini adalah dari adalah: Dokumen adalah adalah sebuah sebuah sebuah sebuah adalah sebuah sebuah adalah.",
+      "elapsed_ms": 947
+    },
+    {
+      "id": "alpha7-id-04",
+      "language": "id",
+      "input": "Panitia menyediakan 125 kursi dan 14 meja untuk peserta.",
+      "output": "Parafrasa teks bahwa tidak tidak adalah: Panitia menyebabkan 125 kursi dan 14 kursi per peserta.",
+      "elapsed_ms": 585
+    },
+    {
+      "id": "alpha7-id-05",
+      "language": "id",
+      "input": "Pendaftaran ditutup pada 17 Agustus 2027 pukul 16.30 WIB.",
+      "output": "Parafrasan teks yang mengkonfirmasi yang mengkonfirmasi: Pendapatan tahun 17 Agustus 2027 tahun 16.30 WIB.",
+      "elapsed_ms": 593
+    },
+    {
+      "id": "alpha7-id-06",
+      "language": "id",
+      "input": "Rina Putri mengirim laporan kepada Budi Santoso.",
+      "output": "Parafrasan teksti dalam bahwa tidak membantu: Rina Putri tidak membantu Budi Santoso.",
+      "elapsed_ms": 527
+    },
+    {
+      "id": "alpha7-id-07",
+      "language": "id",
+      "input": "PT Cakrawala Muda membuka kantor di Surabaya.",
+      "output": "Parafrasa teks adalah ini tidak menyatakan: PT Cakrawala Muda membuka kantor in Surabaya.",
+      "elapsed_ms": 498
+    },
+    {
+      "id": "alpha7-id-08",
+      "language": "id",
+      "input": "Kunjungi https://contoh.id/jadwal untuk melihat informasi terbaru.",
+      "output": "Parafrasa teks perjanjian ini tidak adalah adalah: https://contoh.id/jadwal perjanjian informasi terbaru.",
+      "elapsed_ms": 570
+    },
+    {
+      "id": "alpha7-id-09",
+      "language": "id",
+      "input": "Kirim pertanyaan ke bantuan@contoh.id sebelum hari Jumat.",
+      "output": "Parafrasa teks di bahasa Indonesia tidak menyatakan bahwa: Kirim pertanyaan ke bantuan@contoh.id sebuah hari Jumat.",
+      "elapsed_ms": 587
+    },
+    {
+      "id": "alpha7-id-10",
+      "language": "id",
+      "input": "Rapat dimulai setelah semua anggota hadir.\n\nNotulen disimpan di ruang arsip.",
+      "output": "Parafrasa teks dalam artikel ini tidak membantu: Kembali sebagai semua anggota hadir. Notulen disimpan di ruang arsip.",
+      "elapsed_ms": 640
+    },
+    {
+      "id": "alpha7-id-11",
+      "language": "id",
+      "input": "- Periksa berkas asli.\n- Simpan salinan di perangkat.",
+      "output": "Parafrasa teks tidak tidak adalah tidak adalah: - Periksa berkas asli. - Simpan salinan perangkat.",
+      "elapsed_ms": 601
+    },
+    {
+      "id": "alpha7-id-12",
+      "language": "id",
+      "input": "Server memproses permintaan setelah memvalidasi token.",
+      "output": "Parafrasa teks yang menyatakan: Server memproses menyatakan kembali token.",
+      "elapsed_ms": 420
+    },
+    {
+      "id": "alpha7-id-13",
+      "language": "id",
+      "input": "Cadangan basis data dijalankan setiap malam secara otomatis.",
+      "output": "Parafrasa teks di bahwa ini adalah tidak adalah: Basis data tidak adalah tidak adalah otomatis.",
+      "elapsed_ms": 653
+    },
+    {
+      "id": "alpha7-id-14",
+      "language": "id",
+      "input": "Siswa dapat mengulang ujian jika mendapat izin guru.",
+      "output": "Parafrasa teks di bahwa tidak ada: Siswa adalah tidak adalah tidak adalah guru.",
+      "elapsed_ms": 576
+    },
+    {
+      "id": "alpha7-id-15",
+      "language": "id",
+      "input": "Peserta harus hadir sebelum acara dimulai.",
+      "output": "Parafrasaan teksti tidak diketahui: Peserta adalah tidak adalah tidak adalah tidak adalah.",
+      "elapsed_ms": 660
+    },
+    {
+      "id": "alpha7-id-16",
+      "language": "id",
+      "input": "Penjualan meningkat tetapi keuntungan perusahaan menurun.",
+      "output": "Parafrasaan teksti tidak adalah ini tidak adalah: penjualan tetapi tidak adalah pemerintah menurun.",
+      "elapsed_ms": 649
+    },
+    {
+      "id": "alpha7-id-17",
+      "language": "id",
+      "input": "Tim akan meninjau proposal tersebut minggu depan.",
+      "output": "Parafrasa teks tidak membantu: Tim will present a proposal soon.",
+      "elapsed_ms": 275
+    },
+    {
+      "id": "alpha7-id-18",
+      "language": "id",
+      "input": "Perpustakaan menyediakan ruang belajar yang nyaman.",
+      "output": "Parafrasa teks tidak adalah ini tidak adalah: Perustakaan mengatakan ruang tidak adalah.",
+      "elapsed_ms": 669
+    },
+    {
+      "id": "alpha7-id-19",
+      "language": "id",
+      "input": "Dr. Sari menjelaskan hasil pemeriksaan kepada pasien.",
+      "output": "Parafrasan teksti telah menyatakan: Dr. Sari menyatakan bahwa pasien.",
+      "elapsed_ms": 501
+    },
+    {
+      "id": "alpha7-id-20",
+      "language": "id",
+      "input": "Jika hujan turun, pertandingan akan ditunda sampai besok.",
+      "output": "Parafrasa teks adalah bahwa mereka menjadi bahwa bahwa mereka menjadi bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa bahwa ",
+      "elapsed_ms": 3369
+    },
+    {
+      "id": "alpha7-en-01",
+      "language": "en",
+      "input": "The magazine shares stories about music, popular culture, personal growth, and current events.",
+      "output": "The magazine shares stories about music, popular culture, personal growth, and current events.",
+      "elapsed_ms": 160
+    },
+    {
+      "id": "alpha7-en-02",
+      "language": "en",
+      "input": "We did not cancel the meeting on Tuesday.",
+      "output": "We did not cancel the meeting on Tuesday.",
+      "elapsed_ms": 88
+    },
+    {
+      "id": "alpha7-en-03",
+      "language": "en",
+      "input": "The document has not yet been approved by the principal.",
+      "output": "The document has not yet been approved by the principal.",
+      "elapsed_ms": 108
+    },
+    {
+      "id": "alpha7-en-04",
+      "language": "en",
+      "input": "The committee provided 125 chairs and 14 tables for participants.",
+      "output": "The committee provided 125 chairs and 14 tables for participants.",
+      "elapsed_ms": 129
+    },
+    {
+      "id": "alpha7-en-05",
+      "language": "en",
+      "input": "Registration closes on 17 August 2027 at 16:30.",
+      "output": "Registration closes on 17 August 2027 at 16:30.",
+      "elapsed_ms": 131
+    },
+    {
+      "id": "alpha7-en-06",
+      "language": "en",
+      "input": "Rina Putri sent the report to Budi Santoso.",
+      "output": "Rina Putri sent the report to Budi Santoso.",
+      "elapsed_ms": 143
+    },
+    {
+      "id": "alpha7-en-07",
+      "language": "en",
+      "input": "Cakrawala Muda Ltd opened an office in Surabaya.",
+      "output": "Cakrawala Muda Ltd opened an office in Surabaya.",
+      "elapsed_ms": 170
+    },
+    {
+      "id": "alpha7-en-08",
+      "language": "en",
+      "input": "Visit https://example.org/schedule for the latest information.",
+      "output": "Visit https://example.org/schedule for the latest information.",
+      "elapsed_ms": 167
+    },
+    {
+      "id": "alpha7-en-09",
+      "language": "en",
+      "input": "Send questions to help@example.org before Friday.",
+      "output": "Send questions to help@example.org before Friday.",
+      "elapsed_ms": 131
+    },
+    {
+      "id": "alpha7-en-10",
+      "language": "en",
+      "input": "The meeting begins once all members arrive.\n\nThe minutes are kept in the archive.",
+      "output": "The meeting begins once all members arrive. The minutes are kept in the archive.",
+      "elapsed_ms": 149
+    },
+    {
+      "id": "alpha7-en-11",
+      "language": "en",
+      "input": "- Check the original document.\n- Save a copy on your device.",
+      "output": "Check the original document.",
+      "elapsed_ms": 85
+    },
+    {
+      "id": "alpha7-en-12",
+      "language": "en",
+      "input": "The server processes the request after validating the token.",
+      "output": "The server processes the request after validating the token.",
+      "elapsed_ms": 122
+    },
+    {
+      "id": "alpha7-en-13",
+      "language": "en",
+      "input": "The database backup runs automatically every night.",
+      "output": "The database backup runs automatically every night.",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "alpha7-en-14",
+      "language": "en",
+      "input": "Students may retake the exam if their teacher permits it.",
+      "output": "Students may retake the exam if their teacher permits it.",
+      "elapsed_ms": 142
+    },
+    {
+      "id": "alpha7-en-15",
+      "language": "en",
+      "input": "Participants must arrive before the event begins.",
+      "output": "Participants must arrive before the event begins.",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "alpha7-en-16",
+      "language": "en",
+      "input": "Sales increased but the company profit declined.",
+      "output": "Sales increased but the company profit declined.",
+      "elapsed_ms": 81
+    },
+    {
+      "id": "alpha7-en-17",
+      "language": "en",
+      "input": "The team will review the proposal next week.",
+      "output": "The team will review the proposal next week.",
+      "elapsed_ms": 91
+    },
+    {
+      "id": "alpha7-en-18",
+      "language": "en",
+      "input": "The library provides a comfortable place to study.",
+      "output": "The library provides a comfortable place to study.",
+      "elapsed_ms": 97
+    },
+    {
+      "id": "alpha7-en-19",
+      "language": "en",
+      "input": "Dr. Sari explained the examination results to the patient.",
+      "output": "Dr. Sari explained the examination results to the patient.",
+      "elapsed_ms": 114
+    },
+    {
+      "id": "alpha7-en-20",
+      "language": "en",
+      "input": "If it rains, the match will be postponed until tomorrow.",
+      "output": "If it rains, the match will be postponed until tomorrow.",
+      "elapsed_ms": 150
+    }
+  ]
+}

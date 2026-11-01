@@ -1,0 +1,80 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "expected": "changed",
+      "source": "Mereka meminjam buku sejarah.",
+      "candidate": "Mereka mengambil buku sejarah.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "changed",
+      "source": "Versi baru membutuhkan lebih banyak memori.",
+      "candidate": "Versi baru membutuhkan lebih banyak ruang penyimpanan.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "changed",
+      "source": "Baca petunjuk sebelum mengirim formulir.",
+      "candidate": "Pahami petunjuk sebelum mengirim formulir.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "changed",
+      "source": "Silakan gunakan jadwal semula.",
+      "candidate": "Silakan jadwalkan ulang.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "changed",
+      "source": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "candidate": "Peserta membawa 12 buku dan 3 pensil.",
+      "verdict": "YES"
+    },
+    {
+      "expected": "changed",
+      "source": "Keep the original input, review the result, and download a copy.",
+      "candidate": "Review the original input and download a copy.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "changed",
+      "source": "They borrowed a history book.",
+      "candidate": "They took a history book.",
+      "verdict": "YES"
+    },
+    {
+      "expected": "changed",
+      "source": "Pertemuan berlangsung pada tanggal tersebut.",
+      "candidate": "Kegiatan berlangsung pada tanggal tersebut.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "same",
+      "source": "Rapat dimulai pada hari Senin.",
+      "candidate": "Pertemuan dimulai pada hari Senin.",
+      "verdict": "NO"
+    },
+    {
+      "expected": "same",
+      "source": "The team will review the report.",
+      "candidate": "The team will examine the report.",
+      "verdict": "YES"
+    },
+    {
+      "expected": "same",
+      "source": "Peserta memerlukan penjelasan tambahan.",
+      "candidate": "Peserta membutuhkan penjelasan tambahan.",
+      "verdict": "YES"
+    },
+    {
+      "expected": "same",
+      "source": "Alice and Robert visited the library in Jakarta.",
+      "candidate": "Alice and Robert went to the library in Jakarta.",
+      "verdict": "YES"
+    }
+  ]
+}

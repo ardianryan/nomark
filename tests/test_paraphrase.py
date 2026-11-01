@@ -93,6 +93,27 @@ def test_optional_nmt_and_separate_rate_bucket():
     asyncio.run(scenario())
 
 
+def test_five_complete_jobs_count_once_and_return_retry_after():
+    app = create_app(jobs=NoJobs())
+    class Fake:
+        url = 'http://nmt'
+        async def process(self, text, language):
+            return {'ok': True, 'status': 'unchanged', 'paraphrased_text': text, 'language': language}
+    app.state.nmt = Fake()
+    async def scenario():
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url='http://test') as client:
+            for _ in range(5):
+                reservation = await client.post('/api/paraphrase/queue')
+                assert reservation.status_code == 200
+                result = await client.post('/api/text/paraphrase', json={'text': 'hello', 'language': 'en'},
+                    headers={'X-NoMark-Reservation': reservation.json()['token']})
+                assert result.status_code == 200
+            limited = await client.post('/api/paraphrase/queue')
+            assert limited.status_code == 429
+            assert 1 <= int(limited.headers['retry-after']) <= 60
+    asyncio.run(scenario())
+
+
 def test_cancelled_inference_waits_for_idle_before_releasing_admission():
     app = create_app(jobs=NoJobs())
     class Fake:
@@ -149,6 +170,29 @@ def test_quality_gate_does_not_accept_retained_inputs_as_rewrites(monkeypatch):
         row['output'] = row['input'].replace(' ', '  ')
     with pytest.raises(ValueError, match='actual rewrites'):
         check_quality(data)
+
+
+def test_alpha7_gate_requires_reviewed_meaningful_changes_in_both_languages(monkeypatch):
+    from pathlib import Path
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / 'scripts'))
+    from nmt_quality_gate import check_alpha7_rewrites
+    rows = [{'language': lang, 'input': f'original {i}', 'output': f'rewritten {i}',
+             'meaningful_change': True} for lang in ('id', 'en') for i in range(20)]
+    report = {'version': '0.1.0-alpha.7', 'samples': rows}
+    check_alpha7_rewrites(report)
+    for row in rows[:11]:
+        row['output'] = row['input']
+    with pytest.raises(ValueError, match='below 50% for id'):
+        check_alpha7_rewrites(report)
+    for row in rows[:11]:
+        row['output'] = 'rewritten'
+    for row in rows[20:31]:
+        row['meaningful_change'] = False
+    with pytest.raises(ValueError, match='below 50% for en'):
+        check_alpha7_rewrites(report)
+    report['version'] = '0.1.0-alpha.6'
+    with pytest.raises(ValueError, match='newly reviewed'):
+        check_alpha7_rewrites(report)
 
 
 @pytest.mark.parametrize('malformation', ['none', 'offset', 'bool', 'overlap', 'alternative', 'surrogate', 'many'])

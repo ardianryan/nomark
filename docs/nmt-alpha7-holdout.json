@@ -1,0 +1,407 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "purpose": "Fixed before alpha.7 candidate outputs are collected.",
+  "samples": [
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "category": "screenshot",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-02",
+      "language": "id",
+      "category": "negation",
+      "input": "Kami tidak membatalkan rapat pada hari Selasa.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-03",
+      "language": "id",
+      "category": "negation",
+      "input": "Dokumen ini belum disetujui oleh kepala sekolah.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-04",
+      "language": "id",
+      "category": "number",
+      "input": "Panitia menyediakan 125 kursi dan 14 meja untuk peserta.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-05",
+      "language": "id",
+      "category": "date",
+      "input": "Pendaftaran ditutup pada 17 Agustus 2027 pukul 16.30 WIB.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-06",
+      "language": "id",
+      "category": "name",
+      "input": "Rina Putri mengirim laporan kepada Budi Santoso.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-07",
+      "language": "id",
+      "category": "name",
+      "input": "PT Cakrawala Muda membuka kantor di Surabaya.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-08",
+      "language": "id",
+      "category": "url",
+      "input": "Kunjungi https://contoh.id/jadwal untuk melihat informasi terbaru.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-09",
+      "language": "id",
+      "category": "email",
+      "input": "Kirim pertanyaan ke bantuan@contoh.id sebelum hari Jumat.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-10",
+      "language": "id",
+      "category": "paragraph",
+      "input": "Rapat dimulai setelah semua anggota hadir.\n\nNotulen disimpan di ruang arsip.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-11",
+      "language": "id",
+      "category": "list",
+      "input": "- Periksa berkas asli.\n- Simpan salinan di perangkat.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-12",
+      "language": "id",
+      "category": "technical",
+      "input": "Server memproses permintaan setelah memvalidasi token.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-13",
+      "language": "id",
+      "category": "technical",
+      "input": "Cadangan basis data dijalankan setiap malam secara otomatis.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-14",
+      "language": "id",
+      "category": "meaning",
+      "input": "Siswa dapat mengulang ujian jika mendapat izin guru.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-15",
+      "language": "id",
+      "category": "meaning",
+      "input": "Peserta harus hadir sebelum acara dimulai.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-16",
+      "language": "id",
+      "category": "meaning",
+      "input": "Penjualan meningkat tetapi keuntungan perusahaan menurun.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-17",
+      "language": "id",
+      "category": "meaning",
+      "input": "Tim akan meninjau proposal tersebut minggu depan.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-18",
+      "language": "id",
+      "category": "meaning",
+      "input": "Perpustakaan menyediakan ruang belajar yang nyaman.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-19",
+      "language": "id",
+      "category": "abbreviation",
+      "input": "Dr. Sari menjelaskan hasil pemeriksaan kepada pasien.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-id-20",
+      "language": "id",
+      "category": "conditional",
+      "input": "Jika hujan turun, pertandingan akan ditunda sampai besok.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-01",
+      "language": "en",
+      "category": "description",
+      "input": "The magazine shares stories about music, popular culture, personal growth, and current events.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-02",
+      "language": "en",
+      "category": "negation",
+      "input": "We did not cancel the meeting on Tuesday.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-03",
+      "language": "en",
+      "category": "negation",
+      "input": "The document has not yet been approved by the principal.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-04",
+      "language": "en",
+      "category": "number",
+      "input": "The committee provided 125 chairs and 14 tables for participants.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-05",
+      "language": "en",
+      "category": "date",
+      "input": "Registration closes on 17 August 2027 at 16:30.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-06",
+      "language": "en",
+      "category": "name",
+      "input": "Rina Putri sent the report to Budi Santoso.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-07",
+      "language": "en",
+      "category": "name",
+      "input": "Cakrawala Muda Ltd opened an office in Surabaya.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-08",
+      "language": "en",
+      "category": "url",
+      "input": "Visit https://example.org/schedule for the latest information.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-09",
+      "language": "en",
+      "category": "email",
+      "input": "Send questions to help@example.org before Friday.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-10",
+      "language": "en",
+      "category": "paragraph",
+      "input": "The meeting begins once all members arrive.\n\nThe minutes are kept in the archive.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-11",
+      "language": "en",
+      "category": "list",
+      "input": "- Check the original document.\n- Save a copy on your device.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-12",
+      "language": "en",
+      "category": "technical",
+      "input": "The server processes the request after validating the token.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-13",
+      "language": "en",
+      "category": "technical",
+      "input": "The database backup runs automatically every night.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-14",
+      "language": "en",
+      "category": "meaning",
+      "input": "Students may retake the exam if their teacher permits it.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-15",
+      "language": "en",
+      "category": "meaning",
+      "input": "Participants must arrive before the event begins.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-16",
+      "language": "en",
+      "category": "meaning",
+      "input": "Sales increased but the company profit declined.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-17",
+      "language": "en",
+      "category": "meaning",
+      "input": "The team will review the proposal next week.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-18",
+      "language": "en",
+      "category": "meaning",
+      "input": "The library provides a comfortable place to study.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-19",
+      "language": "en",
+      "category": "abbreviation",
+      "input": "Dr. Sari explained the examination results to the patient.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    },
+    {
+      "id": "alpha7-en-20",
+      "language": "en",
+      "category": "conditional",
+      "input": "If it rains, the match will be postponed until tomorrow.",
+      "reviewed": false,
+      "critical_error": null,
+      "language_acceptable": null,
+      "meaningful_change": null
+    }
+  ]
+}

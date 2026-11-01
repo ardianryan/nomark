@@ -1,0 +1,158 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "expected": "changed",
+      "source": "Mereka meminjam buku sejarah.",
+      "candidate": "Mereka mengambil buku sejarah.",
+      "source_to_candidate": [
+        0.6181,
+        0.1818,
+        0.2001
+      ],
+      "candidate_to_source": [
+        0.5421,
+        0.2476,
+        0.2104
+      ]
+    },
+    {
+      "expected": "changed",
+      "source": "Versi baru membutuhkan lebih banyak memori.",
+      "candidate": "Versi baru membutuhkan lebih banyak ruang penyimpanan.",
+      "source_to_candidate": [
+        0.4052,
+        0.4032,
+        0.1916
+      ],
+      "candidate_to_source": [
+        0.3154,
+        0.4576,
+        0.227
+      ]
+    },
+    {
+      "expected": "changed",
+      "source": "Baca petunjuk sebelum mengirim formulir.",
+      "candidate": "Pahami petunjuk sebelum mengirim formulir.",
+      "source_to_candidate": [
+        0.5933,
+        0.2375,
+        0.1692
+      ],
+      "candidate_to_source": [
+        0.6318,
+        0.1998,
+        0.1684
+      ]
+    },
+    {
+      "expected": "changed",
+      "source": "Silakan gunakan jadwal semula.",
+      "candidate": "Silakan jadwalkan ulang.",
+      "source_to_candidate": [
+        0.4003,
+        0.2777,
+        0.322
+      ],
+      "candidate_to_source": [
+        0.2435,
+        0.3139,
+        0.4426
+      ]
+    },
+    {
+      "expected": "changed",
+      "source": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "candidate": "Peserta membawa 12 buku dan 3 pensil.",
+      "source_to_candidate": [
+        0.2676,
+        0.1751,
+        0.5573
+      ],
+      "candidate_to_source": [
+        0.2184,
+        0.3884,
+        0.3932
+      ]
+    },
+    {
+      "expected": "changed",
+      "source": "Keep the original input, review the result, and download a copy.",
+      "candidate": "Review the original input and download a copy.",
+      "source_to_candidate": [
+        0.6586,
+        0.1666,
+        0.1748
+      ],
+      "candidate_to_source": [
+        0.5647,
+        0.231,
+        0.2043
+      ]
+    },
+    {
+      "expected": "same",
+      "source": "Rapat dimulai pada hari Senin.",
+      "candidate": "Pertemuan dimulai pada hari Senin.",
+      "source_to_candidate": [
+        0.4916,
+        0.1878,
+        0.3207
+      ],
+      "candidate_to_source": [
+        0.4264,
+        0.2351,
+        0.3384
+      ]
+    },
+    {
+      "expected": "same",
+      "source": "The team will review the report.",
+      "candidate": "The team will examine the report.",
+      "source_to_candidate": [
+        0.5148,
+        0.2825,
+        0.2028
+      ],
+      "candidate_to_source": [
+        0.5845,
+        0.2362,
+        0.1793
+      ]
+    },
+    {
+      "expected": "same",
+      "source": "Peserta memerlukan penjelasan tambahan.",
+      "candidate": "Peserta membutuhkan penjelasan tambahan.",
+      "source_to_candidate": [
+        0.6022,
+        0.2131,
+        0.1848
+      ],
+      "candidate_to_source": [
+        0.5996,
+        0.2158,
+        0.1846
+      ]
+    },
+    {
+      "expected": "same",
+      "source": "Alice and Robert visited the library in Jakarta.",
+      "candidate": "Alice and Robert went to the library in Jakarta.",
+      "source_to_candidate": [
+        0.6658,
+        0.1632,
+        0.171
+      ],
+      "candidate_to_source": [
+        0.6551,
+        0.1743,
+        0.1706
+      ]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Optional paraphrasing — 0.1.0-alpha.6
 
+Alpha.7 is under evaluation and has not been released. The relaxed OPUS and FLAN-T5 experiments failed the meaning-preservation gate; see [candidate findings](evaluations/alpha7-candidate-findings.md).
+
 This feature back-translates Indonesian through English, or English through Indonesian, with locally operated OPUS-MT models. It does not detect SynthID, decrypt text, guarantee watermark removal, or provide a semantic-equivalence score. The browser cleaning engine remains deterministic and model-free.
 
 ## Enable the optional service

@@ -38,7 +38,7 @@ document.addEventListener('alpine:init', () => {
     get hasSuggestions() { return this.suggestions.length > 0; },
     get noResult() { return !this.result; },
     get cannotParaphrase() { return this.busy || this.finishing || !this.available || !this.source.trim(); },
-    get resultSummary() { return !this.result ? '' : this.output === this.inputSnapshot ? this.t('noChanges') : this.output !== this.modelText ? this.t('resultEdited') : this.t('paraphraseChanged'); },
+    get resultSummary() { return !this.result ? '' : this.output === this.inputSnapshot ? this.t('paraphraseUnchanged') : this.output !== this.modelText ? this.t('resultEdited') : this.t('paraphraseChanged'); },
     get unavailable() { return !this.available; },
     invalidate() {
       this.flushSave(); this.closeSuggestions(); this.generation++; this.diffRevision++;
@@ -174,8 +174,16 @@ document.addEventListener('alpine:init', () => {
       try { response = await fetch(path, { ...options, signal: this.controller?.signal }); }
       catch (error) { if (error.name === 'AbortError') throw error; throw new Error('paraphrase_unavailable'); }
       let result;
-      try { result = await response.json(); } catch { throw new Error('paraphrase_failed'); }
-      if (!response.ok) throw new Error(result.error || 'paraphrase_failed');
+      try { result = await response.json(); } catch { if (response.ok) throw new Error('paraphrase_failed'); result = {}; }
+      if (!response.ok) {
+        const error = new Error(response.status === 429 ? 'rate_limited' : result?.error || 'paraphrase_failed');
+        if (response.status === 429) {
+          const seconds = Number(response.headers.get('Retry-After'));
+          error.retryAfter = Number.isFinite(seconds) && seconds > 0 ? Math.min(Math.ceil(seconds), 60) : 60;
+        }
+        throw error;
+      }
+      if (!result || typeof result !== 'object') throw new Error('paraphrase_failed');
       return result;
     },
     async release() {
@@ -195,7 +203,6 @@ document.addEventListener('alpine:init', () => {
       let timer;
       try {
         await this.flushSave();
-        this.result = null; this.editing = false;
         this.stage = this.t('paraphraseWaiting');
         const ticket = await this.api('/api/paraphrase/queue', { method: 'POST' });
         this.ticket = ticket.token;
@@ -211,12 +218,14 @@ document.addEventListener('alpine:init', () => {
         const result = await this.api('/api/text/paraphrase', { method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-NoMark-Reservation': this.ticket },
           body: JSON.stringify({ text: source, language }) });
+        this.ticket = null;
         const consent = this.consent;
         await this.loadRecord({ id: newId(), created: Date.now(), inputText: source, language, result });
         this.consent = consent;
         await this.flushSave();
       } catch (error) {
         if (error.name === 'AbortError') { if (this.timedOut) this.error = this.t('paraphrase_timeout'); else this.notice = this.t('cancelled'); }
+        else if (error.message === 'rate_limited' && error.retryAfter) this.error = this.t('paraphraseRetryAfter').replace('{seconds}', error.retryAfter);
         else this.error = this.t(error.message);
       } finally {
         clearTimeout(timer); await this.release(); this.controller = null;

@@ -1,0 +1,104 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Saya tidak menerima perubahan jadwal tersebut. Silakan gunakan jadwal awal.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3891
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Ayu dan Budi mengunjungi perpustakaan di Jakarta pada hari Senin. Mereka meminjam buku-buku sejarah.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3781
+    },
+    {
+      "id": "id-03",
+      "language": "id",
+      "input": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "output": "Peserta membawa 12 buku dan 3 pensil. Jangan ubah jumlah tersebut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2664
+    },
+    {
+      "id": "id-04",
+      "language": "id",
+      "input": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "output": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3096
+    },
+    {
+      "id": "id-06",
+      "language": "id",
+      "input": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "output": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1954
+    },
+    {
+      "id": "id-07",
+      "language": "id",
+      "input": "Tim sedang menyiapkan laporan.\n\nLaporan akan ditinjau sebelum dipublikasikan.",
+      "output": "Tim sedang mempersiapkan laporan.\n\nLaporan akan dipertinjau sebelum diperluangkan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2982
+    },
+    {
+      "id": "id-15",
+      "language": "id",
+      "input": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak memori.",
+      "output": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak memori.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2043
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "I do not approve the schedule change. Please use the original schedule.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2616
+    },
+    {
+      "id": "en-02",
+      "language": "en",
+      "input": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "output": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2126
+    },
+    {
+      "id": "en-03",
+      "language": "en",
+      "input": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "output": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2145
+    },
+    {
+      "id": "en-20",
+      "language": "en",
+      "input": "Keep the original input, review the result, and download a copy. Do not close the page before it finishes.",
+      "output": "Keep the original input, review the result, and download a copy. Do not close the page before it has finished.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2873
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "fallback_segments": 1,
+      "elapsed_ms": 4697
+    }
+  ]
+}

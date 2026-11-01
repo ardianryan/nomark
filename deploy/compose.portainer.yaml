@@ -1,4 +1,4 @@
-# NoMark 0.1.0-alpha.6. Both latest tags follow verified alpha releases.
+# NoMark 0.1.0-alpha.7 candidate. Both latest tags follow verified alpha releases.
 services:
   nomark:
     image: registry.gitlab.com/ardianryan/nomark:latest
@@ -14,7 +14,8 @@ services:
       NOMARK_WORKDIR: /tmp/nomark-work
       TMPDIR: /tmp
       WATERMARKS_MAX_INPUT_BYTES: "20971520"
-      NOMARK_TRUSTED_PROXIES: "172.16.0.0/12"
+      # Nginx on 10.1.0.18 must overwrite X-Forwarded-For with the verified client IP.
+      NOMARK_TRUSTED_PROXIES: "10.1.0.18/32"
       NOMARK_NMT_URL: http://nomark-nmt:8001
       OMP_NUM_THREADS: "1"
     volumes:

@@ -7,8 +7,13 @@ from pathlib import Path
 def check_quality(data=None):
     root = Path(__file__).resolve().parents[1]
     if data is None:
-        for name in ('docs/nmt-evaluation.json', 'docs/nmt-holdout.json'):
-            check_quality(json.loads((root / name).read_text()))
+        for name in ('docs/nmt-evaluation.json', 'docs/nmt-holdout.json', 'docs/nmt-alpha7-holdout.json'):
+            path = root / name
+            if not path.is_file():
+                raise ValueError(f'Alpha.7 release evaluation is missing: {name}')
+            report = json.loads(path.read_text())
+            check_quality(report)
+            check_alpha7_rewrites(report)
         return
     rows = data['samples']
     if len(rows) != 40 or len({row['id'] for row in rows}) != 40:
@@ -30,6 +35,17 @@ def check_quality(data=None):
     fingerprint = hashlib.sha256(b''.join((root / name).read_bytes() for name in files)).hexdigest()
     if data.get('engine_fingerprint') != fingerprint:
         raise ValueError('Tokenizer, converter or pipeline evaluation is stale')
+
+
+def check_alpha7_rewrites(report):
+    if report.get('version') != '0.1.0-alpha.7':
+        raise ValueError('Alpha.7 release requires newly reviewed outputs')
+    for language in ('id', 'en'):
+        changed = [row for row in report['samples'] if row['language'] == language
+                   and row.get('meaningful_change') is True
+                   and ''.join(row['input'].split()) != ''.join(row['output'].split())]
+        if len(changed) < 10:
+            raise ValueError('Alpha.7 meaningful rewrites below 50% for ' + language)
 
 
 if __name__ == '__main__':

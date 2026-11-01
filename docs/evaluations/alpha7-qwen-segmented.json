@@ -1,0 +1,968 @@
+{
+  "version": "0.1.0-alpha.7",
+  "synthetic": true,
+  "reviewed": false,
+  "release_evidence": false,
+  "samples": [
+    {
+      "id": "id-01",
+      "language": "id",
+      "input": "Saya tidak menyetujui perubahan jadwal tersebut. Silakan gunakan jadwal semula.",
+      "output": "Saya tidak setuju dengan perubahan jadwal tersebut. Silakan tetapkan jadwal semula.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1609
+    },
+    {
+      "id": "id-02",
+      "language": "id",
+      "input": "Ayu dan Budi mengunjungi perpustakaan Jakarta pada hari Senin. Mereka meminjam buku sejarah.",
+      "output": "Ayu dan Budi pergi ke perpustakaan Jakarta pada hari Senin. Mereka mengambil buku sejarah.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1581
+    },
+    {
+      "id": "id-03",
+      "language": "id",
+      "input": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "output": "Peserta membawa 12 buku dan 3 pensil. Jangan mengubah jumlah tersebut.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1757
+    },
+    {
+      "id": "id-04",
+      "language": "id",
+      "input": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "output": "Pertemuan berlangsung pada 30 Oktober 2026 pukul 09.00 WIB.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2366
+    },
+    {
+      "id": "id-05",
+      "language": "id",
+      "input": "Baca panduan di https://example.com/guide sebelum mengirim formulir.",
+      "output": "Baca panduan tersebut di https://example.com/guide sebelum mengirim formulir.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1540
+    },
+    {
+      "id": "id-06",
+      "language": "id",
+      "input": "Kirim pertanyaan ke help@example.com setelah membaca petunjuk.",
+      "output": "Kirim pertanyaan ke help@example.com setelah memahami petunjuk.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1338
+    },
+    {
+      "id": "id-07",
+      "language": "id",
+      "input": "Tim sedang menyiapkan laporan.\n\nLaporan akan ditinjau sebelum dipublikasikan.",
+      "output": "Tim sedang mengembangkan laporan.\n\nLaporan akan dianalisis sebelum diterbitkan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1746
+    },
+    {
+      "id": "id-08",
+      "language": "id",
+      "input": "- Baca petunjuk terlebih dahulu.\n- Simpan salinan dokumen asli.",
+      "output": "- Baca petunjuk dahulu.\n- Simpan salinan dokumen asli tersebut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1323
+    },
+    {
+      "id": "id-09",
+      "language": "id",
+      "input": "Dr. Sari memeriksa laporan penelitian. Ia meminta penjelasan tambahan.",
+      "output": "Dr. Sari melakukan pemeriksaan terhadap laporan penelitian. Dia meminta penjelasan lebih lanjut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1695
+    },
+    {
+      "id": "id-10",
+      "language": "id",
+      "input": "Jika hujan turun, acara akan dipindahkan ke dalam ruangan.",
+      "output": "Jika hujan mengguyur, acara tersebut akan dijalankan di dalam ruangan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 999
+    },
+    {
+      "id": "id-11",
+      "language": "id",
+      "input": "Pengguna boleh mengunduh hasil, tetapi tidak boleh membagikan data pribadi orang lain.",
+      "output": "Pengguna boleh mengunduh hasil, tetapi tidak boleh membagikan data pribadi orang lain.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1804
+    },
+    {
+      "id": "id-12",
+      "language": "id",
+      "input": "Antrean membatasi pekerjaan yang berjalan secara bersamaan untuk menjaga kapasitas server.",
+      "output": "Jumlah antrean mengurangi pekerjaan yang dilakukan secara bersamaan untuk mempertahankan kapasitas server.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1644
+    },
+    {
+      "id": "id-13",
+      "language": "id",
+      "input": "Riwayat tersimpan di browser dan tidak disinkronkan antarperangkat.",
+      "output": "Riwayat disimpan dalam browser dan tidak disinkronkan antar perangkat.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1345
+    },
+    {
+      "id": "id-14",
+      "language": "id",
+      "input": "Hasil penelitian ini belum membuktikan hubungan sebab akibat.",
+      "output": "Hasil penelitian ini belum menunjukkan hubungan sebab akibat.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1030
+    },
+    {
+      "id": "id-15",
+      "language": "id",
+      "input": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak memori.",
+      "output": "Versi baru lebih cepat, tetapi membutuhkan lebih banyak ruang penyimpanan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1458
+    },
+    {
+      "id": "id-16",
+      "language": "id",
+      "input": "Menurut penulis, kesimpulan tersebut masih memerlukan pengujian tambahan.",
+      "output": "Menurut penulis, kesimpulan tersebut masih memerlukan penelitian lanjutan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1645
+    },
+    {
+      "id": "id-17",
+      "language": "id",
+      "input": "Dokumen akan dihapus setelah pemrosesan selesai.",
+      "output": "Dokumen akan dihapus setelah proses pengolahan selesai.",
+      "fallback_segments": 0,
+      "elapsed_ms": 4724
+    },
+    {
+      "id": "id-18",
+      "language": "id",
+      "input": "Apakah perubahan tersebut sudah diperiksa oleh pengelola?",
+      "output": "Sudahkah perubahan tersebut disesuaikan oleh pengelola?",
+      "fallback_segments": 0,
+      "elapsed_ms": 2187
+    },
+    {
+      "id": "id-19",
+      "language": "id",
+      "input": "Biaya kegiatan adalah Rp150.000 dan sudah termasuk perlengkapan.",
+      "output": "Biaya untuk kegiatan tersebut adalah Rp150.000 dan termasuk perlengkapan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2382
+    },
+    {
+      "id": "id-20",
+      "language": "id",
+      "input": "Simpan masukan asli, tinjau hasil, lalu unduh salinannya. Jangan menutup halaman sebelum selesai.",
+      "output": "Simpan masukan asli, periksa hasil, lalu unduh salinannya. Jangan menutup halaman sebelum selesai.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2217
+    },
+    {
+      "id": "en-01",
+      "language": "en",
+      "input": "I do not approve the schedule change. Please use the original schedule.",
+      "output": "I do not endorse the alteration of the schedule. Please adhere to the original schedule.",
+      "fallback_segments": 0,
+      "elapsed_ms": 5515
+    },
+    {
+      "id": "en-02",
+      "language": "en",
+      "input": "Alice and Robert visited the library in Jakarta on Monday. They borrowed a history book.",
+      "output": "Alice and Robert went to the library in Jakarta on Monday. They borrowed a history book.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3717
+    },
+    {
+      "id": "en-03",
+      "language": "en",
+      "input": "Participants brought 12 books and 3 pencils. Do not change these quantities.",
+      "output": "Participants brought 12 books and 3 pencils. Do not alter these values.",
+      "fallback_segments": 0,
+      "elapsed_ms": 4430
+    },
+    {
+      "id": "en-04",
+      "language": "en",
+      "input": "The meeting takes place on 30 October 2026 at 09:00.",
+      "output": "The meeting takes place on 30 October 2026 at 09:00.",
+      "fallback_segments": 1,
+      "elapsed_ms": 5895
+    },
+    {
+      "id": "en-05",
+      "language": "en",
+      "input": "Read the guide at https://example.com/guide before submitting the form.",
+      "output": "Review the guide at https://example.com/guide prior to submitting the form.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3620
+    },
+    {
+      "id": "en-06",
+      "language": "en",
+      "input": "Send questions to help@example.com after reading the instructions.",
+      "output": "Send inquiries to help@example.com after reviewing the instructions.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2897
+    },
+    {
+      "id": "en-07",
+      "language": "en",
+      "input": "The team is preparing a report.\n\nIt will be reviewed before publication.",
+      "output": "The team is creating a document.\n\nIt will be reviewed prior to publication.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2441
+    },
+    {
+      "id": "en-08",
+      "language": "en",
+      "input": "- Read the instructions first.\n- Keep a copy of the original document.",
+      "output": "- Read the instructions first.\n- Maintain a copy of the original document.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2052
+    },
+    {
+      "id": "en-09",
+      "language": "en",
+      "input": "Dr. Smith reviewed the research report. She requested additional explanation.",
+      "output": "Dr. Smith examined the research report. She requested further clarification.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3816
+    },
+    {
+      "id": "en-10",
+      "language": "en",
+      "input": "If it rains, the event will be moved indoors.",
+      "output": "If it rains, the event will be held indoors.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2550
+    },
+    {
+      "id": "en-11",
+      "language": "en",
+      "input": "Users may download results, but must not share other people's personal information.",
+      "output": "Users may download results, but must not share other people's personal information.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2725
+    },
+    {
+      "id": "en-12",
+      "language": "en",
+      "input": "The queue limits concurrent jobs to preserve server capacity.",
+      "output": "The queue restricts the number of concurrent jobs to preserve server capacity.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1215
+    },
+    {
+      "id": "en-13",
+      "language": "en",
+      "input": "History is stored in the browser and is not synchronized between devices.",
+      "output": "History is stored in the browser and is not synchronized across devices.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1680
+    },
+    {
+      "id": "en-14",
+      "language": "en",
+      "input": "These research results do not yet establish a causal relationship.",
+      "output": "These research findings do not yet establish a causal link.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1431
+    },
+    {
+      "id": "en-15",
+      "language": "en",
+      "input": "The new version is faster, but requires more memory.",
+      "output": "The new version is faster, but it requires more memory.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1464
+    },
+    {
+      "id": "en-16",
+      "language": "en",
+      "input": "According to the author, that conclusion still requires further testing.",
+      "output": "As stated by the author, the conclusion still necessitates further testing.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2321
+    },
+    {
+      "id": "en-17",
+      "language": "en",
+      "input": "The document will be deleted after processing finishes.",
+      "output": "The document will be erased once the processing is complete.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1143
+    },
+    {
+      "id": "en-18",
+      "language": "en",
+      "input": "Has the change been reviewed by the operator?",
+      "output": "Has the change been reviewed by the operator?",
+      "fallback_segments": 0,
+      "elapsed_ms": 1129
+    },
+    {
+      "id": "en-19",
+      "language": "en",
+      "input": "The activity costs USD150 and includes equipment.",
+      "output": "The activity costs USD150 and includes equipment.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1269
+    },
+    {
+      "id": "en-20",
+      "language": "en",
+      "input": "Keep the original input, review the result, and download a copy. Do not close the page before it finishes.",
+      "output": "Review the original input, and download a copy. Do not terminate the session until it is complete.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1612
+    },
+    {
+      "id": "holdout-id-01",
+      "language": "id",
+      "input": "Rapat belum dimulai. Peserta tidak boleh meninggalkan ruangan.",
+      "output": "Rapat belum dimulai. Peserta tidak boleh meninggalkan ruangan.",
+      "fallback_segments": 1,
+      "elapsed_ms": 3086
+    },
+    {
+      "id": "holdout-id-02",
+      "language": "id",
+      "input": "Nadia mengirim berkas kepada Farhan. Farhan membalas pesan Nadia.",
+      "output": "Nadia mengirim dokumen ke Farhan. Farhan menjawab pesan Nadia.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2595
+    },
+    {
+      "id": "holdout-id-03",
+      "language": "id",
+      "input": "Petugas menerima satu kotak, bukan dua kotak.",
+      "output": "Petugas menerima satu kotak, bukan dua kotak.",
+      "fallback_segments": 1,
+      "elapsed_ms": 849
+    },
+    {
+      "id": "holdout-id-04",
+      "language": "id",
+      "input": "Batas pendaftaran adalah 14 November 2026 pukul 16.30 WIB.",
+      "output": "Pendaftaran berakhir pada 14 November 2026 pukul 16.30 WIB.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2648
+    },
+    {
+      "id": "holdout-id-05",
+      "language": "id",
+      "input": "Gunakan https://example.org/a?x=7 untuk membuka halaman bantuan.",
+      "output": "Gunakan URL https://example.org/a?x=7 untuk mengakses bantuan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2220
+    },
+    {
+      "id": "holdout-id-06",
+      "language": "id",
+      "input": "Jangan mengirim kata sandi ke admin@example.org.",
+      "output": "Jangan mengirim kata sandi ke admin@example.org.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1468
+    },
+    {
+      "id": "holdout-id-07",
+      "language": "id",
+      "input": "Ia telah menyiapkan materi pelatihan.\n\nPeserta memerlukan penjelasan tambahan.",
+      "output": "Dia telah menyediakan bahan pelatihan.\n\nPembicara memerlukan penjelasan lebih lanjut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2774
+    },
+    {
+      "id": "holdout-id-08",
+      "language": "id",
+      "input": "1. Periksa usulan tersebut.\n2. Simpan berkas asli.",
+      "output": "1. Periksa proposal tersebut.\n2. Simpan dokumen asli.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1813
+    },
+    {
+      "id": "holdout-id-09",
+      "language": "id",
+      "input": "Prof. Ratna tidak hadir. Dr. Hasan menggantikannya.",
+      "output": "Profesor Ratna tidak hadir. Dr. Hasan mengambil alih peran tersebut.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2175
+    },
+    {
+      "id": "holdout-id-10",
+      "language": "id",
+      "input": "Jika pembayaran belum diterima, pesanan tidak akan dikirim.",
+      "output": "Jika pembayaran belum diterima, pesanan tidak akan dikirim.",
+      "fallback_segments": 0,
+      "elapsed_ms": 873
+    },
+    {
+      "id": "holdout-id-11",
+      "language": "id",
+      "input": "Pengunjung boleh membaca arsip, tetapi dilarang memotret dokumen.",
+      "output": "Pengunjung boleh membaca arsip, tetapi dilarang memotret dokumen.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2401
+    },
+    {
+      "id": "holdout-id-12",
+      "language": "id",
+      "input": "Kunci privat tidak boleh ditulis ke dalam log aplikasi.",
+      "output": "Kunci privat tidak boleh disimpan dalam log aplikasi.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1341
+    },
+    {
+      "id": "holdout-id-13",
+      "language": "id",
+      "input": "Data sementara dihapus dalam satu jam dan tidak dijadikan data pelatihan.",
+      "output": "Data sementara telah dihapus dalam waktu satu jam dan tidak digunakan sebagai data pelatihan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 3277
+    },
+    {
+      "id": "holdout-id-14",
+      "language": "id",
+      "input": "Hasil ini mungkin dipengaruhi cuaca; penyebabnya belum dipastikan.",
+      "output": "Ini mungkin disebabkan oleh cuaca; penyebabnya belum diketahui.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2615
+    },
+    {
+      "id": "holdout-id-15",
+      "language": "id",
+      "input": "Suhu turun dua derajat, sedangkan tekanan tetap.",
+      "output": "Suhu menurun sebanyak dua derajat, namun tekanan tetap.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2017
+    },
+    {
+      "id": "holdout-id-16",
+      "language": "id",
+      "input": "Menurut dokter, pasien tersebut masih memerlukan observasi.",
+      "output": "Dokter mengatakan bahwa pasien tersebut memerlukan observasi.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1644
+    },
+    {
+      "id": "holdout-id-17",
+      "language": "id",
+      "input": "Kedua salinan harus diperiksa sebelum salah satunya dihapus.",
+      "output": "Kedua dokumen tersebut harus dianalisis sebelum salah satu dihapus.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1537
+    },
+    {
+      "id": "holdout-id-18",
+      "language": "id",
+      "input": "Apakah ia sudah mempersiapkan laporan tersebut?",
+      "output": "Apakah ia telah menyusun laporan tersebut?",
+      "fallback_segments": 0,
+      "elapsed_ms": 1109
+    },
+    {
+      "id": "holdout-id-19",
+      "language": "id",
+      "input": "Pembeli membayar Rp75.000 setelah menerima barang, bukan sebelumnya.",
+      "output": "Pembeli menyetorkan uang sebesar Rp75.000 setelah mendapatkan barang, bukan sebelumnya.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2731
+    },
+    {
+      "id": "holdout-id-20",
+      "language": "id",
+      "input": "Ia sudah menyiapkan usulan itu. Tinjau usulan tersebut terlebih dahulu.",
+      "output": "Dia telah menyusun ide tersebut. Periksa usulan tersebut terlebih dahulu.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1673
+    },
+    {
+      "id": "holdout-en-01",
+      "language": "en",
+      "input": "We cannot accept the offer. They did not approve the revised terms.",
+      "output": "We cannot accept the offer. They did not endorse the modified conditions.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1460
+    },
+    {
+      "id": "holdout-en-02",
+      "language": "en",
+      "input": "Lina called Marcus after Rosa left the office.",
+      "output": "Lina contacted Marcus after Rosa departed from the office.",
+      "fallback_segments": 0,
+      "elapsed_ms": 929
+    },
+    {
+      "id": "holdout-en-03",
+      "language": "en",
+      "input": "The nurse gave one tablet, not two tablets.",
+      "output": "The nurse administered one tablet, not two tablets.",
+      "fallback_segments": 0,
+      "elapsed_ms": 612
+    },
+    {
+      "id": "holdout-en-04",
+      "language": "en",
+      "input": "The appointment is on 14 November 2026 at 16:30 UTC.",
+      "output": "The appointment is on 14 November 2026 at 16:30 UTC.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1936
+    },
+    {
+      "id": "holdout-en-05",
+      "language": "en",
+      "input": "Do not change https://example.org/a?x=7 when copying the link.",
+      "output": "Do not alter https://example.org/a?x=7 when copying the link.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2787
+    },
+    {
+      "id": "holdout-en-06",
+      "language": "en",
+      "input": "Send the public report to archive@example.org, never the private key.",
+      "output": "Send the public report to archive@example.org, never the private key.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1240
+    },
+    {
+      "id": "holdout-en-07",
+      "language": "en",
+      "input": "We do not require additional payment.\n\nKeep a copy of the signed agreement.",
+      "output": "We do not need an additional charge.\n\nMaintain a copy of the signed contract.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1912
+    },
+    {
+      "id": "holdout-en-08",
+      "language": "en",
+      "input": "- Keep a copy of the receipt.\n- Do not discard the original.",
+      "output": "- Maintain a copy of the invoice.\n- Do not discard the original.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1145
+    },
+    {
+      "id": "holdout-en-09",
+      "language": "en",
+      "input": "Ms. Rivera spoke to Dr. Chen. She declined his request.",
+      "output": "Ms. Rivera conversed with Dr. Chen. She rejected his request.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1338
+    },
+    {
+      "id": "holdout-en-10",
+      "language": "en",
+      "input": "Unless payment arrives today, the shipment will not leave.",
+      "output": "Unless payment arrives today, the shipment will not depart.",
+      "fallback_segments": 0,
+      "elapsed_ms": 967
+    },
+    {
+      "id": "holdout-en-11",
+      "language": "en",
+      "input": "Guests may read the records but must not photograph them.",
+      "output": "Guests may read the records but must not photograph them.",
+      "fallback_segments": 0,
+      "elapsed_ms": 971
+    },
+    {
+      "id": "holdout-en-12",
+      "language": "en",
+      "input": "The encryption key must never appear in application logs.",
+      "output": "The encryption key must never be found in application logs.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1609
+    },
+    {
+      "id": "holdout-en-13",
+      "language": "en",
+      "input": "Temporary files expire after an hour and are not used for training.",
+      "output": "Temporary files expire after an hour and are not used for training.",
+      "fallback_segments": 0,
+      "elapsed_ms": 885
+    },
+    {
+      "id": "holdout-en-14",
+      "language": "en",
+      "input": "The evidence may indicate a fault but does not prove its cause.",
+      "output": "The evidence may indicate a fault but does not prove its cause.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1094
+    },
+    {
+      "id": "holdout-en-15",
+      "language": "en",
+      "input": "The temperature fell while the pressure increased.",
+      "output": "The temperature decreased as the pressure rose.",
+      "fallback_segments": 0,
+      "elapsed_ms": 524
+    },
+    {
+      "id": "holdout-en-16",
+      "language": "en",
+      "input": "The engineer requested additional measurements before approval.",
+      "output": "The engineer requested further measurements before approval.",
+      "fallback_segments": 0,
+      "elapsed_ms": 681
+    },
+    {
+      "id": "holdout-en-17",
+      "language": "en",
+      "input": "Both copies must be checked before either is deleted.",
+      "output": "Both copies must be verified before either is erased.",
+      "fallback_segments": 0,
+      "elapsed_ms": 714
+    },
+    {
+      "id": "holdout-en-18",
+      "language": "en",
+      "input": "Did she submit the document before he arrived?",
+      "output": "Was she the one to submit the document before he arrived?",
+      "fallback_segments": 0,
+      "elapsed_ms": 874
+    },
+    {
+      "id": "holdout-en-19",
+      "language": "en",
+      "input": "The refund is USD75, excluding the delivery charge.",
+      "output": "The refund is USD75, excluding the delivery charge.",
+      "fallback_segments": 1,
+      "elapsed_ms": 717
+    },
+    {
+      "id": "holdout-en-20",
+      "language": "en",
+      "input": "They will not proceed without permission. Keep a copy of the notice.",
+      "output": "They will not proceed without permission. Maintain a copy of the notice.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1086
+    },
+    {
+      "id": "alpha7-id-01",
+      "language": "id",
+      "input": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "output": "Media yang menyajikan cerita dan informasi Dunia remaja tentang musik, pop culture, pengembangan diri, gaya hidup anak muda, dan berita terkini.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2793
+    },
+    {
+      "id": "alpha7-id-02",
+      "language": "id",
+      "input": "Kami tidak membatalkan rapat pada hari Selasa.",
+      "output": "Rapat kami tidak diadakan pada hari Selasa.",
+      "fallback_segments": 0,
+      "elapsed_ms": 757
+    },
+    {
+      "id": "alpha7-id-03",
+      "language": "id",
+      "input": "Dokumen ini belum disetujui oleh kepala sekolah.",
+      "output": "Dokumen ini belum disetujui oleh sekolah.",
+      "fallback_segments": 0,
+      "elapsed_ms": 841
+    },
+    {
+      "id": "alpha7-id-04",
+      "language": "id",
+      "input": "Panitia menyediakan 125 kursi dan 14 meja untuk peserta.",
+      "output": "Panitia menyediakan 125 kursi dan 14 meja untuk penghadir.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1310
+    },
+    {
+      "id": "alpha7-id-05",
+      "language": "id",
+      "input": "Pendaftaran ditutup pada 17 Agustus 2027 pukul 16.30 WIB.",
+      "output": "Pendaftaran ditutup pada tanggal 17 Agustus 2027 pukul 16.30 WIB.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1753
+    },
+    {
+      "id": "alpha7-id-06",
+      "language": "id",
+      "input": "Rina Putri mengirim laporan kepada Budi Santoso.",
+      "output": "Rina Putri menyampaikan laporan ke Budi Santoso.",
+      "fallback_segments": 0,
+      "elapsed_ms": 959
+    },
+    {
+      "id": "alpha7-id-07",
+      "language": "id",
+      "input": "PT Cakrawala Muda membuka kantor di Surabaya.",
+      "output": "PT Cakrawala Muda telah membuka kantor di Surabaya.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1006
+    },
+    {
+      "id": "alpha7-id-08",
+      "language": "id",
+      "input": "Kunjungi https://contoh.id/jadwal untuk melihat informasi terbaru.",
+      "output": "Kunjungi https://contoh.id/jadwal untuk melihat informasi terbaru.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1174
+    },
+    {
+      "id": "alpha7-id-09",
+      "language": "id",
+      "input": "Kirim pertanyaan ke bantuan@contoh.id sebelum hari Jumat.",
+      "output": "Kirim pertanyaan ke bantuan@contoh.id sebelum hari Jumat.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2068
+    },
+    {
+      "id": "alpha7-id-10",
+      "language": "id",
+      "input": "Rapat dimulai setelah semua anggota hadir.\n\nNotulen disimpan di ruang arsip.",
+      "output": "Rapat dimulai setelah semua anggota hadir.\n\nLembaran notulen disimpan di ruang arsip.",
+      "fallback_segments": 0,
+      "elapsed_ms": 2081
+    },
+    {
+      "id": "alpha7-id-11",
+      "language": "id",
+      "input": "- Periksa berkas asli.\n- Simpan salinan di perangkat.",
+      "output": "- Periksa berkas asli.\n- Simpan salinan di perangkat tersebut.",
+      "fallback_segments": 1,
+      "elapsed_ms": 2017
+    },
+    {
+      "id": "alpha7-id-12",
+      "language": "id",
+      "input": "Server memproses permintaan setelah memvalidasi token.",
+      "output": "Server memproses permintaan setelah memverifikasi token.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1053
+    },
+    {
+      "id": "alpha7-id-13",
+      "language": "id",
+      "input": "Cadangan basis data dijalankan setiap malam secara otomatis.",
+      "output": "Basis data tersebut dijalankan setiap malam secara otomatis.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1086
+    },
+    {
+      "id": "alpha7-id-14",
+      "language": "id",
+      "input": "Siswa dapat mengulang ujian jika mendapat izin guru.",
+      "output": "Siswa dapat mengulang ujian jika mendapatkan izin dari guru.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1165
+    },
+    {
+      "id": "alpha7-id-15",
+      "language": "id",
+      "input": "Peserta harus hadir sebelum acara dimulai.",
+      "output": "Peserta harus hadir sebelum acara dimulai.",
+      "fallback_segments": 1,
+      "elapsed_ms": 888
+    },
+    {
+      "id": "alpha7-id-16",
+      "language": "id",
+      "input": "Penjualan meningkat tetapi keuntungan perusahaan menurun.",
+      "output": "Penjualan bertambah namun laba perusahaan menurun.",
+      "fallback_segments": 0,
+      "elapsed_ms": 856
+    },
+    {
+      "id": "alpha7-id-17",
+      "language": "id",
+      "input": "Tim akan meninjau proposal tersebut minggu depan.",
+      "output": "Tim akan memeriksa proposal tersebut pada minggu depan.",
+      "fallback_segments": 0,
+      "elapsed_ms": 950
+    },
+    {
+      "id": "alpha7-id-18",
+      "language": "id",
+      "input": "Perpustakaan menyediakan ruang belajar yang nyaman.",
+      "output": "Perpustakaan memberikan ruang belajar yang nyaman.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1113
+    },
+    {
+      "id": "alpha7-id-19",
+      "language": "id",
+      "input": "Dr. Sari menjelaskan hasil pemeriksaan kepada pasien.",
+      "output": "Dr. Sari menyampaikan hasil pemeriksaan kepada pasien.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1415
+    },
+    {
+      "id": "alpha7-id-20",
+      "language": "id",
+      "input": "Jika hujan turun, pertandingan akan ditunda sampai besok.",
+      "output": "Jika hujan turun, pertandingan akan dibatalkan sampai besok.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1363
+    },
+    {
+      "id": "alpha7-en-01",
+      "language": "en",
+      "input": "The magazine shares stories about music, popular culture, personal growth, and current events.",
+      "output": "The publication discusses stories related to music, popular culture, personal development, and current affairs.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1283
+    },
+    {
+      "id": "alpha7-en-02",
+      "language": "en",
+      "input": "We did not cancel the meeting on Tuesday.",
+      "output": "We did not cancel the meeting on Tuesday.",
+      "fallback_segments": 0,
+      "elapsed_ms": 891
+    },
+    {
+      "id": "alpha7-en-03",
+      "language": "en",
+      "input": "The document has not yet been approved by the principal.",
+      "output": "The document has not yet been approved by the principal.",
+      "fallback_segments": 0,
+      "elapsed_ms": 982
+    },
+    {
+      "id": "alpha7-en-04",
+      "language": "en",
+      "input": "The committee provided 125 chairs and 14 tables for participants.",
+      "output": "The committee provided 125 chairs and 14 tables for attendees.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1248
+    },
+    {
+      "id": "alpha7-en-05",
+      "language": "en",
+      "input": "Registration closes on 17 August 2027 at 16:30.",
+      "output": "Registration closes on 17 August 2027 at 16:30.",
+      "fallback_segments": 1,
+      "elapsed_ms": 1405
+    },
+    {
+      "id": "alpha7-en-06",
+      "language": "en",
+      "input": "Rina Putri sent the report to Budi Santoso.",
+      "output": "Rina Putri delivered the report to Budi Santoso.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1355
+    },
+    {
+      "id": "alpha7-en-07",
+      "language": "en",
+      "input": "Cakrawala Muda Ltd opened an office in Surabaya.",
+      "output": "Cakrawala Muda Ltd established an office in Surabaya.",
+      "fallback_segments": 0,
+      "elapsed_ms": 993
+    },
+    {
+      "id": "alpha7-en-08",
+      "language": "en",
+      "input": "Visit https://example.org/schedule for the latest information.",
+      "output": "Go to https://example.org/schedule for the most current details.",
+      "fallback_segments": 0,
+      "elapsed_ms": 823
+    },
+    {
+      "id": "alpha7-en-09",
+      "language": "en",
+      "input": "Send questions to help@example.org before Friday.",
+      "output": "Submit inquiries to help@example.org by Friday.",
+      "fallback_segments": 0,
+      "elapsed_ms": 697
+    },
+    {
+      "id": "alpha7-en-10",
+      "language": "en",
+      "input": "The meeting begins once all members arrive.\n\nThe minutes are kept in the archive.",
+      "output": "The meeting commences once all members have arrived.\n\nThe minutes are stored in the archive.",
+      "fallback_segments": 0,
+      "elapsed_ms": 1266
+    },
+    {
+      "id": "alpha7-en-11",
+      "language": "en",
+      "input": "- Check the original document.\n- Save a copy on your device.",
+      "output": "- Verify the original document.\n- Make a backup on your storage.",
+      "fallback_segments": 0,
+      "elapsed_ms": 999
+    },
+    {
+      "id": "alpha7-en-12",
+      "language": "en",
+      "input": "The server processes the request after validating the token.",
+      "output": "The server validates the token before processing the request.",
+      "fallback_segments": 0,
+      "elapsed_ms": 851
+    },
+    {
+      "id": "alpha7-en-13",
+      "language": "en",
+      "input": "The database backup runs automatically every night.",
+      "output": "The database backup is executed automatically every night.",
+      "fallback_segments": 0,
+      "elapsed_ms": 632
+    },
+    {
+      "id": "alpha7-en-14",
+      "language": "en",
+      "input": "Students may retake the exam if their teacher permits it.",
+      "output": "Students may retake the exam if their teacher allows it.",
+      "fallback_segments": 0,
+      "elapsed_ms": 939
+    },
+    {
+      "id": "alpha7-en-15",
+      "language": "en",
+      "input": "Participants must arrive before the event begins.",
+      "output": "Participants must arrive before the event starts.",
+      "fallback_segments": 0,
+      "elapsed_ms": 783
+    },
+    {
+      "id": "alpha7-en-16",
+      "language": "en",
+      "input": "Sales increased but the company profit declined.",
+      "output": "Sales rose, but the company's profit fell.",
+      "fallback_segments": 0,
+      "elapsed_ms": 962
+    },
+    {
+      "id": "alpha7-en-17",
+      "language": "en",
+      "input": "The team will review the proposal next week.",
+      "output": "The team will scrutinize the proposal the following week.",
+      "fallback_segments": 0,
+      "elapsed_ms": 845
+    },
+    {
+      "id": "alpha7-en-18",
+      "language": "en",
+      "input": "The library provides a comfortable place to study.",
+      "output": "The library offers a serene area for studying.",
+      "fallback_segments": 0,
+      "elapsed_ms": 803
+    },
+    {
+      "id": "alpha7-en-19",
+      "language": "en",
+      "input": "Dr. Sari explained the examination results to the patient.",
+      "output": "Dr. Sari informed the patient about the examination results.",
+      "fallback_segments": 0,
+      "elapsed_ms": 855
+    },
+    {
+      "id": "alpha7-en-20",
+      "language": "en",
+      "input": "If it rains, the match will be postponed until tomorrow.",
+      "output": "If it rains, the match will be postponed until tomorrow.",
+      "fallback_segments": 0,
+      "elapsed_ms": 961
+    }
+  ]
+}

@@ -6,6 +6,15 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.7] - 2026-11-01
+
+### Changed
+
+- Count each paraphrase reservation once, return a retry interval for rate limits, and preserve the previous result if a later request fails.
+- Explain unchanged paraphrase results without claiming no edits are needed, and avoid cancelling an already consumed ticket after success.
+- Document the observed Cloudflare/Nginx proxy path and supply a narrowly scoped Portainer trust setting and Nginx examples for sanitized client addresses.
+- Require three reviewed 40-sample reports with at least half of each language meaningfully rewritten before promoting a release. Model evaluation remains in progress; no new model has been approved.
+
 ## [0.1.0-alpha.6] - 2026-10-31
 
 ### Added
