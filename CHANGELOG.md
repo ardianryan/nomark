@@ -8,6 +8,10 @@ No changes yet.
 
 ## [0.1.0-alpha.7] - 2026-11-01
 
+### Deployment note
+
+- Updated the existing alpha.6 production proxy to forward a sanitized client address and trust only Nginx at `10.1.0.18`. The alpha.7 application and NMT images remain unreleased.
+
 ### Changed
 
 - Count each paraphrase reservation once, return a retry interval for rate limits, and preserve the previous result if a later request fails.
