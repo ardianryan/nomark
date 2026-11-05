@@ -23,7 +23,7 @@ def public_head(lang, path, title, description, *, tool=False):
     if tool:
         graph += [
             {"@type": "WebApplication", "@id": SITE + "/#application", "name": "NoMark", "url": url, "description": description, "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "JavaScript, WebAssembly and Web Workers", "isAccessibleForFree": True, "inLanguage": ["id", "en"], "featureList": ["Hidden Unicode character cleaning", "Document, image, audio and video metadata cleaning", "Browser-local history"], "isBasedOn": SOURCE},
-            {"@type": "FAQPage", "@id": url + "#faq", "inLanguage": lang, "mainEntity": [{"@type": "Question", "name": COPY[lang][f"faq{i}Q"], "acceptedAnswer": {"@type": "Answer", "text": COPY[lang][f"faq{i}A"]}} for i in range(1, 7)]},
+            {"@type": "FAQPage", "@id": url + "#faq", "inLanguage": lang, "mainEntity": [{"@type": "Question", "name": COPY[lang][f"faq{i}Q"], "acceptedAnswer": {"@type": "Answer", "text": COPY[lang][f"faq{i}A"]}} for i in range(1, 8)]},
         ]
     data = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False).replace("<", "\\u003c")
     title, description = escape(title, quote=True), escape(description, quote=True)
@@ -80,7 +80,7 @@ def llms_index():
 
 > Public, account-free browser tool for cleaning supported hidden Unicode characters and document metadata. Cleaning needs no AI model or API key. Optional server paraphrasing uses locally operated translation models with separate consent.
 
-Text and non-PDF documents are processed locally in a browser Web Worker. PDFs require explicit upload permission and a server slot. Findings do not establish AI authorship, and statistical AI watermark removal is not guaranteed. Public site context: Jakarta, Indonesia. Available worldwide in Indonesian and English.
+Text and non-PDF file metadata are processed locally in a browser Web Worker. The separate Images tab sends one static PNG, JPEG, or WebP to the private CPU media service after permission; it cleans supported visible AI marks and returns normalized PNG. Its limits are 20 MiB, 8 megapixels and 8,192 pixels per side. PDFs require explicit upload permission and a server slot. Findings do not establish AI authorship, and statistical AI watermark removal is not guaranteed. Public site context: Jakarta, Indonesia. Available worldwide in Indonesian and English.
 
 Optional paraphrasing supports Indonesian and English, at most 5,000 characters, one active job and two waiting tickets. It can change meaning and does not detect or guarantee removal of SynthID. It is unavailable when its separate model service is not configured.
 
@@ -92,7 +92,8 @@ Optional paraphrasing supports Indonesian and English, at most 5,000 characters,
 - [Full public context]({SITE}/llms-full.txt): Detailed tool facts, bilingual questions and answers, and current public policies.
 
 ## Source
-- [watermarks-remover]({SOURCE}): The pinned upstream Python cleaning engine used by NoMark.
+- [watermarks-remover]({SOURCE}): The pinned upstream Python Unicode and metadata cleaning engine.
+- [remove-ai-watermarks](https://github.com/wiltodelta/remove-ai-watermarks): Pinned Apache-2.0 image-cleaning engine used by the optional media service; OpenCV backend only.
 
 Contact: me@ardianryan.com
 '''
@@ -100,10 +101,10 @@ Contact: me@ardianryan.com
 
 def llms_full():
     from nomark.policies import POLICIES, UPDATED
-    sections = [llms_index(), "## Processing and limits\n\nSupported files: TXT, MD/Markdown, HTML/HTM, PDF, DOCX, XLSX, PPTX, ODT, EPUB; images: PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, HEIC/HEIF, SVG; text source: TEX/LaTeX; audio/video: WAV, MP3, FLAC, M4A, MP4, MOV, M4V. Media processing removes metadata only and does not remove pixel or waveform watermarks, re-encode media, or invoke model hooks. Text and every supported non-PDF format run locally through Pyodide. PDF metadata cleaning runs on the server with ExifTool, qpdf, and Ghostscript; no OCR or text rewriting.\n\nLimits: 200,000 pasted characters; 20 MiB per file; five sequential files in the browser queue. Server: two simultaneous jobs, eight waiting tickets, 120-second waiting expiry, 20-second ready expiry, 30-second upload timeout, 60-second processing timeout. Waiting files stay on the device. Temporary files are removed after jobs; interrupted-job remnants older than five minutes are swept while running.\n\nIndexedDB history: 20 entries or 100 MiB, including originals and results. Oldest entries are evicted. Language and theme preferences use localStorage. No account, server history database, analytics, S3 bucket, external CDN, MCP, or AI provider is configured. Compatibility API calls send their contents to the server even for non-PDF input.\n"]
+    sections = [llms_index(), "## Processing and limits\n\nSupported files: TXT, MD/Markdown, HTML/HTM, PDF, DOCX, XLSX, PPTX, ODT, EPUB; images: PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, HEIC/HEIF, SVG; text source: TEX/LaTeX; audio/video: WAV, MP3, FLAC, M4A, MP4, MOV, M4V. The Files tab removes supported media metadata only, without changing pixel or waveform watermarks. Text and non-PDF metadata cleaning run locally through Pyodide. The separate Images tab uploads one static PNG, JPEG or WebP after permission and queue admission, uses local OpenCV to reconstruct recognized visible-mark regions, and returns normalized PNG without private metadata. There is one active media job and two waiting tickets. No hidden-watermark or GPU removal is provided; detail may change. PDF metadata cleaning runs on the server with ExifTool, qpdf, and Ghostscript; no OCR or text rewriting.\n\nLimits: 200,000 pasted characters; 20 MiB per file; five sequential files in the browser queue. Server: two simultaneous jobs, eight waiting tickets, 120-second waiting expiry, 20-second ready expiry, 30-second upload timeout, 60-second processing timeout. Waiting files stay on the device. Temporary files are removed after jobs; interrupted-job remnants older than five minutes are swept while running.\n\nIndexedDB history: 20 entries or 100 MiB, including originals and results. Oldest entries are evicted. Language and theme preferences use localStorage. No account, server history database, analytics, S3 bucket, external CDN, MCP, or AI provider is configured. Compatibility API calls send their contents to the server even for non-PDF input.\n"]
     for lang in ("en", "id"):
         sections.append(f"## Questions and answers ({lang})\n")
-        for i in range(1, 7):
+        for i in range(1, 8):
             sections.append(f"### {COPY[lang][f'faq{i}Q']}\n\n{COPY[lang][f'faq{i}A']}\n")
         for kind in ("privacy", "terms"):
             policy = POLICIES[lang][kind]

@@ -83,3 +83,11 @@ docker compose --project-directory . -f deploy/compose.release.yaml -f deploy/co
 ```
 
 The eighty reviewed model outputs pass the limited-edit quality gate; most inputs are retained unchanged. This does not establish general semantic accuracy or watermark removal. See [Paraphrasing](PARAPHRASE.md).
+
+## Optional CPU image service (alpha.8 staging candidate)
+
+The complete Portainer example now includes a third optional media service. It needs no GPU and publishes no host port. Its internal media network is separate from NMT. The main app points `NOMARK_MEDIA_URL` at `http://nomark-media:8002`; image metadata cleaning in Files remains local. For a single-service installation, merge `deploy/compose.media.yaml`. Media is not a main-app health dependency. See `IMAGE_PROCESSING.md` for limits and cancellation.
+
+Do not deploy the example's rolling media tag until a reviewed release has actually published it. For staging, substitute images built from the same candidate SHA. Existing production image tags remain unchanged. Media startup does not require NMT availability, and no release gate is bypassed.
+
+On 2026-11-05 production alpha.6 was observed `unhealthy` because cached startup `/health.pdf_ready` was false. All three native tools subsequently returned exit code zero when checked directly. The alpha.8 candidate periodically refreshes native readiness so a transient startup failure can recover. Production was not restarted or modified during this work; health must be checked and restored before any later rollout.

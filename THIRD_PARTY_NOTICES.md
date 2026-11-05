@@ -5,6 +5,7 @@ NoMark calls the original cleaning functions directly and runs selected modules 
 | Component | Purpose | License / source |
 | --- | --- | --- |
 | watermarks-remover | Python Unicode and metadata cleaners | [MIT](watermarks-remover/LICENSE), [source](https://github.com/guillaumemeyer/watermarks-remover), pinned commit `5c180932a00c793261177f79aee21db8929f3fe2` |
+| remove-ai-watermarks | Visible image-mark cleaning in the optional media service | [Apache-2.0](remove-ai-watermarks/LICENSE), [source](https://github.com/wiltodelta/remove-ai-watermarks), pinned commit `b57ef6045cd7de525bc10546d4c1ce9f9fe151f7` |
 | Alpine.js CSP | Browser interface | [MIT notice](static/vendor/ALPINE-LICENSE.txt) |
 | Vue reactivity/shared | Included in Alpine | [Notices](static/notices.txt) |
 | Pyodide 314.0.7 | Local Python WebAssembly runtime | [MPL-2.0 notice](static/vendor/pyodide/314.0.7/LICENSE.txt), [source](https://github.com/pyodide/pyodide/tree/314.0.7) |
@@ -22,3 +23,5 @@ Helsinki-NLP OPUS-MT en-id and id-en model cards declare Apache-2.0. Immutable s
 ## JsDiff
 
 The browser text-comparison worker uses JsDiff (`diff` npm package) version 9.0.0, under the BSD-3-Clause license. Source: https://github.com/kpdecker/jsdiff. A local distribution and license are provided under `static/vendor`; the browser does not load it from a CDN. Full terms are also included in `static/notices.txt`.
+
+The media service installs remove-ai-watermarks from the pinned submodule source without modifying it. NoMark supplies a separate validation, normalization and isolation adapter. Synthetic marked image fixtures derive from the upstream Apache-2.0 renderer and embedded templates; they are not real-world accuracy evidence. The main app and browser engine do not bundle the media package.

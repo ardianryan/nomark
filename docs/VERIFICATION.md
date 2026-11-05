@@ -1,5 +1,9 @@
 # Verification
 
+## 0.1.0-alpha.8 image verification
+
+The candidate passed 225 isolated Linux Python checks, 36 browser tests and eight JavaScript unit tests. Actual media HTTP, cancellation/disconnect, accessibility and bounded CPU measurements are recorded in [the alpha.8 report](MEDIA-ALPHA8-VERIFICATION.md). This is not a published release or a production rollout; the NMT quality gate remains held.
+
 ## 0.1.0-alpha.6 editor verification
 
 Verified on 31 October 2026 before publication. The local Python suite passed **177 tests**, with one Linux-only resource-limit test deferred to GitLab; the existing framework TestClient deprecation warning remains. **29 browser tests** and **8 JavaScript unit tests** passed. A focused seven-test editor rerun additionally verified the final popup-position fix without a page-scroll jump. GitLab must pass the complete Linux suite, both image builds and runtime smoke checks before release promotion.

@@ -6,6 +6,22 @@ All application changes are recorded under a version before release. Versions fo
 
 No changes yet.
 
+## [0.1.0-alpha.8] - 2026-11-05
+
+### Added
+
+- Add an optional isolated CPU media service calling the pinned remove-ai-watermarks submodule directly, with automatic visible-mark removal and normalized PNG output.
+- Add an Images workspace with separate upload consent, before/after previews, cancellation, downloads and browser-local history.
+- Add bounded image admission, multipart and response validation, hard worker termination, image format/pixel limits and an internal-only container.
+- Include Apache-2.0 attribution, bilingual media privacy/FAQ information and staging verification records. This is a staging candidate, not a published release.
+
+### Verification
+
+- Pass 225 isolated Linux Python checks and 36 browser tests. Verify actual app-to-media PNG output, active-job cancellation and disconnect termination, with no retained job directories.
+- Record a fixed 30-image synthetic corpus: 14/15 known examples recognized, one documented Jimeng pill miss, no false positives in ten clean and five unknown-mark controls, and no changed pixels outside the fill masks.
+- Measure 1/4/8-megapixel PNG/JPEG/WebP CPU cases within the 2 GiB limit. Preserve the failed NMT release gate; no release tag, latest promotion or production rollout is performed.
+- Refresh native PDF-tool readiness periodically to recover from transient startup probe failures. Make the NMT timeout fixture warm its process before testing the inference deadline; production NMT limits are unchanged.
+
 ## [0.1.0-alpha.7] - 2026-11-01
 
 ### Deployment note

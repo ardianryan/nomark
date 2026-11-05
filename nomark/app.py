@@ -31,7 +31,7 @@ FILE_LIMIT = 20 * 1024 * 1024
 TEXT_LIMIT = 200_000
 BODY_LIMIT = FILE_LIMIT + 1024 * 1024
 ALLOWED = {".txt", ".md", ".markdown", ".html", ".htm", ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".epub"}
-CSP = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+CSP = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
 
 
 class BodyLimit(Exception):
@@ -62,6 +62,8 @@ class Guard:
                     extra.append((b"cache-control", b"public, max-age=31536000, immutable"))
                 elif path.startswith("/static/"):
                     extra.append((b"cache-control", b"no-cache"))
+                if scope.get('nomark.image_claimed'):
+                    extra.append((b'x-nomark-reservation-consumed', b'1'))
                 message["headers"] = list(message.get("headers", [])) + extra
             await send(message)
         async def reject(code, status, retry_after=None):
@@ -90,7 +92,7 @@ class Guard:
                 self.last_sweep = now
                 if len(self.requests) > 10_000:
                     return await reject("server_busy", 503)
-            capability = path == '/api/paraphrase/capabilities' and scope['method'] == 'GET'
+            capability = path in {'/api/paraphrase/capabilities', '/api/media/capabilities'} and scope['method'] == 'GET'
             if capability:
                 recent = self.requests[(address, 'capabilities')]
                 while recent and recent[0] <= now - 60:
@@ -98,15 +100,15 @@ class Guard:
                 if len(recent) >= 60:
                     return await reject('rate_limited', 429, max(1, math.ceil(60 - (now - recent[0]))))
                 recent.append(now)
-            if not capability and not (path in {"/api/queue", "/api/paraphrase/queue"} and scope["method"] in {"GET", "DELETE"}):
+            if not capability and not (path in {"/api/queue", "/api/paraphrase/queue", "/api/media/queue"} and scope["method"] in {"GET", "DELETE"}):
                 recent = self.requests[address]
                 while recent and recent[0] <= now - 60:
                     recent.popleft()
                 if len(recent) >= 20:
                     return await reject("rate_limited", 429, max(1, math.ceil(60 - (now - recent[0]))))
                 recent.append(now)
-                if scope['method'] == 'POST' and path == '/api/paraphrase/queue':
-                    nmt_recent = self.requests[(address, 'paraphrase')]
+                if scope['method'] == 'POST' and path in {'/api/paraphrase/queue', '/api/media/queue'}:
+                    nmt_recent = self.requests[(address, 'media' if path == '/api/media/queue' else 'paraphrase')]
                     while nmt_recent and nmt_recent[0] <= now - 60:
                         nmt_recent.popleft()
                     if len(nmt_recent) >= 5:
@@ -148,9 +150,14 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
     async def lifespan(app):
         app.state.tools = await asyncio.to_thread(_tools)
         async def maintain_queue():
+            tool_refresh = time.monotonic()
             while True:
                 await asyncio.sleep(5)
+                if time.monotonic() - tool_refresh >= 30:
+                    app.state.tools = await asyncio.to_thread(_tools)
+                    tool_refresh = time.monotonic()
                 app.state.admission.sweep()
+                app.state.image_queue.sweep()
                 cleanup_workdir()
         maintenance = asyncio.create_task(maintain_queue())
         try:
@@ -171,9 +178,13 @@ def create_app(*, jobs: Jobs | None = None) -> FastAPI:
     app.state.jobs = jobs or Jobs(timeout=float(os.environ.get("NOMARK_TIMEOUT", "60")), temp_root=str(workdir))
     app.state.admission = Admission(capacity=app.state.jobs.concurrency)
     app.state.tools = {"exiftool": False, "qpdf": False, "gs": False}
-    app.add_middleware(Guard)
     from nomark.paraphrase_routes import install
     install(app)
+    from nomark.image_routes import install as install_images
+    install_images(app)
+    from nomark.image_response import ImageResponseGate
+    app.add_middleware(ImageResponseGate, queue=app.state.image_queue)
+    app.add_middleware(Guard)
 
     def queue_token(request):
         value = request.headers.get("authorization", "")

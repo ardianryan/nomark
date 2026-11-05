@@ -1,0 +1,180 @@
+{
+  "version": "0.1.0-alpha.8",
+  "environment": {
+    "platform": "linux/amd64",
+    "cpu_limit": 2,
+    "memory_limit_bytes": 2147483648,
+    "tmpfs_limit_bytes": 268435456,
+    "network": "none",
+    "user": "10003:10003"
+  },
+  "method": "wait4 child peak RSS in KiB; cold Python process per input; not total container memory or a concurrency load test",
+  "series": {
+    "flat_baseline": [
+      {
+        "pixels": 1000000,
+        "format": "PNG",
+        "elapsed_ms": 728,
+        "peak_rss_kib": 104920,
+        "exit_code": 0,
+        "bytes_in": 5216,
+        "bytes_out": 6599
+      },
+      {
+        "pixels": 1000000,
+        "format": "JPEG",
+        "elapsed_ms": 702,
+        "peak_rss_kib": 105648,
+        "exit_code": 0,
+        "bytes_in": 16504,
+        "bytes_out": 6599
+      },
+      {
+        "pixels": 1000000,
+        "format": "WEBP",
+        "elapsed_ms": 702,
+        "peak_rss_kib": 107472,
+        "exit_code": 0,
+        "bytes_in": 1882,
+        "bytes_out": 6644
+      },
+      {
+        "pixels": 4000000,
+        "format": "PNG",
+        "elapsed_ms": 1731,
+        "peak_rss_kib": 190628,
+        "exit_code": 0,
+        "bytes_in": 16278,
+        "bytes_out": 20375
+      },
+      {
+        "pixels": 4000000,
+        "format": "JPEG",
+        "elapsed_ms": 1656,
+        "peak_rss_kib": 187492,
+        "exit_code": 0,
+        "bytes_in": 63128,
+        "bytes_out": 20376
+      },
+      {
+        "pixels": 4000000,
+        "format": "WEBP",
+        "elapsed_ms": 1681,
+        "peak_rss_kib": 188032,
+        "exit_code": 0,
+        "bytes_in": 7186,
+        "bytes_out": 20419
+      },
+      {
+        "pixels": 8000000,
+        "format": "PNG",
+        "elapsed_ms": 3561,
+        "peak_rss_kib": 284164,
+        "exit_code": 0,
+        "bytes_in": 28980,
+        "bytes_out": 37482
+      },
+      {
+        "pixels": 8000000,
+        "format": "JPEG",
+        "elapsed_ms": 3487,
+        "peak_rss_kib": 276880,
+        "exit_code": 0,
+        "bytes_in": 126228,
+        "bytes_out": 37482
+      },
+      {
+        "pixels": 8000000,
+        "format": "WEBP",
+        "elapsed_ms": 3461,
+        "peak_rss_kib": 284364,
+        "exit_code": 0,
+        "bytes_in": 14366,
+        "bytes_out": 37528
+      }
+    ],
+    "resized_synthetic_gemini": [
+      {
+        "pixels": 1000000,
+        "format": "PNG",
+        "elapsed_ms": 1206,
+        "peak_rss_kib": 109988,
+        "exit_code": 0,
+        "bytes_in": 549090,
+        "bytes_out": 550209
+      },
+      {
+        "pixels": 1000000,
+        "format": "JPEG",
+        "elapsed_ms": 928,
+        "peak_rss_kib": 109616,
+        "exit_code": 0,
+        "bytes_in": 22627,
+        "bytes_out": 69373
+      },
+      {
+        "pixels": 1000000,
+        "format": "WEBP",
+        "elapsed_ms": 928,
+        "peak_rss_kib": 113340,
+        "exit_code": 0,
+        "bytes_in": 3424,
+        "bytes_out": 22394
+      },
+      {
+        "pixels": 4000000,
+        "format": "PNG",
+        "elapsed_ms": 2583,
+        "peak_rss_kib": 196848,
+        "exit_code": 0,
+        "bytes_in": 1986671,
+        "bytes_out": 2008288
+      },
+      {
+        "pixels": 4000000,
+        "format": "JPEG",
+        "elapsed_ms": 2056,
+        "peak_rss_kib": 189960,
+        "exit_code": 0,
+        "bytes_in": 137047,
+        "bytes_out": 1069750
+      },
+      {
+        "pixels": 4000000,
+        "format": "WEBP",
+        "elapsed_ms": 1806,
+        "peak_rss_kib": 189908,
+        "exit_code": 0,
+        "bytes_in": 14846,
+        "bytes_out": 98334
+      },
+      {
+        "pixels": 8000000,
+        "format": "PNG",
+        "elapsed_ms": 5467,
+        "peak_rss_kib": 293692,
+        "exit_code": 0,
+        "bytes_in": 3154365,
+        "bytes_out": 3237192
+      },
+      {
+        "pixels": 8000000,
+        "format": "JPEG",
+        "elapsed_ms": 4564,
+        "peak_rss_kib": 294624,
+        "exit_code": 0,
+        "bytes_in": 331563,
+        "bytes_out": 2764486
+      },
+      {
+        "pixels": 8000000,
+        "format": "WEBP",
+        "elapsed_ms": 3786,
+        "peak_rss_kib": 287476,
+        "exit_code": 0,
+        "bytes_in": 45458,
+        "bytes_out": 447770
+      }
+    ]
+  }
+}

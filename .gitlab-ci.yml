@@ -1,8 +1,27 @@
-stages: [test, build, smoke, promote, release]
+stages: [source, test, build, smoke, promote, release]
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_PATHS: watermarks-remover
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+prepare_media_source:
+  stage: source
+  image: node:22-bookworm
+  script:
+    - MEDIA_COMMIT=$(git ls-tree HEAD remove-ai-watermarks | awk '{print $3}')
+    - node -e "require('node:fs').rmSync('remove-ai-watermarks', {recursive:true, force:true})"
+    - git clone --filter=blob:none --no-checkout --depth 1 https://github.com/wiltodelta/remove-ai-watermarks.git remove-ai-watermarks
+    - git -C remove-ai-watermarks sparse-checkout set --no-cone '/src/' '/pyproject.toml' '/README.md' '/LICENSE'
+    - git -C remove-ai-watermarks fetch --depth 1 origin "$MEDIA_COMMIT"
+    - git -C remove-ai-watermarks checkout --detach "$MEDIA_COMMIT"
+  artifacts:
+    paths:
+      - remove-ai-watermarks/src/
+      - remove-ai-watermarks/pyproject.toml
+      - remove-ai-watermarks/README.md
+      - remove-ai-watermarks/LICENSE
+    expire_in: 1 day
 
 workflow:
   rules:
@@ -16,9 +35,12 @@ verify:
     - apt-get update && apt-get install -y --no-install-recommends libimage-exiftool-perl qpdf ghostscript python3 python3-venv python-is-python3
     - python -m venv .venv
     - .venv/bin/pip install -r requirements.lock
+    - .venv/bin/pip install --require-hashes -r media-service/requirements.lock
+    - .venv/bin/pip install --require-hashes -r media-service/build.lock
+    - .venv/bin/pip install --no-deps --no-build-isolation ./remove-ai-watermarks
     - .venv/bin/python scripts/release.py check
     - if [ -n "$CI_COMMIT_TAG" ]; then .venv/bin/python scripts/nmt_quality_gate.py; fi
-    - .venv/bin/python -m pytest tests nmt-service/tests
+    - .venv/bin/python -m pytest tests nmt-service/tests media-service/tests
     - npm ci --no-audit --no-fund
     - npm run test:unit
     - npx playwright install --with-deps chromium
@@ -106,6 +128,49 @@ smoke_nmt:
     - cd /app
     - python -m uvicorn nmt_service.main:app --host 127.0.0.1 --port 8001 --no-access-log --no-proxy-headers &
     - python "$CI_PROJECT_DIR/scripts/smoke_nmt.py"
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+build_media_image:
+  extends: build_image
+  script:
+    - mkdir -p "$HOME/.docker"
+    - AUTH=$(printf '%s:%s' "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')
+    - printf '{"auths":{"%s":{"auth":"%s"}}}' "$CI_REGISTRY" "$AUTH" > "$HOME/.docker/config.json"
+    - mkdir -p artifacts
+    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=. --local dockerfile=. --opt filename=media-service/Dockerfile --opt platform=linux/amd64 --opt build-arg:VERSION="$(cat VERSION)" --opt build-arg:REVISION="$CI_COMMIT_SHA" --output "type=image,name=$CI_REGISTRY_IMAGE/media:sha-$CI_COMMIT_SHA,push=true" --metadata-file artifacts/media-image-metadata.json
+  artifacts:
+    paths: [artifacts/media-image-metadata.json]
+    expire_in: 1 year
+
+smoke_media:
+  stage: smoke
+  image:
+    name: $CI_REGISTRY_IMAGE/media:sha-$CI_COMMIT_SHA
+    entrypoint: [""]
+  script:
+    - cd /app
+    - python -m uvicorn media_service.main:app --host 127.0.0.1 --port 8002 --no-access-log --no-proxy-headers &
+    - python "$CI_PROJECT_DIR/scripts/smoke_media.py"
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+smoke_media_integration:
+  stage: smoke
+  image:
+    name: $CI_REGISTRY_IMAGE:sha-$CI_COMMIT_SHA
+    entrypoint: [""]
+  services:
+    - name: $CI_REGISTRY_IMAGE/media:sha-$CI_COMMIT_SHA
+      alias: nomark-media
+  variables:
+    NOMARK_MEDIA_URL: http://nomark-media:8002
+  script:
+    - cd /app
+    - python -m uvicorn nomark.app:app --host 127.0.0.1 --port 8000 --no-access-log --no-proxy-headers &
+    - python "$CI_PROJECT_DIR/scripts/smoke_image_public.py"
   rules:
     - if: $CI_COMMIT_TAG
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

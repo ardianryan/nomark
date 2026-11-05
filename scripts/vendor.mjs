@@ -16,7 +16,8 @@ const hash = createHash('sha256').update(await readFile(source)).digest('hex');
 await writeFile('static/vendor/VERSION.txt', `@alpinejs/csp ${version}\nSHA256 ${hash}\n`);
 const upstreamLicense = await readFile('watermarks-remover/LICENSE', 'utf8');
 const ownLicense = await readFile('LICENSE', 'utf8');
-await writeFile('static/notices.txt', `NoMark — MIT License\n\n${ownLicense}\n\nNoMark — third-party notices\n\nwatermarks-remover\nhttps://github.com/guillaumemeyer/watermarks-remover\nCommit: 5c180932a00c793261177f79aee21db8929f3fe2\n\n${upstreamLicense}\n\nAlpine.js CSP ${version}\nhttps://github.com/alpinejs/alpine\n\n${await readFile('static/vendor/ALPINE-LICENSE.txt', 'utf8')}`);
+const mediaLicense = await readFile('remove-ai-watermarks/LICENSE', 'utf8');
+await writeFile('static/notices.txt', `NoMark — MIT License\n\n${ownLicense}\n\nNoMark — third-party notices\n\nwatermarks-remover\nhttps://github.com/guillaumemeyer/watermarks-remover\nCommit: 5c180932a00c793261177f79aee21db8929f3fe2\n\n${upstreamLicense}\n\nremove-ai-watermarks\nhttps://github.com/wiltodelta/remove-ai-watermarks\nCommit: b57ef6045cd7de525bc10546d4c1ce9f9fe151f7\n\n${mediaLicense}\n\nAlpine.js CSP ${version}\nhttps://github.com/alpinejs/alpine\n\n${await readFile('static/vendor/ALPINE-LICENSE.txt', 'utf8')}`);
 for (const name of ['reactivity', 'shared']) {
   const license = await readFile(`node_modules/@vue/${name}/LICENSE`, 'utf8');
   await writeFile('static/notices.txt', `${await readFile('static/notices.txt', 'utf8')}\n\n@vue/${name}\n\n${license}`);

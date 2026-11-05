@@ -7,9 +7,9 @@ test('image categories clean locally, preserve pixels, download, and restore his
   const api = [];
   page.on('request', request => { if (/\/api\/(?:file|text|queue)/.test(request.url())) api.push(request.url()); });
   await page.getByRole('radio', { name: 'Images', exact: true }).check();
-  await expect(page.locator('input[type=file]')).toHaveAttribute('accept', /\.png/);
+  await expect(page.locator('#file-panel input[type=file]')).toHaveAttribute('accept', /\.png/);
   await expect(page.locator('.format-explanation')).toContainText('Clean image file metadata.');
-  await page.locator('input[type=file]').setInputFiles(['png', 'jpg', 'webp', 'gif', 'bmp'].map(ext => path.resolve(`tests/fixtures/media/sample.${ext}`)));
+  await page.locator('#file-panel input[type=file]').setInputFiles(['png', 'jpg', 'webp', 'gif', 'bmp'].map(ext => path.resolve(`tests/fixtures/media/sample.${ext}`)));
   await page.getByRole('button', { name: 'Clean files', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Download', exact: true })).toHaveCount(10, { timeout: 60000 });
   const compared = await page.evaluate(async () => {
@@ -41,8 +41,8 @@ test('audio metadata is cleaned locally and controls work in both languages and 
   const uploads = [];
   page.on('request', request => { if (request.method() === 'POST') uploads.push(request.url()); });
   await page.getByRole('radio', { name: 'Audio', exact: true }).check();
-  await expect(page.locator('input[type=file]')).toHaveAttribute('accept', /\.wav/);
-  await page.locator('input[type=file]').setInputFiles(path.resolve('tests/fixtures/media/sample.wav'));
+  await expect(page.locator('#file-panel input[type=file]')).toHaveAttribute('accept', /\.wav/);
+  await page.locator('#file-panel input[type=file]').setInputFiles(path.resolve('tests/fixtures/media/sample.wav'));
   await page.getByRole('button', { name: 'Clean files', exact: true }).click();
   await expect(page.locator('.file-actions').getByRole('button', { name: 'Download', exact: true })).toBeVisible({ timeout: 60000 });
   await page.getByRole('radio', { name: 'Video', exact: true }).check();

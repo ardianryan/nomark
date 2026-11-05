@@ -14,3 +14,11 @@ watermarks-remover/tests
 
 .env.*
 .docker-ci/
+remove-ai-watermarks/.git
+remove-ai-watermarks/data
+remove-ai-watermarks/scripts
+remove-ai-watermarks/docs
+remove-ai-watermarks/tests
+remove-ai-watermarks/assets
+remove-ai-watermarks/demo_*.png
+media-service/tests

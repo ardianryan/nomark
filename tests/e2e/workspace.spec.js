@@ -45,7 +45,7 @@ test('cleans text, copies, downloads, restores local history, and deletes it', a
 
 test('uploads a sequential document queue, downloads, and restores files', async ({ page }) => {
   await page.getByRole('tab', { name: 'Files' }).click();
-  await page.locator('input[type=file]').setInputFiles([
+  await page.locator('#file-panel input[type=file]').setInputFiles([
     { name: 'first.txt', mimeType: 'text/plain', buffer: Buffer.from('Hello\u200bworld') },
     { name: 'second.md', mimeType: 'text/markdown', buffer: Buffer.from('# Halo\u200bdunia') },
   ]);
@@ -67,7 +67,7 @@ test('uploads a sequential document queue, downloads, and restores files', async
 
 test('validates uploads, retains input on network errors, and survives storage failure', async ({ page }) => {
   await page.getByRole('tab', { name: 'Files' }).click();
-  await page.locator('input[type=file]').setInputFiles({ name: 'archive.7z', mimeType: 'application/x-7z-compressed', buffer: Buffer.from('unsupported') });
+  await page.locator('#file-panel input[type=file]').setInputFiles({ name: 'archive.7z', mimeType: 'application/x-7z-compressed', buffer: Buffer.from('unsupported') });
   await expect(page.getByRole('alert')).toContainText('not supported');
   await page.getByRole('tab', { name: 'Text', exact: true }).click();
   await page.getByRole('button', { name: 'Try a sample' }).click();
@@ -133,7 +133,7 @@ test('supports dropping files and enforces the five-file queue limit', async ({ 
     for (let i = 0; i < 6; i++) data.items.add(new File(['Hello'], `document-${i}.txt`, { type: 'text/plain' }));
     return data;
   });
-  await page.locator('.dropzone').dispatchEvent('drop', { dataTransfer: transfer });
+  await page.locator('#file-panel .dropzone').dispatchEvent('drop', { dataTransfer: transfer });
   await expect(page.locator('.file-row')).toHaveCount(5);
   await expect(page.getByRole('alert')).toContainText('up to 5 files');
   await page.locator('.remove-button').first().click();
@@ -154,7 +154,7 @@ test('supports the UUID and clipboard fallbacks needed for HTTP LAN access', asy
   await page.getByRole('button', { name: 'Copy', exact: true }).click();
   await expect(page.locator('.notice')).toContainText('Cleaned text copied');
   await page.getByRole('tab', { name: 'Files' }).click();
-  await page.locator('input[type=file]').setInputFiles({ name: 'lan.txt', mimeType: 'text/plain', buffer: Buffer.from('Hello\u200bLAN') });
+  await page.locator('#file-panel input[type=file]').setInputFiles({ name: 'lan.txt', mimeType: 'text/plain', buffer: Buffer.from('Hello\u200bLAN') });
   await expect(page.locator('.file-row')).toHaveCount(1);
 });
 
@@ -240,7 +240,7 @@ test('PDF waits before upload and requires explicit server permission', async ({
   try {
     for (let index = 0; index < 2; index++) tickets.push(await (await request.post('/api/queue')).json());
     await page.getByRole('tab', { name: 'Files' }).click();
-    await page.locator('input[type=file]').setInputFiles({ name: 'sample.pdf', mimeType: 'application/pdf', buffer: source });
+    await page.locator('#file-panel input[type=file]').setInputFiles({ name: 'sample.pdf', mimeType: 'application/pdf', buffer: source });
     await page.getByRole('button', { name: 'Clean files', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Allow PDF uploads');
     expect(uploads).toBe(0);
@@ -299,7 +299,7 @@ test('cancelling a waiting PDF releases its ticket without uploading the file', 
   try {
     for (let i = 0; i < 2; i++) held.push(await (await request.post('/api/queue')).json());
     await page.getByRole('tab', { name: 'Files' }).click();
-    await page.locator('input[type=file]').setInputFiles({ name: 'cancel.pdf', mimeType: 'application/pdf', buffer: content });
+    await page.locator('#file-panel input[type=file]').setInputFiles({ name: 'cancel.pdf', mimeType: 'application/pdf', buffer: content });
     await page.getByRole('checkbox', { name: /I allow queued PDFs/ }).check();
     const ticketResponse = page.waitForResponse(response => response.url().endsWith('/api/queue') && response.request().method() === 'POST');
     await page.getByRole('button', { name: 'Clean files', exact: true }).click();

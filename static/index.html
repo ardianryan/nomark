@@ -13,6 +13,7 @@
   <script defer src="/static/app.js"></script>
   <script defer src="/static/changes.js"></script>
   <script defer src="/static/paraphrase.js"></script>
+  <script defer src="/static/image.js"></script>
   <script defer src="/static/vendor/alpine-csp.min.js"></script>
 </head>
 <body x-data="workspace">
@@ -49,6 +50,7 @@
             <div class="tabs" role="tablist" :aria-label="t('inputType')">
               <button type="button" id="text-tab" role="tab" aria-controls="text-panel" :aria-selected="isTextTab" :tabindex="textTabIndex" :disabled="busy" @click="setTextTab" @keydown="tabKey" :class="textTabClass"><span aria-hidden="true" class="text-symbol">Aa</span><span x-text="t('textTab')">Teks</span></button>
               <button type="button" id="file-tab" role="tab" aria-controls="file-panel" :aria-selected="isFileTab" :tabindex="fileTabIndex" :disabled="busy" @click="setFileTab" @keydown="tabKey" :class="fileTabClass"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M11 2H5a1 1 0 0 0-1 1v14h12V7zm0 0v5h5M7 11h6m-6 3h5"/></svg><span x-text="t('fileTab')">Dokumen</span></button>
+              <button id="image-tab" type="button" role="tab" aria-controls="image-panel" :aria-selected="isImageTab" :tabindex="imageTabIndex" :class="imageTabClass" @click="setImageTab" @keydown="tabKey" :disabled="busy"><span x-text="t('imageTab')">Gambar</span></button>
               <button type="button" id="paraphrase-tab" role="tab" aria-controls="paraphrase-panel" :aria-selected="isParaphraseTab" :tabindex="paraphraseTabIndex" :disabled="busy" @click="setParaphraseTab" @keydown="tabKey" :class="paraphraseTabClass"><span x-text="t('paraphraseTab')">Parafrasa</span></button>
             </div>
           </div>
@@ -96,6 +98,26 @@
               <label class="pdf-consent" x-show="hasPdfFiles" x-cloak><input type="checkbox" x-model="allowServer" :disabled="busy"><span x-text="t('pdfConsent')">Saya mengizinkan PDF dikirim ke server untuk diproses. Berkas lain tetap diproses di browser.</span></label>
             </div>
             <div class="run-bar"><p x-text="t('documentMethod')">Membersihkan metadata dan karakter internal sesuai format. PDF tidak mendapatkan OCR atau penulisan ulang isi.</p><button type="button" class="primary-button" @click="cleanFiles" :disabled="cannotCleanFiles"><span x-text="fileButtonLabel">Bersihkan dokumen</span></button></div>
+          </section>
+
+          <section id="image-panel" role="tabpanel" aria-labelledby="image-tab" x-show="isImageTab" x-data="imageEditor" x-cloak>
+            <div class="image-workspace">
+              <p x-text="t('imageIntro')"></p>
+              <div class="image-availability" x-show="imageMissing"><p role="status" x-text="t('media_unavailable')"></p><button type="button" class="text-button" @click="refreshImageAvailability" :disabled="busy" x-text="t('paraphraseRetry')"></button></div>
+              <div class="dropzone" :class="imageDropClass" @dragover.prevent="imageDragging = true" @dragleave.prevent="imageDragging = false" @drop.prevent="dropImage">
+                <label class="file-picker"><span x-text="t('imageChoose')">Pilih gambar</span><input id="image-picker" type="file" accept=".png,.jpg,.jpeg,.webp" @change="pickImage" :disabled="busy" aria-describedby="image-limit"></label>
+                <p id="image-limit" class="file-limit" x-text="t('imageLimit')"></p>
+              </div>
+              <div class="image-selected" x-show="imageFile"><p x-text="imageMeta"></p><button type="button" class="text-button" @click="clearImage" :disabled="busy" x-text="t('clear')"></button></div>
+              <div class="image-comparison" x-show="imageFile">
+                <figure><figcaption x-text="t('imageBefore')">Sebelum</figcaption><img :src="originalUrl" :alt="t('imageBefore')" x-show="originalUrl"></figure>
+                <figure><figcaption x-text="t('imageAfter')">Sesudah</figcaption><img :src="cleanedUrl" :alt="t('imageAfter')" x-show="cleanedUrl"><p x-show="!imageResult" x-text="t('imageEmpty')"></p></figure>
+              </div>
+              <div class="image-report" x-show="imageResult" role="status" aria-live="polite"><p x-text="imageSummary"></p><ul><template x-for="mark in imageMarks" :key="mark.key"><li x-text="imageMarkLabel(mark)"></li></template></ul><p x-text="t('imageMetadataResult')"></p><button type="button" class="copy-button" @click="downloadImage" x-text="t('imageDownload')"></button></div>
+              <label class="pdf-consent"><input type="checkbox" x-model="imageConsent" :disabled="busy || imageSelecting"><span x-text="t('imageConsent')"></span></label>
+              <p class="detail-note" x-text="t('imageReview')"></p>
+            </div>
+            <div class="run-bar"><p x-text="t('imageMethod')"></p><button type="button" class="primary-button" @click="processImage" :disabled="cannotProcessImage" x-text="t('imageAction')">Bersihkan gambar</button></div>
           </section>
 
           <section id="paraphrase-panel" role="tabpanel" aria-labelledby="paraphrase-tab" x-show="isParaphraseTab" x-data="paraphraseEditor" x-cloak>
@@ -165,6 +187,7 @@
         <h2 id="source-title" x-text="t('sourceTitle')">Berbasis watermarks-remover</h2>
         <p><span x-text="t('sourceIntro')">NoMark menggunakan repositori sumber terbuka</span> <a href="https://github.com/guillaumemeyer/watermarks-remover">watermarks-remover</a>.</p>
         <p x-text="t('sourcePurpose')">Website ini dibuat untuk memudahkan siapa saja menggunakan watermarks-remover untuk membersihkan teks melalui browser, tanpa instalasi yang rumit.</p>
+        <p><a href="https://github.com/wiltodelta/remove-ai-watermarks">remove-ai-watermarks</a> <span x-text="t('mediaSourceStatus')">digunakan untuk pembersihan tanda visual gambar pada tab Gambar.</span></p>
       </section>
       <section id="faq" class="faq-section" aria-labelledby="faq-title">
         <h2 id="faq-title" x-text="t('faqTitle')">Pertanyaan umum</h2>
@@ -174,6 +197,7 @@
         <details><summary x-text="t('faq4Q')">Mengapa NoMark dibuat?</summary><p x-text="t('faq4A')"></p></details>
         <details><summary x-text="t('faq5Q')">Bagaimana parafrasa bekerja?</summary><p x-text="t('faq5A')"></p></details>
         <details><summary x-text="t('faq6Q')">Apa batas pembersihan berkas?</summary><p x-text="t('faq6A')"></p></details>
+        <details><summary x-text="t('faq7Q')">Bagaimana pembersihan gambar bekerja?</summary><p x-text="t('faq7A')"></p></details>
       </section>
     </main>
     <footer><p>© 2026 NoMark <span aria-hidden="true">·</span> <span x-text="t('publicTool')">Terbuka untuk siapa saja</span></p><nav class="footer-links" aria-label="Legal"><a :href="termsHref" href="/id/terms" x-text="t('terms')">Ketentuan layanan</a><a :href="privacyHref" href="/id/privacy" x-text="t('privacy')">Kebijakan privasi</a><a href="/static/notices.txt" x-text="t('licenses')">Lisensi sumber terbuka</a></nav></footer>

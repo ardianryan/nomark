@@ -36,9 +36,10 @@ def test_warm_reuse_and_idle_eviction():
 
 @pytest.mark.parametrize('mode', ['timeout', 'cancel', 'disconnect'])
 def test_hard_stop_and_recovery(mode):
-    runtime = Runtime('/unused', timeout=.5, target=synthetic_worker)
+    runtime = Runtime('/unused', timeout=5, target=synthetic_worker)
     async def scenario():
         await runtime.process_text('ready', 'en', connected)
+        runtime.timeout = .5
         async def disconnected(): return mode == 'disconnect'
         task = asyncio.create_task(runtime.process_text('wait', 'id', disconnected))
         if mode == 'cancel':

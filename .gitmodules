@@ -1,3 +1,7 @@
 [submodule "watermarks-remover"]
 	path = watermarks-remover
 	url = https://github.com/guillaumemeyer/watermarks-remover.git
+[submodule "remove-ai-watermarks"]
+	path = remove-ai-watermarks
+	url = https://github.com/wiltodelta/remove-ai-watermarks.git
+	shallow = true

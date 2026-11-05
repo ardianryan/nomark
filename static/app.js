@@ -55,7 +55,7 @@ document.addEventListener('alpine:init', () => {
       for (const item of data['@graph']) {
         if (item['@type'] === 'WebPage') Object.assign(item, { '@id': `${url}#page`, url, name: this.t('seoTitle'), description: this.t('seoDescription'), inLanguage: this.locale });
         if (item['@type'] === 'WebApplication') Object.assign(item, { url, description: this.t('seoDescription') });
-        if (item['@type'] === 'FAQPage') Object.assign(item, { '@id': `${url}#faq`, inLanguage: this.locale, mainEntity: [1, 2, 3, 4, 5, 6].map(i => ({ '@type': 'Question', name: this.t(`faq${i}Q`), acceptedAnswer: { '@type': 'Answer', text: this.t(`faq${i}A`) } })) });
+        if (item['@type'] === 'FAQPage') Object.assign(item, { '@id': `${url}#faq`, inLanguage: this.locale, mainEntity: [1, 2, 3, 4, 5, 6, 7].map(i => ({ '@type': 'Question', name: this.t(`faq${i}Q`), acceptedAnswer: { '@type': 'Answer', text: this.t(`faq${i}A`) } })) });
       }
       schema.textContent = JSON.stringify(data);
     },
@@ -68,11 +68,15 @@ document.addEventListener('alpine:init', () => {
     get textTabClass() { return this.isTextTab ? 'selected' : ''; }, get fileTabClass() { return this.isFileTab ? 'selected' : ''; },
     get textTabIndex() { return this.isTextTab ? 0 : -1; }, get fileTabIndex() { return this.isFileTab ? 0 : -1; },
     setTextTab() { if (!this.busy) { window.NoMarkParaphraseFlush?.(); this.tab = 'text'; this.error = ''; } }, setFileTab() { if (!this.busy) { window.NoMarkParaphraseFlush?.(); this.tab = 'file'; this.error = ''; } },
+    get isImageTab() { return this.tab === 'image'; },
+    get imageTabClass() { return this.isImageTab ? 'selected' : ''; },
+    get imageTabIndex() { return this.isImageTab ? 0 : -1; },
+    setImageTab() { if (!this.busy) { window.NoMarkParaphraseFlush?.(); this.tab = 'image'; this.error = ''; } },
     get isParaphraseTab() { return this.tab === 'paraphrase'; },
     get paraphraseTabClass() { return this.isParaphraseTab ? 'selected' : ''; },
     get paraphraseTabIndex() { return this.isParaphraseTab ? 0 : -1; },
     setParaphraseTab() { if (!this.busy) { this.tab = 'paraphrase'; this.error = ''; } },
-    tabKey(event) { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); if (this.busy) return; const tabs = ['text', 'file', 'paraphrase']; this.tab = event.key === 'Home' ? 'text' : event.key === 'End' ? 'paraphrase' : tabs[(tabs.indexOf(this.tab) + (event.key === 'ArrowLeft' ? 2 : 1)) % 3]; document.getElementById(`${this.tab}-tab`).focus(); } },
+    tabKey(event) { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); if (this.busy) return; const tabs = ['text', 'file', 'image', 'paraphrase']; this.tab = event.key === 'Home' ? 'text' : event.key === 'End' ? 'paraphrase' : tabs[(tabs.indexOf(this.tab) + (event.key === 'ArrowLeft' ? 3 : 1)) % 4]; document.getElementById(`${this.tab}-tab`).focus(); } },
     get notBusy() { return !this.busy; }, get characterCount() { return Array.from(this.input).length.toLocaleString(this.locale); },
     get characterLimit() { return (200000).toLocaleString(this.locale); },
     get cannotCleanText() { return this.busy || !this.input.trim(); }, get cannotClear() { return this.busy || !this.input; },
@@ -93,7 +97,7 @@ document.addEventListener('alpine:init', () => {
     get fileMethod() { return this.t(`${this.formatCategory}Method`); },
     categoryFor(name) { const suffix = name.split('.').pop().toLowerCase(); return Object.keys(this.fileFormats).find(category => this.fileFormats[category].split(',').includes(suffix)) || 'documents'; },
     get dropClass() { return this.dragging ? 'dragging' : ''; },
-    get activeResult() { return this.isParaphraseTab ? null : this.isTextTab ? this.textResult : this.selectedFileResult; },
+    get activeResult() { return this.isParaphraseTab || this.isImageTab ? null : this.isTextTab ? this.textResult : this.selectedFileResult; },
     get reportTiming() { return this.activeResult ? `${(this.activeResult.elapsed_ms / 1000).toLocaleString(this.locale, { maximumFractionDigits: 2 })} s` : ''; },
     get reportSummary() {
       if (!this.activeResult) return '';
@@ -184,12 +188,12 @@ document.addEventListener('alpine:init', () => {
       }
       this.busy = false; this.stage = '';
     },
-    cancelProcessing() { this.cancelled = true; if (this.isParaphraseTab) window.dispatchEvent(new Event('nomark-cancel-paraphrase')); else NoMarkProcessor.cancel(); },
+    cancelProcessing() { this.cancelled = true; if (this.isParaphraseTab) window.dispatchEvent(new Event('nomark-cancel-paraphrase')); else if (this.isImageTab) window.dispatchEvent(new Event('nomark-cancel-image')); else NoMarkProcessor.cancel(); },
     downloadFile(id) { const result = this.files.find(entry => entry.id === id)?.result; if (result) download(result.outputBlob, result.cleaned_name); },
     formatBytes(value) { return value >= 1024 * 1024 ? `${(value / (1024 * 1024)).toLocaleString(this.locale, { maximumFractionDigits: 1 })} MiB` : value >= 1024 ? `${(value / 1024).toLocaleString(this.locale, { maximumFractionDigits: 1 })} KiB` : `${value} B`; },
     async refreshHistory() { try { this.history = await NoMarkHistory.list(); } catch { this.notice = this.t('storageFailed'); } },
     async saveHistory(record) { try { const evicted = await NoMarkHistory.save(record); await this.refreshHistory(); if (evicted) this.notice = this.t('storageEvicted'); } catch { this.notice = this.t('storageFailed'); } },
-    itemType(item) { return this.t(item.mode === 'paraphrase' ? 'paraphraseTab' : item.mode === 'text' ? 'textTab' : 'fileTab'); },
+    itemType(item) { return this.t(item.mode === 'image' ? 'imageTab' : item.mode === 'paraphrase' ? 'paraphraseTab' : item.mode === 'text' ? 'textTab' : 'fileTab'); },
     itemTitle(item) { return item.title; },
     itemDate(item) { return new Intl.DateTimeFormat(this.locale, { dateStyle: 'medium', timeStyle: 'short' }).format(item.created); },
     deleteLabel(item) { return `${this.t('delete')}: ${item.title}`; },
@@ -200,7 +204,8 @@ document.addEventListener('alpine:init', () => {
         const record = await NoMarkHistory.get(id);
         if (!record) { this.notice = this.t('historyMissing'); await this.refreshHistory(); return; }
         this.tab = record.mode;
-        if (record.mode === 'paraphrase') { window.dispatchEvent(new CustomEvent('nomark-restore-paraphrase', { detail: record })); }
+        if (record.mode === 'image') { window.dispatchEvent(new CustomEvent('nomark-restore-image', { detail: record })); }
+        else if (record.mode === 'paraphrase') { window.dispatchEvent(new CustomEvent('nomark-restore-paraphrase', { detail: record })); }
         else if (record.mode === 'text') { this.input = record.inputText; this.textResult = record.result; }
         else { this.formatCategory = this.categoryFor(record.sourceName); const result = { ...record.result, outputBlob: record.outputBlob }; this.files = [{ id: record.id, name: record.sourceName, size: record.sourceBlob.size, file: new File([record.sourceBlob], record.sourceName), status: result.status, result, error: '' }]; this.selectedFileResult = result; }
         this.error = ''; this.notice = this.t('pendingResult');

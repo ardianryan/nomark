@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "kind": "image",
+  "format": "png",
+  "mime": "image/png",
+  "name": "gemini.png",
+  "cleaned_name": "gemini.cleaned.png",
+  "status": "cleaned",
+  "visual_status": "cleaned",
+  "width": 1536,
+  "height": 1152,
+  "bytes_in": 2049559,
+  "bytes_out": 1174053,
+  "elapsed_ms": 1672,
+  "processed_by": "server",
+  "report": {
+    "marks": [
+      {
+        "key": "gemini",
+        "label": "Google Gemini visible watermark (sparkle)",
+        "status": "cleaned"
+      }
+    ],
+    "metadata_removed": false,
+    "normalized": true,
+    "warnings": [
+      "image_review"
+    ]
+  }
+}

@@ -114,3 +114,20 @@ html[data-theme=dark] .skip-link{background:var(--accent);color:var(--on-accent)
 html[data-theme=dark] .changed-phrase { background: #3a624a; color: #eff5ec; }
 html[data-theme=dark] .changed-phrase:hover { background: #497658; }
 @media (max-width: 600px) { .workspace-toolbar { flex-wrap: wrap; gap: .6rem; } .tabs { width: 100%; } .tabs button { flex: 1; } }
+
+.image-workspace { padding: 24px; display: grid; gap: 20px; }
+.image-workspace > p { margin: 0; }
+.image-workspace .dropzone { min-height: auto; padding: 24px; }
+.image-selected { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+.image-selected p { overflow-wrap: anywhere; margin: 0; }
+.image-comparison { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+.image-comparison figure { margin: 0; min-width: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.image-comparison figcaption { padding: 12px; font-weight: 600; }
+.image-comparison img { display: block; width: 100%; max-height: 480px; object-fit: contain; background: repeating-conic-gradient(#ddd 0% 25%,#fff 0% 50%) 50% / 20px 20px; }
+.image-comparison figure > p { padding: 12px; }
+.image-report { padding: 16px; border: 1px solid var(--line); border-radius: 12px; }
+.image-report p:first-child { margin-top: 0; font-weight: 600; }
+.image-availability { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tabs { overflow-x: auto; }
+.tabs button { white-space: nowrap; }
+@media (max-width: 640px) { .image-workspace { padding: 18px; } .image-comparison { grid-template-columns: minmax(0,1fr); } }

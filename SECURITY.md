@@ -44,3 +44,9 @@ Paraphrasing introduces an internal HTTP/model-parser boundary and requires a ne
 ## Browser editor boundary — 0.1.0-alpha.6
 
 Optional suggestion metadata is bounded and validated for code-point ranges, text correspondence, ordering and alternatives; invalid metadata is discarded without discarding valid output. Browser comparison runs in a worker with time/edit-distance bounds. Result and suggestion strings are rendered as text, not HTML. Manual edits and suggestion choices never call the model or send text again, and manual edits are not validated by the model. These changes do not close the outstanding audit hypotheses, dependency advisory follow-up or production infrastructure checks above.
+
+## Optional image boundary — 0.1.0-alpha.8 candidate
+
+The Images tab introduces raster decoders and the pinned Apache-2.0 remove-ai-watermarks package in a separate, optional CPU container. It accepts only static PNG/JPEG/WebP after content-free, client-owned admission and explicit browser consent. Byte, pixel, side, mode, output and response limits apply. Native image work runs in a killable process whose Linux seccomp filter denies socket creation and outgoing network syscalls; runtime has no GPU/model dependency. Cancellation is acknowledged before reuse, and response backpressure keeps the image slot occupied until delivery finishes. Reports exclude raw metadata and native diagnostic paths.
+
+See [image processing](docs/IMAGE_PROCESSING.md) and [alpha.8 verification](docs/MEDIA-ALPHA8-VERIFICATION.md) for tests and measured limits. These checks do not close earlier unresolved audit findings, establish general detection accuracy, or constitute OWASP/Cloudflare certification. The existing NMT quality gate remains unchanged.

@@ -19,11 +19,12 @@ The website address is the production target. Deployment and DNS setup are separ
 - Paste text or select supported documents; inspect changes, copy, and download results.
 - Process text and non-PDF documents locally using the original Python cleaners in a Pyodide Web Worker.
 - Clean PDF metadata on the server after explicit permission, with a bounded queue before upload.
+- Remove supported visible AI image marks in a separate Images tab, with explicit upload permission and normalized PNG output from an isolated CPU service.
 - Keep history in the browser, with individual and bulk deletion.
 - Switch between Indonesian and English, and system, light, or dark themes.
 - Use keyboard-accessible controls, responsive layouts, and screen-reader status announcements.
 
-No AI model, API key, MCP service, account, or server database is required. The cleaning tools do not rewrite text or perform PDF OCR, remove visual image/video watermarks, or guarantee removal of statistical AI watermarks. Image and audio/video cleaning removes supported metadata only: it does not alter pixel or waveform watermarks. Removing metadata may affect image orientation or color interpretation; review results. Findings do not establish who authored content.
+No AI model, API key, MCP service, account, or server database is required. The Files tab cleans supported metadata without altering pixel or waveform watermarks. The optional Images tab uses OpenCV to reconstruct supported visible-mark regions; it does not provide hidden-watermark removal or visual video cleaning. The tools do not perform PDF OCR or guarantee removal of statistical AI watermarks. Removing metadata may affect image orientation or color interpretation; review results. Findings do not establish who authored content.
 
 ## Where processing happens
 
@@ -35,6 +36,7 @@ No AI model, API key, MCP service, account, or server database is required. The 
 | PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, HEIC/HEIF, SVG metadata | Browser worker | No |
 | WAV, MP3, FLAC, M4A, MP4, MOV, M4V metadata | Browser worker | No |
 | PDF metadata | Server, after permission and admission | PDF and filename |
+| Images tab: visible marks, static PNG/JPEG/WebP | Isolated CPU media server, after separate permission and admission | Image and filename |
 | History, preferences, downloads | Browser | No synchronization |
 
 Local-engine failures never silently upload content. Direct compatibility API calls are server processing, including calls containing text or non-PDF documents.
@@ -44,7 +46,7 @@ Local-engine failures never silently upload content. Direct compatibility API ca
 Requirements: Python 3.11 and Git. Node.js is only needed for asset maintenance and browser tests.
 
 ```sh
-git submodule update --init --recursive
+git submodule update --init --recursive watermarks-remover
 python3.11 -m venv .venv
 .venv/bin/pip install -r requirements.lock
 .venv/bin/python -m nomark.dev
@@ -62,7 +64,7 @@ Restart the server and check `/health` for `pdf_ready: true`. Docker is not requ
 
 ## Deployment
 
-For Portainer, copy [the complete two-service stack](deploy/compose.portainer.yaml) and pull/redeploy after each release. This rolling tag currently includes alpha releases; versioned tags remain available for rollback.
+For Portainer, copy [the complete three-service stack](deploy/compose.portainer.yaml) and pull/redeploy after each release. This rolling tag currently includes alpha releases; versioned tags remain available for rollback.
 
 Published images and tagged releases are available from [GitLab](https://gitlab.com/ardianryan/nomark/-/releases). See [Releasing](docs/RELEASING.md) for version policy and image verification. Alpha limitations are recorded in [Changelog](CHANGELOG.md).
 
@@ -71,12 +73,13 @@ docker compose up --build -d
 curl http://127.0.0.1:8000/health
 ```
 
-The root Compose file builds both the application and its isolated NMT service. The application image includes FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database or Redis. For a single-container installation without paraphrasing, use `deploy/compose.release.yaml`; add `deploy/compose.paraphrase.yaml` to enable NMT. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
+The root Compose file builds the application, its isolated NMT service and its optional CPU media service. The application image includes FastAPI, frontend assets, the Python cleaners, ExifTool, qpdf, and Ghostscript. Caddy runs on the host for HTTPS. There is no separate frontend server, database or Redis. For a single-container installation without paraphrasing, use `deploy/compose.release.yaml`; add `deploy/compose.paraphrase.yaml` to enable NMT. See [Deployment](docs/DEPLOYMENT.md) before configuring the VPS.
 
 ## Limits
 
 - Text: 200,000 characters. Files: 20 MiB each; five sequential files per browser queue.
 - PDF server: two simultaneous jobs and eight waiting tickets. Files stay on the device while waiting.
+- Images: one active job and two waiting tickets; one static image, 20 MiB, 8 megapixels and 8,192 pixels per side. PNG output is limited to 40 MiB.
 - Server upload timeout: 30 seconds. Processing timeout: 60 seconds. Browser processing timeout: 90 seconds.
 - IndexedDB history: 20 entries or 100 MiB, including originals and results. Oldest entries are evicted.
 - Working files are deleted after jobs; remnants older than five minutes are swept while running.
@@ -90,7 +93,9 @@ nomark/                  FastAPI app, Python integration, SEO, and public polici
 static/                  Browser UI, translations, workers, and bundled runtime
   brand/                 Outlined logos, favicons, device icons, social preview
   vendor/                Versioned runtime assets and third-party licenses
+media-service/           Isolated CPU image processing, locked dependencies and container
 watermarks-remover/      Pinned upstream Git submodule
+remove-ai-watermarks/   Pinned Apache-2.0 visual image-cleaning submodule
 scripts/                 Asset generation and maintenance
 tests/                   Python and browser tests
 deploy/                  Host Caddy configuration
@@ -100,11 +105,31 @@ docs/                    Architecture, deployment, design, SEO, verification
 
 `watermarks-remover` is a submodule pinned to `5c180932a00c793261177f79aee21db8929f3fe2`. Git records its URL and commit rather than importing its history. Clone this repository with `--recurse-submodules`, or initialize the submodule as shown above. The browser bundle includes the required upstream modules and their license.
 
+The [remove-ai-watermarks](https://github.com/wiltodelta/remove-ai-watermarks) submodule is pinned to `b57ef6045cd7de525bc10546d4c1ce9f9fe151f7` for development of media cleaning. The optional CPU media service calls its visible-image API directly. See [image processing](docs/IMAGE_PROCESSING.md) for supported inputs, consent, isolation and current limitations. It is licensed under Apache-2.0; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## Optional media source checkout
+
+The media upstream includes a large research corpus. The app-only quick start needs just `watermarks-remover`. For a fresh media build, fetch only the pinned runtime source:
+
+```sh
+git clone --filter=blob:none --no-checkout --depth 1 https://github.com/wiltodelta/remove-ai-watermarks.git remove-ai-watermarks
+git -C remove-ai-watermarks sparse-checkout set --no-cone '/src/' '/pyproject.toml' '/README.md' '/LICENSE'
+git -C remove-ai-watermarks fetch --depth 1 origin b57ef6045cd7de525bc10546d4c1ce9f9fe151f7
+git -C remove-ai-watermarks checkout --detach b57ef6045cd7de525bc10546d4c1ce9f9fe151f7
+git submodule absorbgitdirs remove-ai-watermarks
+```
+
+If the submodule is already initialized, apply the sparse patterns to that clean checkout instead of cloning again. The GitLab pipeline prepares the same limited source artifact before building the media image. See [media service](media-service/README.md) and [alpha.8 verification](docs/MEDIA-ALPHA8-VERIFICATION.md).
+
 ## Development
 
 ```sh
 .venv/bin/pip install -e '.[test]'
-.venv/bin/python -m pytest
+# Media tests also need the pinned submodule checkout and CPU dependencies.
+.venv/bin/pip install -r media-service/requirements.in
+.venv/bin/pip install --require-hashes -r media-service/build.lock
+.venv/bin/pip install --no-deps --no-build-isolation ./remove-ai-watermarks
+.venv/bin/python -m pytest tests nmt-service/tests media-service/tests
 npm ci
 npm test
 ```

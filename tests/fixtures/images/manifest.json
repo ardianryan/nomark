@@ -1,0 +1,204 @@
+{
+  "upstream_commit": "b57ef6045cd7de525bc10546d4c1ce9f9fe151f7",
+  "samples": [
+    {
+      "file": "supported-gemini.png",
+      "category": "supported",
+      "expected_mark": "gemini",
+      "synthetic": true,
+      "sha256": "767bb3c6278a07d4a1d7f5e5608348e54cfe3a74b4c5beb1a9a07a39ca5e3ba9"
+    },
+    {
+      "file": "supported-doubao.png",
+      "category": "supported",
+      "expected_mark": "doubao",
+      "synthetic": true,
+      "sha256": "06daf794fecd05f079e1dc19d0c23f9e94ecbb49d8f5fa87b7e447092123ba21"
+    },
+    {
+      "file": "supported-jimeng.png",
+      "category": "supported",
+      "expected_mark": "jimeng",
+      "synthetic": true,
+      "sha256": "34172890c00585e76f94e458651c1fa989f5dbea5a00b2d4f24f8e1fc6000907"
+    },
+    {
+      "file": "supported-qwen.png",
+      "category": "supported",
+      "expected_mark": "qwen",
+      "synthetic": true,
+      "sha256": "d9923d315f4f3e549dc6aef4c2d8fcb0b38049061927cad3eb87d560a88b1f2e"
+    },
+    {
+      "file": "supported-wan.png",
+      "category": "supported",
+      "expected_mark": "wan",
+      "synthetic": true,
+      "sha256": "b168b1d34b3883d8a158c9c00514f9fa1f29f1eaf5a97000e0cbcb4efa651c79"
+    },
+    {
+      "file": "supported-kling.png",
+      "category": "supported",
+      "expected_mark": "kling",
+      "synthetic": true,
+      "sha256": "dbf0b5418d89545114316a7aead83e932982ee8fdcd318173e37b5017c4715db"
+    },
+    {
+      "file": "supported-yuanbao.png",
+      "category": "supported",
+      "expected_mark": "yuanbao",
+      "synthetic": true,
+      "sha256": "ecc64388bc7ac8b71318446f4ed34f5a6ca120fc3fe2835d4fd1b77d4a7d5539"
+    },
+    {
+      "file": "supported-dola.png",
+      "category": "supported",
+      "expected_mark": "dola",
+      "synthetic": true,
+      "sha256": "eb5a01039a54e7d794df82cd042fbeddf87a7a5af06768bb54da425b86ce9cf2"
+    },
+    {
+      "file": "supported-workbuddy.png",
+      "category": "supported",
+      "expected_mark": "workbuddy",
+      "synthetic": true,
+      "sha256": "8f00a284247725c9bce3dc67a53749636f7de079f417bf0997a933ef7ec5980d"
+    },
+    {
+      "file": "supported-samsung.png",
+      "category": "supported",
+      "expected_mark": "samsung",
+      "synthetic": true,
+      "sha256": "0594d6331fc65a68040e72b1cffc015853eeebdf5ad5a6cade5ef589d262241f"
+    },
+    {
+      "file": "supported-runninghub.png",
+      "category": "supported",
+      "expected_mark": "runninghub",
+      "synthetic": true,
+      "sha256": "339cd8d0beec52a1074f5a7112d888c34b390373610eb0cf07e054e13432b2c2"
+    },
+    {
+      "file": "supported-baidu.png",
+      "category": "supported",
+      "expected_mark": "baidu",
+      "synthetic": true,
+      "sha256": "305e0afb76577ddf11149c5cbbacd4bb56bb4ecb42edc6d58b7705204d60fcb3"
+    },
+    {
+      "file": "supported-liblib.png",
+      "category": "supported",
+      "expected_mark": "liblib",
+      "synthetic": true,
+      "sha256": "37738093b3424cca11debf6d4775da8e54bada04bd2182d2f74406e539ae1df2"
+    },
+    {
+      "file": "supported-microsoft.png",
+      "category": "supported",
+      "expected_mark": "microsoft",
+      "synthetic": true,
+      "sha256": "439c85e42e239430ab1b48e85837c4e0210bd3d831f222fb990991af517b9f48"
+    },
+    {
+      "file": "supported-jimeng_pill.png",
+      "category": "supported",
+      "expected_mark": "jimeng_pill",
+      "synthetic": true,
+      "sha256": "5d5be9f0ebee9a64512e420dbed78c23e1390bbce91329ae92d7086bf1a1489f"
+    },
+    {
+      "file": "clean-01.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "14747cb6c8dcafce95911ea475f0c3caabc8506712cb27acfd90500ee42f7db5"
+    },
+    {
+      "file": "clean-02.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "69fb76f88336d98b9d199b76fbbbe8cbfcd50c2c084d5d48f4816cf5bc5067f4"
+    },
+    {
+      "file": "clean-03.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "dccb676d61ad0dee2fb116ebcb5ef9932430087ba0c87079b04712457967d7df"
+    },
+    {
+      "file": "clean-04.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "30e640faeb051ba8226ab239160b09e19bbf71df12e79fc2736ec7e90f77524b"
+    },
+    {
+      "file": "clean-05.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "e86287504d2ec5eb49f3f6ea6bef9483cef22b758b4e1ede8bf6a642012dc5b2"
+    },
+    {
+      "file": "clean-06.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "b92095860bedf658e35e12953aa8e66e9db8c363ac02c1d14fdb3a79c475b2a3"
+    },
+    {
+      "file": "clean-07.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "1f1685ff3633ed7c45b117059d79752de66715045598e04d3505afba2eb4f5e1"
+    },
+    {
+      "file": "clean-08.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "8278da61c99ce96fa93b93d0f8db95a94785484291482111bc0232217bee3a80"
+    },
+    {
+      "file": "clean-09.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "903829f8820b4262b5788714b1b42fd333d2d9548d51685f0693928793b3dc6c"
+    },
+    {
+      "file": "clean-10.png",
+      "category": "clean",
+      "synthetic": true,
+      "sha256": "7969051eb24d2dda4f16c5ce7b3e68579eedd8fdc760ed3cd7b62ab10f65e4f8"
+    },
+    {
+      "file": "unknown-01.png",
+      "category": "unsupported",
+      "synthetic": true,
+      "sha256": "415884f75a27ae8713e13fd5b9d66a43484317b134fe58983bd9bca1a2ff99d3"
+    },
+    {
+      "file": "unknown-02.png",
+      "category": "unsupported",
+      "synthetic": true,
+      "sha256": "b75752aab115f7a07967b105998a7b9840de3b08f9d038f0701808c77d923d0a"
+    },
+    {
+      "file": "unknown-03.png",
+      "category": "unsupported",
+      "synthetic": true,
+      "sha256": "533b5aa01d391648b9b4526546291fa55ff58ffa756a21c6a3246c3b7e99e752"
+    },
+    {
+      "file": "unknown-04.png",
+      "category": "unsupported",
+      "synthetic": true,
+      "sha256": "ff87bff47f24e606692ff84642f66a7297e1065bf7286ac32f44fd18fbc00372"
+    },
+    {
+      "file": "unknown-05.png",
+      "category": "unsupported",
+      "synthetic": true,
+      "sha256": "a983a90e4df241871bea68e0d05a8fe446b8742fe0b8209b21afe3d5a2dc9743"
+    }
+  ],
+  "allowed_misses": [
+    "jimeng_pill"
+  ],
+  "renderer_sha256": "4e162c86810b321cbc04f8ed1e9e9cd8e2885b8fb49e4b0b6c95cfb34ccc0189"
+}
